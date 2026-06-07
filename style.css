@@ -641,6 +641,7 @@ body::before {
 }
 .contact-chip:hover { background: var(--accent); color: #0d1a10; }
 .contact-chip svg { width:16px; height:16px; }
+.contact-chip svg.contact-chip__whatsapp { width:18px; height:18px; flex-shrink:0; }
 
 /* ════════════════════════════════════════════════════════════
    FOOTER
