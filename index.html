@@ -1,898 +1,597 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NexaTech — Tecnología para tu negocio</title>
+  <title>&lt;RE:Hardware&gt; — Reparación a nivel componente</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- ========================================================
-       HEADER
-  ======================================================== -->
-  <header class="header" id="header">
-    <div class="header__inner">
+<!-- ════════════════ HEADER ════════════════ -->
+<header class="header" id="header">
+  <div class="header__inner">
 
-      <a href="#inicio" class="logo">
-        <div class="logo__mark">
-          <svg viewBox="0 0 36 36" fill="none">
-            <polygon points="18,2 34,10 34,26 18,34 2,26 2,10" fill="none" stroke="currentColor" stroke-width="2"/>
-            <polygon points="18,8 28,13 28,23 18,28 8,23 8,13" fill="currentColor" opacity=".18"/>
-            <circle cx="18" cy="18" r="4" fill="currentColor"/>
-          </svg>
-        </div>
-        <span class="logo__text">NexaTech</span>
-      </a>
-
-      <nav class="nav" id="nav">
-        <a href="#inicio"    class="nav__item">Inicio</a>
-        <a href="#productos" class="nav__item">Productos</a>
-        <a href="#servicios" class="nav__item">Servicios</a>
-        <a href="#reseñas"   class="nav__item">Reseñas</a>
-        <a href="#nosotros"  class="nav__item">Nosotros</a>
-        <a href="#contacto"  class="nav__item">Contacto</a>
-      </nav>
-
-      <div class="header__actions">
-        <a href="#contacto" class="btn btn--cta">Solicitar Cotización</a>
-        <button class="burger" id="burger" aria-label="Menú">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-
-    </div>
-  </header>
-
-  <!-- ========================================================
-       HERO
-  ======================================================== -->
-  <section class="hero" id="inicio">
-    <div class="hero__bg">
-      <div class="hero__circuit">
-        <svg viewBox="0 0 900 600" preserveAspectRatio="xMidYMid slice">
-          <defs>
-            <linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#22c55e" stop-opacity=".35"/>
-              <stop offset="100%" stop-color="#15803d" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <!-- Circuit lines -->
-          <path d="M0,300 H200 V150 H450 V300 H700 V200 H900" stroke="url(#lg1)" stroke-width="1.5" fill="none"/>
-          <path d="M0,400 H100 V250 H350 V400 H600 V300 H900" stroke="url(#lg1)" stroke-width="1" fill="none"/>
-          <path d="M200,0 V100 H400 V250" stroke="url(#lg1)" stroke-width="1" fill="none"/>
-          <path d="M600,0 V80 H750 V200" stroke="url(#lg1)" stroke-width="1" fill="none"/>
-          <!-- Nodes -->
-          <circle cx="200" cy="150" r="4" fill="#22c55e" opacity=".6"/>
-          <circle cx="450" cy="150" r="3" fill="#22c55e" opacity=".4"/>
-          <circle cx="450" cy="300" r="5" fill="#22c55e" opacity=".7"/>
-          <circle cx="700" cy="200" r="3" fill="#4ade80" opacity=".5"/>
-          <circle cx="100" cy="250" r="4" fill="#22c55e" opacity=".5"/>
-          <circle cx="350" cy="250" r="3" fill="#4ade80" opacity=".4"/>
-          <circle cx="600" cy="300" r="5" fill="#22c55e" opacity=".6"/>
+    <a href="#inicio" class="logo">
+      <div class="logo__hex">
+        <svg viewBox="0 0 36 36" fill="none">
+          <polygon points="18,2 34,10 34,26 18,34 2,26 2,10" fill="none" stroke="currentColor" stroke-width="1.8"/>
+          <polygon points="18,8 28,13 28,23 18,28 8,23 8,13" fill="currentColor" opacity=".15"/>
+          <circle cx="18" cy="18" r="5" fill="currentColor"/>
+          <circle cx="18" cy="18" r="2.5" fill="#0d1a10"/>
         </svg>
       </div>
-      <div class="hero__glow hero__glow--1"></div>
-      <div class="hero__glow hero__glow--2"></div>
-      <div class="hero__grid"></div>
+      <div>
+        <span class="logo__text"><span>&lt;</span>RE:Hardware<span>&gt;</span></span>
+        <span class="logo__sub">Repair · Restore · Rebuild</span>
+      </div>
+    </a>
+
+    <nav class="nav" id="nav">
+      <a href="#servicios"  class="nav__item">Servicio</a>
+      <a href="#proceso"    class="nav__item">Proceso</a>
+      <a href="#nosotros"   class="nav__item">Sobre Nosotros</a>
+    </nav>
+
+    <div class="header__actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema (dark/light)">
+        <!-- Moon -->
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
+        </svg>
+        <!-- Sun -->
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+
+      <button class="btn-auth" id="btnOpenAuth">Registro/Login</button>
+
+      <button class="burger" id="burger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
     </div>
 
-    <div class="hero__content">
+  </div>
+</header>
+
+
+<!-- ════════════════ HERO ════════════════ -->
+<section class="hero" id="inicio">
+  <div class="hero__bg">
+    <div class="hero__grid"></div>
+    <div class="hero__glow hero__glow--1"></div>
+    <div class="hero__glow hero__glow--2"></div>
+  </div>
+
+  <div class="hero__inner">
+    <div>
       <div class="hero__tag">
         <span class="hero__tag-dot"></span>
-        Tecnología empresarial de vanguardia
+        Diagnóstico electrónico profesional
       </div>
       <h1 class="hero__title">
-        Transformamos la<br>
-        <em>tecnología</em> en<br>
-        soluciones para tu<br>
-        negocio
+        Reparación de hardware<br>
+        <em>a nivel componente</em>
       </h1>
       <p class="hero__sub">
-        Software, hardware y servicios IT para empresas que quieren crecer.
-        Calidad garantizada, soporte experto y precios que se adaptan a ti.
+        Diagnóstico electrónico profesional, recuperación de datos y soldadura de precisión. Más de 3.400 equipos reparados con 98% de éxito.
       </p>
       <div class="hero__btns">
-        <a href="#productos" class="btn btn--primary">Ver Catálogo</a>
-        <a href="https://wa.me/59800000000?text=Hola%2C%20estoy%20interesado%20en%20conocer%20m%C3%A1s%20sobre%20sus%20productos%20y%20servicios%20tecnol%C3%B3gicos."
-           target="_blank" class="btn btn--wa">
-          <svg class="btn__icon" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-          </svg>
-          Contactar por WhatsApp
-        </a>
+        <button class="btn-primary" onclick="document.getElementById('btnOpenAuth').click()">
+          Solicitar diagnóstico
+        </button>
+        <a href="#proceso" class="btn-outline">Cómo trabajamos</a>
       </div>
     </div>
 
     <div class="hero__visual">
-      <div class="hero__monitor">
-        <div class="hero__monitor-frame">
-          <div class="hero__monitor-bar">
-            <span class="dot dot--r"></span>
-            <span class="dot dot--y"></span>
-            <span class="dot dot--g"></span>
-            <div class="hero__monitor-url">nexatech.com/dashboard</div>
-          </div>
-          <div class="hero__monitor-screen">
-            <div class="hm-sidebar">
-              <div class="hm-sidebar-item hm-sidebar-item--active"></div>
-              <div class="hm-sidebar-item"></div>
-              <div class="hm-sidebar-item"></div>
-              <div class="hm-sidebar-item"></div>
-            </div>
-            <div class="hm-body">
-              <div class="hm-kpis">
-                <div class="hm-kpi">
-                  <span class="hm-kpi-val" style="color:#22c55e">+24%</span>
-                  <span class="hm-kpi-lbl">Rendimiento</span>
-                </div>
-                <div class="hm-kpi">
-                  <span class="hm-kpi-val">$48K</span>
-                  <span class="hm-kpi-lbl">Ahorrado</span>
-                </div>
-                <div class="hm-kpi">
-                  <span class="hm-kpi-val" style="color:#22c55e">98%</span>
-                  <span class="hm-kpi-lbl">Uptime</span>
-                </div>
-              </div>
-              <div class="hm-chart">
-                <div class="hm-bar" style="height:40%"></div>
-                <div class="hm-bar" style="height:60%"></div>
-                <div class="hm-bar" style="height:45%"></div>
-                <div class="hm-bar" style="height:75%"></div>
-                <div class="hm-bar" style="height:55%"></div>
-                <div class="hm-bar hm-bar--accent" style="height:90%"></div>
-                <div class="hm-bar" style="height:70%"></div>
-              </div>
-              <div class="hm-rows">
-                <div class="hm-row"></div>
-                <div class="hm-row hm-row--short"></div>
-                <div class="hm-row"></div>
-              </div>
-            </div>
-          </div>
+      <div class="hero__hex-wrap">
+        <div class="hero__hex-main">
+          <svg viewBox="0 0 320 320" fill="none">
+            <polygon points="160,10 300,82 300,238 160,310 20,238 20,82"
+              fill="none" stroke="currentColor" stroke-width="1.5" opacity=".5"/>
+          </svg>
         </div>
-        <div class="hero__monitor-stand"></div>
-        <div class="hero__monitor-base"></div>
-      </div>
-      <div class="hero__badge hero__badge--tl">
-        <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#22c55e" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Sistema activo
-      </div>
-      <div class="hero__badge hero__badge--br">
-        <svg viewBox="0 0 20 20" fill="#22c55e"><circle cx="10" cy="10" r="10"/><path d="M6 10l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Soporte 24/7
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================================================
-       ESTADÍSTICAS ANIMADAS
-  ======================================================== -->
-  <section class="stats" id="stats">
-    <div class="container">
-      <div class="stats__grid">
-        <div class="stat-item">
-          <div class="stat-item__num" data-target="5000" data-suffix="+">0</div>
-          <div class="stat-item__lbl">Clientes satisfechos</div>
+        <div class="hero__hex-inner">
+          <svg viewBox="0 0 240 240" fill="none">
+            <polygon points="120,10 220,62 220,178 120,230 20,178 20,62"
+              fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="8 5"/>
+          </svg>
         </div>
-        <div class="stat-item">
-          <div class="stat-item__num" data-target="12000" data-suffix="+">0</div>
-          <div class="stat-item__lbl">Productos vendidos</div>
+        <div class="hero__hex-center">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="24" cy="24" r="20"/>
+            <circle cx="24" cy="24" r="4" fill="currentColor"/>
+            <line x1="24" y1="4" x2="24" y2="14"/>
+            <line x1="24" y1="34" x2="24" y2="44"/>
+            <line x1="4" y1="24" x2="14" y2="24"/>
+            <line x1="34" y1="24" x2="44" y2="24"/>
+            <circle cx="24" cy="4" r="2" fill="currentColor"/>
+            <circle cx="24" cy="44" r="2" fill="currentColor"/>
+            <circle cx="4" cy="24" r="2" fill="currentColor"/>
+            <circle cx="44" cy="24" r="2" fill="currentColor"/>
+          </svg>
         </div>
-        <div class="stat-item">
-          <div class="stat-item__num" data-target="98" data-suffix="%">0</div>
-          <div class="stat-item__lbl">Satisfacción del cliente</div>
+        <div class="hbadge hbadge--tl">
+          <span class="hbadge__dot"></span>
+          SISTEMA ACTIVO
         </div>
-        <div class="stat-item">
-          <div class="stat-item__num" data-target="10" data-suffix=" años">0</div>
-          <div class="stat-item__lbl">De experiencia</div>
+        <div class="hbadge hbadge--br">
+          <span class="hbadge__dot"></span>
+          GARANTÍA 90 DÍAS
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- ========================================================
-       ASESOR INTELIGENTE
-  ======================================================== -->
-  <section class="asesor" id="asesor">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-tag">IA</span>
-        <h2 class="section-title">Asesor Inteligente</h2>
-        <p class="section-desc">Dinos para qué usarás la tecnología y te recomendamos los productos ideales.</p>
-      </div>
-      <div class="asesor__widget reveal">
-        <div class="asesor__opciones">
-          <button class="asesor__opcion" data-uso="gaming">
-            <span class="asesor__opcion-icon">🎮</span>
-            <span>Gaming</span>
-          </button>
-          <button class="asesor__opcion" data-uso="oficina">
-            <span class="asesor__opcion-icon">💼</span>
-            <span>Oficina</span>
-          </button>
-          <button class="asesor__opcion" data-uso="empresa">
-            <span class="asesor__opcion-icon">🏢</span>
-            <span>Empresa</span>
-          </button>
-          <button class="asesor__opcion" data-uso="diseño">
-            <span class="asesor__opcion-icon">🎨</span>
-            <span>Diseño Gráfico</span>
-          </button>
-        </div>
-        <div class="asesor__resultado" id="asesorResultado">
-          <p class="asesor__placeholder">← Seleccioná un perfil para ver los productos recomendados</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================================================
-       CATÁLOGO DE PRODUCTOS
-  ======================================================== -->
-  <section class="catalogo" id="productos">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-tag">Catálogo</span>
-        <h2 class="section-title">Nuestros Productos</h2>
-        <p class="section-desc">Hardware y software de las marcas más confiables del mundo.</p>
-      </div>
-
-      <div class="catalogo__controls reveal">
-        <div class="search-wrap">
-          <svg class="search-wrap__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="searchInput" class="search-input" placeholder="Buscar productos..." />
-        </div>
-        <div class="filtros" id="filtros">
-          <button class="filtro active" data-cat="todos">Todos</button>
-          <button class="filtro" data-cat="hardware">Hardware</button>
-          <button class="filtro" data-cat="software">Software</button>
-          <button class="filtro" data-cat="accesorios">Accesorios</button>
-          <button class="filtro" data-cat="redes">Redes</button>
-          <button class="filtro" data-cat="seguridad">Seguridad</button>
-        </div>
-      </div>
-
-      <div class="productos-grid" id="productosGrid">
-
-        <!-- Producto 1 -->
-        <div class="prod-card reveal" data-cat="hardware" data-nombre="Notebook ProMax X15" data-precio="1299" data-rating="5" data-desc="Procesador Intel Core i9, 32GB RAM, SSD 1TB NVMe, pantalla 15.6 IPS 144Hz. Ideal para trabajo intensivo y multitarea empresarial.">
-          <div class="prod-card__badges">
-            <span class="badge badge--new">Nuevo</span>
-            <span class="badge badge--hot">Más vendido</span>
-          </div>
-          <div class="prod-card__img prod-card__img--1">
-            <svg viewBox="0 0 80 60" fill="none">
-              <rect x="5" y="5" width="70" height="44" rx="4" fill="rgba(255,255,255,.12)"/>
-              <rect x="10" y="10" width="60" height="34" rx="2" fill="rgba(255,255,255,.08)"/>
-              <rect x="15" y="40" width="50" height="3" rx="1.5" fill="rgba(255,255,255,.15)"/>
-              <rect x="20" y="43" width="40" height="6" rx="2" fill="rgba(255,255,255,.1)"/>
-              <line x1="18" y1="16" x2="62" y2="16" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
-              <line x1="18" y1="20" x2="50" y2="20" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
-              <line x1="18" y1="24" x2="55" y2="24" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
-            </svg>
-          </div>
-          <div class="prod-card__body">
-            <span class="prod-card__cat">Hardware</span>
-            <h3 class="prod-card__name">Notebook ProMax X15</h3>
-            <div class="prod-card__stars">★★★★★ <span>(214)</span></div>
-            <p class="prod-card__desc">Intel i9 · 32GB · SSD 1TB · 144Hz IPS</p>
-            <div class="prod-card__footer">
-              <span class="prod-card__price">$1.299</span>
-              <button class="btn btn--sm btn--compare" data-id="1">Ver detalles</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Producto 2 -->
-        <div class="prod-card reveal" data-cat="software" data-nombre="Suite ERP NexaCloud" data-precio="89" data-rating="4.5" data-desc="Sistema de gestión empresarial en la nube. Módulos de facturación, RRHH, inventario y CRM. Licencia anual por usuario.">
-          <div class="prod-card__badges">
-            <span class="badge badge--sale">Oferta</span>
-          </div>
-          <div class="prod-card__img prod-card__img--2">
-            <svg viewBox="0 0 80 60" fill="none">
-              <rect x="10" y="8" width="60" height="40" rx="3" fill="rgba(255,255,255,.1)"/>
-              <rect x="10" y="8" width="60" height="10" rx="3" fill="rgba(255,255,255,.15)"/>
-              <rect x="15" y="24" width="20" height="18" rx="2" fill="rgba(255,255,255,.1)"/>
-              <rect x="40" y="24" width="24" height="8" rx="2" fill="rgba(255,255,255,.08)"/>
-              <rect x="40" y="34" width="24" height="8" rx="2" fill="rgba(255,255,255,.08)"/>
-            </svg>
-          </div>
-          <div class="prod-card__body">
-            <span class="prod-card__cat">Software</span>
-            <h3 class="prod-card__name">Suite ERP NexaCloud</h3>
-            <div class="prod-card__stars">★★★★½ <span>(89)</span></div>
-            <p class="prod-card__desc">Gestión empresarial · CRM · Facturación</p>
-            <div class="prod-card__footer">
-              <span class="prod-card__price">$89<small>/mes</small></span>
-              <button class="btn btn--sm btn--compare" data-id="2">Ver detalles</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Producto 3 -->
-        <div class="prod-card reveal" data-cat="hardware" data-nombre="Monitor UltraWide 34"" data-precio="749" data-rating="5" data-desc="Panel IPS 34 pulgadas ultrawide QHD 3440x1440, 144Hz, 1ms, compatible con USB-C y soporta hasta 90W de carga.">
-          <div class="prod-card__badges">
-            <span class="badge badge--hot">Más vendido</span>
-          </div>
-          <div class="prod-card__img prod-card__img--3">
-            <svg viewBox="0 0 80 60" fill="none">
-              <rect x="5" y="5" width="70" height="42" rx="3" fill="rgba(255,255,255,.1)"/>
-              <rect x="10" y="10" width="60" height="32" rx="2" fill="rgba(255,255,255,.08)"/>
-              <rect x="28" y="47" width="24" height="4" rx="2" fill="rgba(255,255,255,.12)"/>
-              <rect x="20" y="51" width="40" height="3" rx="1.5" fill="rgba(255,255,255,.1)"/>
-              <circle cx="40" cy="26" r="8" fill="rgba(255,255,255,.12)"/>
-            </svg>
-          </div>
-          <div class="prod-card__body">
-            <span class="prod-card__cat">Hardware</span>
-            <h3 class="prod-card__name">Monitor UltraWide 34"</h3>
-            <div class="prod-card__stars">★★★★★ <span>(176)</span></div>
-            <p class="prod-card__desc">34" QHD · 144Hz · IPS · USB-C 90W</p>
-            <div class="prod-card__footer">
-              <span class="prod-card__price">$749</span>
-              <button class="btn btn--sm btn--compare" data-id="3">Ver detalles</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Producto 4 -->
-        <div class="prod-card reveal" data-cat="seguridad" data-nombre="ShieldPro Antivirus" data-precio="49" data-rating="4" data-desc="Protección avanzada con IA contra malware, ransomware y phishing. Hasta 5 dispositivos. Actualizaciones automáticas incluidas.">
-          <div class="prod-card__badges">
-            <span class="badge badge--sale">Oferta</span>
-          </div>
-          <div class="prod-card__img prod-card__img--4">
-            <svg viewBox="0 0 80 60" fill="none">
-              <path d="M40 6L12 18v14c0 14 11.5 27 28 30 16.5-3 28-16 28-30V18L40 6z" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>
-              <path d="M30 30l6 6 14-12" stroke="rgba(255,255,255,.6)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="prod-card__body">
-            <span class="prod-card__cat">Seguridad</span>
-            <h3 class="prod-card__name">ShieldPro Antivirus</h3>
-            <div class="prod-card__stars">★★★★☆ <span>(302)</span></div>
-            <p class="prod-card__desc">IA antivirus · 5 dispositivos · VPN incluida</p>
-            <div class="prod-card__footer">
-              <span class="prod-card__price">$49<small>/año</small></span>
-              <button class="btn btn--sm btn--compare" data-id="4">Ver detalles</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Producto 5 -->
-        <div class="prod-card reveal" data-cat="accesorios" data-nombre="Teclado Mecánico K7 Pro" data-precio="179" data-rating="4.5" data-desc="Switches Cherry MX Red silenciosos, TKL compacto, retroiluminación RGB por zona, cuerpo de aluminio anodizado.">
-          <div class="prod-card__badges">
-            <span class="badge badge--new">Nuevo</span>
-          </div>
-          <div class="prod-card__img prod-card__img--5">
-            <svg viewBox="0 0 80 60" fill="none">
-              <rect x="6" y="16" width="68" height="30" rx="4" fill="rgba(255,255,255,.12)"/>
-              <rect x="10" y="20" width="8" height="6" rx="1" fill="rgba(255,255,255,.2)"/>
-              <rect x="20" y="20" width="8" height="6" rx="1" fill="rgba(255,255,255,.15)"/>
-              <rect x="30" y="20" width="8" height="6" rx="1" fill="rgba(255,255,255,.2)"/>
-              <rect x="40" y="20" width="8" height="6" rx="1" fill="rgba(255,255,255,.15)"/>
-              <rect x="10" y="28" width="60" height="6" rx="1" fill="rgba(255,255,255,.1)"/>
-              <rect x="16" y="36" width="48" height="6" rx="1" fill="rgba(255,255,255,.15)"/>
-            </svg>
-          </div>
-          <div class="prod-card__body">
-            <span class="prod-card__cat">Accesorios</span>
-            <h3 class="prod-card__name">Teclado Mecánico K7 Pro</h3>
-            <div class="prod-card__stars">★★★★½ <span>(148)</span></div>
-            <p class="prod-card__desc">Cherry MX · TKL · RGB · Aluminio</p>
-            <div class="prod-card__footer">
-              <span class="prod-card__price">$179</span>
-              <button class="btn btn--sm btn--compare" data-id="5">Ver detalles</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Producto 6 -->
-        <div class="prod-card reveal" data-cat="redes" data-nombre="Router WiFi 6E Mesh" data-precio="329" data-rating="5" data-desc="Sistema mesh tribanda WiFi 6E, cobertura hasta 500m², gestión desde app móvil, VPN integrada y firewall empresarial.">
-          <div class="prod-card__badges">
-            <span class="badge badge--hot">Más vendido</span>
-          </div>
-          <div class="prod-card__img prod-card__img--6">
-            <svg viewBox="0 0 80 60" fill="none">
-              <circle cx="40" cy="30" r="6" fill="rgba(255,255,255,.4)"/>
-              <circle cx="40" cy="30" r="14" stroke="rgba(255,255,255,.2)" stroke-width="1.5" fill="none"/>
-              <circle cx="40" cy="30" r="22" stroke="rgba(255,255,255,.12)" stroke-width="1.5" fill="none"/>
-              <line x1="40" y1="8" x2="40" y2="4" stroke="rgba(255,255,255,.4)" stroke-width="2"/>
-              <line x1="58" y1="18" x2="62" y2="14" stroke="rgba(255,255,255,.3)" stroke-width="1.5"/>
-              <line x1="58" y1="42" x2="62" y2="46" stroke="rgba(255,255,255,.3)" stroke-width="1.5"/>
-              <line x1="40" y1="52" x2="40" y2="56" stroke="rgba(255,255,255,.3)" stroke-width="1.5"/>
-              <line x1="22" y1="42" x2="18" y2="46" stroke="rgba(255,255,255,.3)" stroke-width="1.5"/>
-              <line x1="22" y1="18" x2="18" y2="14" stroke="rgba(255,255,255,.3)" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <div class="prod-card__body">
-            <span class="prod-card__cat">Redes</span>
-            <h3 class="prod-card__name">Router WiFi 6E Mesh</h3>
-            <div class="prod-card__stars">★★★★★ <span>(93)</span></div>
-            <p class="prod-card__desc">Tribanda · 500m² · VPN · App móvil</p>
-            <div class="prod-card__footer">
-              <span class="prod-card__price">$329</span>
-              <button class="btn btn--sm btn--compare" data-id="6">Ver detalles</button>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="catalogo__empty" id="catalogoEmpty">
-        <span>🔍</span>
-        <p>No encontramos productos para tu búsqueda.</p>
-      </div>
-
-      <!-- Comparador -->
-      <div class="comparador-bar" id="comparadorBar">
-        <span class="comparador-bar__txt">Seleccioná 2 productos para comparar</span>
-        <div class="comparador-bar__sels" id="comparadorSels"></div>
-        <button class="btn btn--primary btn--sm" id="btnComparar">Comparar ahora</button>
-        <button class="comparador-bar__clear" id="btnClearComp">✕</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================================================
-       MODAL COMPARADOR
-  ======================================================== -->
-  <div class="modal-overlay" id="modalOverlay">
-    <div class="modal" id="modal">
-      <button class="modal__close" id="modalClose">✕</button>
-      <h2 class="modal__title">Comparar Productos</h2>
-      <div class="modal__table" id="modalTable"></div>
     </div>
   </div>
+</section>
 
-  <!-- ========================================================
-       SERVICIOS — CARRUSEL
-  ======================================================== -->
-  <section class="servicios" id="servicios">
-    <div class="servicios__deco"></div>
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-tag">Servicios</span>
-        <h2 class="section-title section-title--light">Reparación especializada</h2>
-        <p class="section-desc section-desc--light">Soluciones tecnológicas integrales para que tu empresa funcione mejor.</p>
+
+<!-- ════════════════ STATS ════════════════ -->
+<section class="stats" id="stats">
+  <div class="container">
+    <div class="stats__grid">
+      <div class="stat-item">
+        <span class="stat-item__num" data-target="3400" data-prefix="+">+0</span>
+        <span class="stat-item__lbl">equipos reparados</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-item__num" data-target="98" data-suffix="%">0%</span>
+        <span class="stat-item__lbl">tasa de éxito</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-item__num" data-target="48" data-suffix="h">0h</span>
+        <span class="stat-item__lbl">diagnóstico express</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-item__num" data-target="8" data-prefix="+">+0</span>
+        <span class="stat-item__lbl">años en servicio</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════ SERVICIOS GRID ════════════════ -->
+<section class="servicios-grid" id="servicios">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">// SERVICIO</span>
+      <h2 class="section-title">Reparación especializada</h2>
+    </div>
+
+    <div class="serv-cards">
+
+      <div class="serv-card reveal">
+        <div class="serv-card__ico">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <rect x="6" y="10" width="36" height="28" rx="3"/>
+            <line x1="6" y1="18" x2="42" y2="18"/>
+            <line x1="14" y1="14" x2="16" y2="14"/>
+            <line x1="20" y1="14" x2="22" y2="14"/>
+            <line x1="14" y1="24" x2="28" y2="24"/>
+            <line x1="14" y1="30" x2="22" y2="30"/>
+          </svg>
+        </div>
+        <div class="serv-card__title">Diagnóstico electrónico</div>
+        <div class="serv-card__desc">Análisis con osciloscopio, multímetro, y Firmware. Detección precisa de fallas a nivel de componente.</div>
       </div>
 
-      <!-- Carrusel -->
-      <div class="carousel reveal">
-        <div class="carousel__track-wrap">
-          <div class="carousel__track" id="carouselTrack">
+      <div class="serv-card reveal">
+        <div class="serv-card__ico">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <rect x="4" y="8" width="40" height="32" rx="3"/>
+            <line x1="4" y1="16" x2="44" y2="16"/>
+            <circle cx="14" cy="12" r="2" fill="currentColor"/>
+            <rect x="10" y="22" width="28" height="12" rx="2"/>
+          </svg>
+        </div>
+        <div class="serv-card__title">Reparación de placas</div>
+        <div class="serv-card__desc">Soldadura BGA, reballing GPU, reemplazo de ICs. Equipamiento profesional de última generación.</div>
+      </div>
 
-            <div class="serv-slide">
-              <div class="serv-slide__num">01</div>
-              <div class="serv-slide__ico">
-                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="8" y="12" width="32" height="24" rx="3"/>
-                  <polyline points="16,24 21,29 32,20"/>
-                </svg>
-              </div>
-              <h3>Desarrollo de Software</h3>
-              <p>Apps web y mobile a medida, integraciones de sistemas y automatización de procesos empresariales con tecnología moderna.</p>
-              <a href="#contacto" class="serv-slide__link">Consultar →</a>
-            </div>
+      <div class="serv-card reveal">
+        <div class="serv-card__ico">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <ellipse cx="24" cy="36" rx="16" ry="4"/>
+            <path d="M8 36 V16 a16 8 0 0 1 32 0 V36"/>
+            <line x1="24" y1="8" x2="24" y2="28"/>
+            <circle cx="24" cy="28" r="3" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="serv-card__title">Recuperación de datos</div>
+        <div class="serv-card__desc">HDD, SSD, eMMC, NAND Flash. Recuperación en sala limpia con tasa de éxito del 95%.</div>
+      </div>
 
-            <div class="serv-slide">
-              <div class="serv-slide__num">02</div>
-              <div class="serv-slide__ico">
-                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="24" cy="24" r="10"/>
-                  <line x1="24" y1="4" x2="24" y2="10"/>
-                  <line x1="24" y1="38" x2="24" y2="44"/>
-                  <line x1="4" y1="24" x2="10" y2="24"/>
-                  <line x1="38" y1="24" x2="44" y2="24"/>
-                </svg>
-              </div>
-              <h3>Soporte Técnico</h3>
-              <p>Asistencia especializada 24/7. Mantenimiento preventivo, correctivo y help desk para mantener tu operación activa sin interrupciones.</p>
-              <a href="#contacto" class="serv-slide__link">Consultar →</a>
-            </div>
+      <div class="serv-card reveal">
+        <div class="serv-card__ico">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <rect x="6" y="12" width="22" height="24" rx="3"/>
+            <rect x="10" y="16" width="14" height="16" rx="1"/>
+            <line x1="30" y1="20" x2="42" y2="20"/>
+            <line x1="30" y1="28" x2="42" y2="28"/>
+            <circle cx="42" cy="20" r="3" fill="currentColor"/>
+            <circle cx="42" cy="28" r="3" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="serv-card__title">Laptops y notebooks</div>
+        <div class="serv-card__desc">Pantallas, teclados, puertos, motherboards. Reparación integral para todas las marcas del mercado.</div>
+      </div>
 
-            <div class="serv-slide">
-              <div class="serv-slide__num">03</div>
-              <div class="serv-slide__ico">
-                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="6" y="30" width="10" height="12" rx="2"/>
-                  <rect x="19" y="22" width="10" height="20" rx="2"/>
-                  <rect x="32" y="14" width="10" height="28" rx="2"/>
-                  <polyline points="6,20 16,12 28,16 42,6"/>
-                </svg>
-              </div>
-              <h3>Infraestructura IT</h3>
-              <p>Diseño y gestión de infraestructura escalable: servidores, redes, almacenamiento y virtualización para entornos exigentes.</p>
-              <a href="#contacto" class="serv-slide__link">Consultar →</a>
-            </div>
+      <div class="serv-card reveal">
+        <div class="serv-card__ico">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <rect x="8" y="6" width="32" height="26" rx="3"/>
+            <rect x="16" y="36" width="16" height="6" rx="2"/>
+            <line x1="10" y1="38" x2="38" y2="38"/>
+            <line x1="16" y1="38" x2="32" y2="38"/>
+          </svg>
+        </div>
+        <div class="serv-card__title">Consolas y gaming</div>
+        <div class="serv-card__desc">PS4, PS5, Xbox, Switch. Reparación de lectoras, HDMI, joystick drift y fallas de placa principal.</div>
+      </div>
 
-            <div class="serv-slide">
-              <div class="serv-slide__num">04</div>
-              <div class="serv-slide__ico">
-                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M24 6L8 14v10c0 11 7 20 16 22 9-2 16-11 16-22V14z"/>
-                  <polyline points="18,24 22,28 30,20"/>
-                </svg>
-              </div>
-              <h3>Ciberseguridad</h3>
-              <p>Auditorías de seguridad, pentesting, monitoreo activo y planes de respuesta ante incidentes para proteger tus activos digitales.</p>
-              <a href="#contacto" class="serv-slide__link">Consultar →</a>
-            </div>
+      <div class="serv-card reveal">
+        <div class="serv-card__ico">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <rect x="4" y="8" width="24" height="32" rx="3"/>
+            <rect x="30" y="16" width="14" height="20" rx="2"/>
+            <line x1="10" y1="16" x2="22" y2="16"/>
+            <line x1="10" y1="22" x2="22" y2="22"/>
+            <line x1="10" y1="28" x2="22" y2="28"/>
+            <line x1="10" y1="34" x2="18" y2="34"/>
+          </svg>
+        </div>
+        <div class="serv-card__title">Hardware industrial</div>
+        <div class="serv-card__desc">Placas embebidas, sensores, actuadores. Mantenimiento y reparación de equipos industriales y PLC.</div>
+      </div>
 
-            <div class="serv-slide">
-              <div class="serv-slide__num">05</div>
-              <div class="serv-slide__ico">
-                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="24" cy="16" r="6"/>
-                  <path d="M10 42c0-7.7 6.3-14 14-14s14 6.3 14 14"/>
-                  <line x1="32" y1="22" x2="40" y2="14"/>
-                  <circle cx="42" cy="12" r="4"/>
-                </svg>
-              </div>
-              <h3>Consultoría Tecnológica</h3>
-              <p>Asesoramiento estratégico para transformación digital, selección de tecnología y reducción de costos operativos en tu empresa.</p>
-              <a href="#contacto" class="serv-slide__link">Consultar →</a>
-            </div>
+    </div>
+  </div>
+</section>
 
-            <div class="serv-slide">
-              <div class="serv-slide__num">06</div>
-              <div class="serv-slide__ico">
-                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <ellipse cx="24" cy="18" rx="14" ry="6"/>
-                  <path d="M10 18v6c0 3.3 6.3 6 14 6s14-2.7 14-6v-6"/>
-                  <path d="M10 24v6c0 3.3 6.3 6 14 6s14-2.7 14-6v-6"/>
-                </svg>
-              </div>
-              <h3>Cloud Computing</h3>
-              <p>Migración a la nube, arquitecturas híbridas, optimización de costos y alta disponibilidad garantizada para tu infraestructura.</p>
-              <a href="#contacto" class="serv-slide__link">Consultar →</a>
-            </div>
 
-          </div><!-- /track -->
-        </div><!-- /track-wrap -->
+<!-- ════════════════ PROCESO ════════════════ -->
+<section class="proceso" id="proceso">
+  <div class="container">
+    <div class="proceso__inner">
+      <div class="proceso__left reveal">
+        <span class="section-tag">// PROCESO</span>
+        <h2>Cómo trabajamos</h2>
+        <p>Nuestro proceso técnico garantiza transparencia total y resultados verificables en cada etapa de la reparación. Sabés exactamente qué le pasa a tu equipo en todo momento.</p>
+      </div>
 
-        <!-- Controles -->
-        <div class="carousel__controls">
-          <button class="carousel__btn" id="carouselPrev" aria-label="Anterior">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="15 18 9 12 15 6"/>
+      <div class="proceso__steps">
+        <div class="step reveal">
+          <div class="step__num">01</div>
+          <div>
+            <div class="step__title">Recepción y documentación</div>
+            <div class="step__desc">Registro detallado del equipo y problema reportado. Fotos del estado inicial y firma de presupuesto.</div>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="step__num">02</div>
+          <div>
+            <div class="step__title">Diagnóstico a nivel componente</div>
+            <div class="step__desc">Análisis técnico con equipamiento especializado: osciloscopio, analizador de señales y estación BGA.</div>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="step__num">03</div>
+          <div>
+            <div class="step__title">Presupuesto aprobado</div>
+            <div class="step__desc">Cotización transparente antes de proceder. Sin cargos ocultos. El cliente aprueba o rechaza sin costo.</div>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="step__num">04</div>
+          <div>
+            <div class="step__title">Reparación y pruebas</div>
+            <div class="step__desc">Intervención precisa y verificación de funcionalidad completa bajo condiciones de carga real.</div>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="step__num">05</div>
+          <div>
+            <div class="step__title">Garantía por escrito — 90 días</div>
+            <div class="step__desc">Respaldo total sobre el trabajo realizado. Cubrimos cualquier falla relacionada con la reparación.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════ CAROUSEL ════════════════ -->
+<section class="carousel-section" id="reparacion">
+  <div class="carousel-section__deco"></div>
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">// SERVICIO</span>
+      <h2 class="section-title section-title--light">Reparación especializada</h2>
+      <p class="section-desc section-desc--light">Soluciones técnicas de precisión para todos los tipos de hardware.</p>
+    </div>
+
+    <div class="carousel-wrap reveal">
+      <div class="carousel__track" id="carouselTrack">
+
+        <div class="carousel__slide">
+          <span class="slide__num">01</span>
+          <div class="slide__ico">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <rect x="6" y="10" width="36" height="28" rx="3"/>
+              <line x1="6" y1="18" x2="42" y2="18"/>
+              <polyline points="14,26 20,32 34,22"/>
             </svg>
-          </button>
-          <div class="carousel__dots" id="carouselDots"></div>
-          <button class="carousel__btn" id="carouselNext" aria-label="Siguiente">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"/>
+          </div>
+          <div class="slide__title">Diagnóstico electrónico</div>
+          <div class="slide__desc">Análisis con osciloscopio, multímetro, y Firmware. Identificación precisa de fallas en cualquier circuito.</div>
+          <a href="#" class="slide__link">Consultar →</a>
+        </div>
+
+        <div class="carousel__slide">
+          <span class="slide__num">02</span>
+          <div class="slide__ico">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <rect x="4" y="8" width="40" height="32" rx="3"/>
+              <line x1="4" y1="16" x2="44" y2="16"/>
+              <circle cx="14" cy="12" r="2" fill="currentColor"/>
+              <rect x="10" y="22" width="28" height="12" rx="2"/>
             </svg>
-          </button>
-        </div>
-
-      </div><!-- /carousel -->
-    </div>
-  </section>
-
-  <!-- ========================================================
-       RESEÑAS
-  ======================================================== -->
-  <section class="reseñas" id="reseñas">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-tag">Opiniones</span>
-        <h2 class="section-title">Lo que dicen nuestros clientes</h2>
-      </div>
-
-      <div class="reseñas__overview reveal">
-        <div class="reseñas__score">
-          <div class="reseñas__score-num">4.8</div>
-          <div class="reseñas__score-stars">★★★★★</div>
-          <div class="reseñas__score-base">Basado en 1.247 opiniones verificadas</div>
-        </div>
-        <div class="reseñas__bars">
-          <div class="rbar"><span>5 ★</span><div class="rbar__track"><div class="rbar__fill" style="width:78%"></div></div><span>78%</span></div>
-          <div class="rbar"><span>4 ★</span><div class="rbar__track"><div class="rbar__fill" style="width:15%"></div></div><span>15%</span></div>
-          <div class="rbar"><span>3 ★</span><div class="rbar__track"><div class="rbar__fill" style="width:5%"></div></div><span>5%</span></div>
-          <div class="rbar"><span>2 ★</span><div class="rbar__track"><div class="rbar__fill" style="width:1%"></div></div><span>1%</span></div>
-          <div class="rbar"><span>1 ★</span><div class="rbar__track"><div class="rbar__fill" style="width:1%"></div></div><span>1%</span></div>
-        </div>
-      </div>
-
-      <div class="reseñas__grid">
-
-        <div class="review-card reveal">
-          <div class="review-card__head">
-            <div class="avatar avatar--a">JP</div>
-            <div>
-              <strong>Juan Pérez</strong>
-              <span>Director de Operaciones</span>
-            </div>
           </div>
-          <div class="review-card__stars">★★★★★</div>
-          <p>"Compré una notebook para mi empresa y el servicio fue excelente. Entrega rápida, producto impecable y gran atención postventa."</p>
-          <span class="review-card__date">Hace 2 semanas</span>
+          <div class="slide__title">Reparación de placas madre</div>
+          <div class="slide__desc">Soldadura BGA, reballing GPU, reemplazo de ICs y componentes SMD. Equipamiento profesional especializado.</div>
+          <a href="#" class="slide__link">Consultar →</a>
         </div>
 
-        <div class="review-card reveal">
-          <div class="review-card__head">
-            <div class="avatar avatar--b">MR</div>
-            <div>
-              <strong>María Rodríguez</strong>
-              <span>Gerente de Sistemas</span>
-            </div>
+        <div class="carousel__slide">
+          <span class="slide__num">03</span>
+          <div class="slide__ico">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <ellipse cx="24" cy="36" rx="16" ry="4"/>
+              <path d="M8 36 V16 a16 8 0 0 1 32 0 V36"/>
+              <circle cx="24" cy="28" r="4" fill="currentColor"/>
+            </svg>
           </div>
-          <div class="review-card__stars">★★★★★</div>
-          <p>"El software de gestión mejoró muchísimo nuestros procesos internos. La implementación fue rápida y el soporte siempre disponible."</p>
-          <span class="review-card__date">Hace 1 mes</span>
+          <div class="slide__title">Recuperación de datos</div>
+          <div class="slide__desc">HDD, SSD, eMMC, NAND Flash. Recuperación en sala limpia con hasta 95% de tasa de éxito.</div>
+          <a href="#" class="slide__link">Consultar →</a>
         </div>
 
-        <div class="review-card reveal">
-          <div class="review-card__head">
-            <div class="avatar avatar--c">CF</div>
-            <div>
-              <strong>Carlos Fernández</strong>
-              <span>CTO · StartupTech</span>
-            </div>
+        <div class="carousel__slide">
+          <span class="slide__num">04</span>
+          <div class="slide__ico">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <rect x="6" y="12" width="22" height="24" rx="3"/>
+              <rect x="10" y="16" width="14" height="16" rx="1"/>
+              <line x1="30" y1="20" x2="42" y2="20"/>
+              <line x1="30" y1="28" x2="42" y2="28"/>
+              <circle cx="42" cy="20" r="3" fill="currentColor"/>
+              <circle cx="42" cy="28" r="3" fill="currentColor"/>
+            </svg>
           </div>
-          <div class="review-card__stars">★★★★☆</div>
-          <p>"Buenos precios y soporte técnico muy profesional. Resolvieron un problema complejo de infraestructura en menos de 24 horas."</p>
-          <span class="review-card__date">Hace 3 semanas</span>
+          <div class="slide__title">Laptops y notebooks</div>
+          <div class="slide__desc">Pantallas, teclados, puertos, motherboards. Reparación completa para todas las marcas del mercado.</div>
+          <a href="#" class="slide__link">Consultar →</a>
         </div>
 
-        <div class="review-card reveal">
-          <div class="review-card__head">
-            <div class="avatar avatar--d">LG</div>
-            <div>
-              <strong>Lucía Gómez</strong>
-              <span>CEO · Consultoría AG</span>
-            </div>
+        <div class="carousel__slide">
+          <span class="slide__num">05</span>
+          <div class="slide__ico">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <rect x="8" y="6" width="32" height="26" rx="3"/>
+              <rect x="16" y="36" width="16" height="6" rx="2"/>
+              <line x1="10" y1="38" x2="38" y2="38"/>
+            </svg>
           </div>
-          <div class="review-card__stars">★★★★★</div>
-          <p>"Excelente experiencia de compra. Desde el asesoramiento previo hasta la entrega. Recomiendo totalmente la empresa a cualquier colega."</p>
-          <span class="review-card__date">Hace 5 días</span>
+          <div class="slide__title">Consolas y gaming</div>
+          <div class="slide__desc">PS4, PS5, Xbox, Switch. Lectoras, HDMI, joystick drift y fallas de placa base con garantía.</div>
+          <a href="#" class="slide__link">Consultar →</a>
         </div>
 
-        <div class="review-card reveal">
-          <div class="review-card__head">
-            <div class="avatar avatar--e">AR</div>
-            <div>
-              <strong>Alejandro Ríos</strong>
-              <span>IT Manager · Grupo Andino</span>
-            </div>
+        <div class="carousel__slide">
+          <span class="slide__num">06</span>
+          <div class="slide__ico">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <rect x="4" y="8" width="24" height="32" rx="3"/>
+              <rect x="30" y="16" width="14" height="20" rx="2"/>
+              <line x1="10" y1="16" x2="22" y2="16"/>
+              <line x1="10" y1="22" x2="22" y2="22"/>
+              <line x1="10" y1="28" x2="22" y2="28"/>
+            </svg>
           </div>
-          <div class="review-card__stars">★★★★★</div>
-          <p>"Migramos toda nuestra infraestructura a la nube con ellos. Cero incidentes, todo documentado y el equipo estuvo presente en cada etapa."</p>
-          <span class="review-card__date">Hace 2 meses</span>
-        </div>
-
-        <div class="review-card reveal">
-          <div class="review-card__head">
-            <div class="avatar avatar--f">VS</div>
-            <div>
-              <strong>Valentina Suárez</strong>
-              <span>Diseñadora · Freelance</span>
-            </div>
-          </div>
-          <div class="review-card__stars">★★★★★</div>
-          <p>"Encontré exactamente el software de diseño que buscaba a mejor precio. El proceso fue simple y la licencia llegó al instante."</p>
-          <span class="review-card__date">Hace 1 semana</span>
+          <div class="slide__title">Hardware industrial</div>
+          <div class="slide__desc">Placas embebidas, sensores, actuadores y PLC. Mantenimiento preventivo y correctivo especializado.</div>
+          <a href="#" class="slide__link">Consultar →</a>
         </div>
 
       </div>
     </div>
-  </section>
 
-  <!-- ========================================================
-       NOSOTROS
-  ======================================================== -->
-  <section class="nosotros" id="nosotros">
-    <div class="container">
-      <div class="nosotros__inner">
-        <div class="nosotros__text reveal">
-          <span class="section-tag">Quiénes somos</span>
-          <h2 class="section-title">Más de 10 años siendo<br>el socio tecnológico<br>de tu empresa</h2>
-          <p>NexaTech nació con una misión clara: hacer que la tecnología profesional sea accesible para todos. Somos distribuidores oficiales de las principales marcas del mercado y contamos con un equipo certificado de más de 80 profesionales especializados.</p>
-          <div class="nosotros__mv">
-            <div class="nosotros__mv-card">
-              <h4>🎯 Misión</h4>
-              <p>Conectar empresas con soluciones tecnológicas de calidad, brindando soporte experto y precios competitivos en todo momento.</p>
-            </div>
-            <div class="nosotros__mv-card">
-              <h4>🚀 Visión</h4>
-              <p>Ser el referente tecnológico número uno de Latinoamérica, impulsando la transformación digital de cada empresa que confíe en nosotros.</p>
-            </div>
-          </div>
-        </div>
-        <div class="nosotros__right reveal">
-          <div class="nosotros__cards">
-            <div class="nos-card">
-              <div class="nos-card__ico">🏆</div>
-              <div class="nos-card__num">+80</div>
-              <div class="nos-card__lbl">Profesionales certificados</div>
-            </div>
-            <div class="nos-card">
-              <div class="nos-card__ico">🌎</div>
-              <div class="nos-card__num">15</div>
-              <div class="nos-card__lbl">Países con presencia</div>
-            </div>
-            <div class="nos-card">
-              <div class="nos-card__ico">⚡</div>
-              <div class="nos-card__num">&lt;2h</div>
-              <div class="nos-card__lbl">Tiempo de respuesta</div>
-            </div>
-            <div class="nos-card">
-              <div class="nos-card__ico">🔒</div>
-              <div class="nos-card__num">ISO</div>
-              <div class="nos-card__lbl">Certificación 27001</div>
-            </div>
-          </div>
-        </div>
+    <div class="carousel__controls">
+      <button class="carousel__btn" id="carouselPrev" aria-label="Anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="carousel__dots" id="carouselDots"></div>
+      <button class="carousel__btn" id="carouselNext" aria-label="Siguiente">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════ CTA ════════════════ -->
+<section class="cta-section" id="nosotros">
+  <div class="cta-section__inner">
+    <div class="reveal">
+      <span class="section-tag">// CONTACTO</span>
+      <h2>¿Equipo dañado? Hablemos.</h2>
+      <p>Diagnóstico gratuito en 48h. Presupuesto sin compromiso. Garantía extendida de 90 días.</p>
+      <div class="cta-section__btns">
+        <a href="tel:+59899000000" class="contact-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 013.07 9.81a19.79 19.79 0 01-3.07-8.7A2 2 0 012.18 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 9.16a16 16 0 006.93 6.93l1.52-1.52a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+          +598 99 000 000
+        </a>
+        <a href="mailto:hola@rehardware.uy" class="contact-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          hola@rehardware.uy
+        </a>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ========================================================
-       CONTACTO
-  ======================================================== -->
-  <section class="contacto" id="contacto">
-    <div class="container">
-      <div class="contacto__inner">
-        <div class="contacto__info reveal">
-          <span class="section-tag">Contacto</span>
-          <h2 class="section-title">¿Hablamos?</h2>
-          <p>Nuestro equipo está listo para asesorarte. Respondemos en menos de 2 horas en horario hábil.</p>
-          <div class="contacto__datos">
-            <div class="cdat">
-              <div class="cdat__ico">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              </div>
-              <div><strong>Dirección</strong><span>Av. Tecnológica 1200, Piso 12, Montevideo</span></div>
-            </div>
-            <div class="cdat">
-              <div class="cdat__ico">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              </div>
-              <div><strong>Email</strong><span>ventas@nexatech.com</span></div>
-            </div>
-            <div class="cdat">
-              <div class="cdat__ico">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.7A2 2 0 012.18 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 9.16a16 16 0 006.93 6.93l1.52-1.52a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-              </div>
-              <div><strong>Teléfono</strong><span>+598 00 000 000</span></div>
-            </div>
-          </div>
+
+<!-- ════════════════ FOOTER ════════════════ -->
+<footer class="footer">
+  <div class="footer__grid">
+    <div class="footer__brand">
+      <a href="#inicio" class="logo" style="margin-bottom:12px; display:flex;">
+        <div class="logo__hex">
+          <svg viewBox="0 0 36 36" fill="none">
+            <polygon points="18,2 34,10 34,26 18,34 2,26 2,10" fill="none" stroke="currentColor" stroke-width="1.8"/>
+            <circle cx="18" cy="18" r="5" fill="currentColor"/>
+          </svg>
         </div>
-        <div class="contacto__form-wrap reveal">
-          <form class="contacto__form" id="contactoForm">
-            <div class="fg">
-              <label>Nombre completo</label>
-              <input type="text" placeholder="Tu nombre" required />
-            </div>
-            <div class="fg">
-              <label>Correo electrónico</label>
-              <input type="email" placeholder="tu@email.com" required />
-            </div>
-            <div class="fg">
-              <label>Empresa</label>
-              <input type="text" placeholder="Nombre de tu empresa" />
-            </div>
-            <div class="fg">
-              <label>Servicio de interés</label>
-              <select>
-                <option value="">Seleccioná un servicio</option>
-                <option>Desarrollo de Software</option>
-                <option>Soporte Técnico</option>
-                <option>Infraestructura IT</option>
-                <option>Ciberseguridad</option>
-                <option>Consultoría Tecnológica</option>
-                <option>Cloud Computing</option>
-                <option>Compra de productos</option>
-              </select>
-            </div>
-            <div class="fg">
-              <label>Mensaje</label>
-              <textarea rows="4" placeholder="¿En qué podemos ayudarte?" required></textarea>
-            </div>
-            <button type="submit" class="btn btn--primary btn--full">Enviar mensaje</button>
-            <div class="form-ok" id="formOk">✅ ¡Mensaje enviado! Te contactamos pronto.</div>
-          </form>
+        <div>
+          <span class="logo__text"><span>&lt;</span>RE:Hardware<span>&gt;</span></span>
+          <span class="logo__sub">Repair · Restore · Rebuild</span>
         </div>
+      </a>
+      <p>Reparación profesional de hardware a nivel componente. Diagnóstico electrónico, recuperación de datos y soldadura de precisión.</p>
+      <div class="footer__socials">
+        <a href="#" class="fsoc" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </a>
+        <a href="#" class="fsoc" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="#" class="fsoc" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="#" class="fsoc" aria-label="X">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
       </div>
     </div>
-  </section>
-
-  <!-- ========================================================
-       FOOTER
-  ======================================================== -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer__grid">
-
-        <div class="footer__brand">
-          <div class="footer__logo">
-            <div class="logo__mark"><svg viewBox="0 0 36 36" fill="none"><polygon points="18,2 34,10 34,26 18,34 2,26 2,10" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="18" r="4" fill="currentColor"/></svg></div>
-            <span>NexaTech</span>
-          </div>
-          <p>Tu socio tecnológico de confianza. Software, hardware y soluciones IT para empresas que quieren crecer.</p>
-          <div class="footer__socials">
-            <a href="#" aria-label="LinkedIn" class="fsoc">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-            </a>
-            <a href="#" aria-label="X/Twitter" class="fsoc">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            </a>
-            <a href="#" aria-label="Instagram" class="fsoc">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-            </a>
-            <a href="https://wa.me/59800000000" aria-label="WhatsApp" class="fsoc">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            </a>
-          </div>
-        </div>
-
-        <div class="footer__col">
-          <h5>Productos</h5>
-          <ul>
-            <li><a href="#productos">Hardware</a></li>
-            <li><a href="#productos">Software</a></li>
-            <li><a href="#productos">Accesorios</a></li>
-            <li><a href="#productos">Redes</a></li>
-            <li><a href="#productos">Seguridad</a></li>
-          </ul>
-        </div>
-
-        <div class="footer__col">
-          <h5>Servicios</h5>
-          <ul>
-            <li><a href="#servicios">Desarrollo de Software</a></li>
-            <li><a href="#servicios">Soporte Técnico</a></li>
-            <li><a href="#servicios">Infraestructura IT</a></li>
-            <li><a href="#servicios">Ciberseguridad</a></li>
-            <li><a href="#servicios">Cloud Computing</a></li>
-          </ul>
-        </div>
-
-        <div class="footer__col">
-          <h5>Empresa</h5>
-          <ul>
-            <li><a href="#nosotros">Nosotros</a></li>
-            <li><a href="#reseñas">Reseñas</a></li>
-            <li><a href="#contacto">Contacto</a></li>
-            <li><a href="#">Política de Privacidad</a></li>
-            <li><a href="#">Términos de Uso</a></li>
-          </ul>
-        </div>
-
-      </div>
-
-      <div class="footer__bottom">
-        <p>© 2026 NexaTech — Todos los derechos reservados.</p>
-        <div class="footer__bottom-badges">
-          <span>ISO 27001</span>
-          <span>PCI DSS</span>
-          <span>SSL Seguro</span>
-        </div>
-      </div>
+    <div class="footer__col">
+      <h5>Servicios</h5>
+      <ul>
+        <li><a href="#servicios">Diagnóstico electrónico</a></li>
+        <li><a href="#servicios">Reparación de placas</a></li>
+        <li><a href="#servicios">Recuperación de datos</a></li>
+        <li><a href="#servicios">Laptops y notebooks</a></li>
+        <li><a href="#servicios">Hardware industrial</a></li>
+      </ul>
     </div>
-  </footer>
+    <div class="footer__col">
+      <h5>Empresa</h5>
+      <ul>
+        <li><a href="#nosotros">Sobre nosotros</a></li>
+        <li><a href="#proceso">Cómo trabajamos</a></li>
+        <li><a href="#">Blog técnico</a></li>
+        <li><a href="#">Garantías</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h5>Legal</h5>
+      <ul>
+        <li><a href="#">Política de privacidad</a></li>
+        <li><a href="#">Términos de servicio</a></li>
+        <li><a href="#">Cookies</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <p>© 2026 RE:Hardware — Todos los derechos reservados.</p>
+    <div class="footer__bottom-logo"><span>&lt;</span>RE:Hardware<span>&gt;</span></div>
+  </div>
+</footer>
 
-  <!-- ========================================================
-       BOTONES FLOTANTES
-  ======================================================== -->
-  <a class="fab-wa"
-     href="https://wa.me/59800000000?text=Hola%2C%20estoy%20interesado%20en%20conocer%20m%C3%A1s%20sobre%20sus%20productos%20y%20servicios%20tecnol%C3%B3gicos."
-     target="_blank" aria-label="Contactar por WhatsApp">
-    <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-    </svg>
-    <span class="fab-wa__tooltip">Chateá con nosotros</span>
-  </a>
 
-  <button class="fab-top" id="fabTop" aria-label="Volver arriba">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
-  </button>
+<!-- ════════════════ FAB ════════════════ -->
+<button class="fab-top" id="fabTop" aria-label="Volver arriba">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
 
-  <script src="script.js"></script>
+
+<!-- ════════════════ AUTH MODAL ════════════════ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="auth-modal" id="authModal">
+    <button class="modal-close" id="modalClose">✕</button>
+
+    <div class="modal-logo">
+      <svg viewBox="0 0 36 36" fill="none">
+        <polygon points="18,2 34,10 34,26 18,34 2,26 2,10" fill="none" stroke="currentColor" stroke-width="1.8"/>
+        <polygon points="18,8 28,13 28,23 18,28 8,23 8,13" fill="currentColor" opacity=".15"/>
+        <circle cx="18" cy="18" r="5" fill="currentColor"/>
+        <circle cx="18" cy="18" r="2.5" fill="#0d1a10"/>
+      </svg>
+      <span class="modal-logo-text"><span>&lt;</span>RE:Hardware<span>&gt;</span></span>
+      <span class="modal-logo-sub">Repair · Restore · Rebuild</span>
+    </div>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="register">Registro</button>
+      <button class="auth-tab" data-tab="login">Iniciar sesión</button>
+    </div>
+
+    <div class="auth-form">
+
+      <!-- REGISTER -->
+      <div class="auth-field active" id="tab-register">
+        <div class="fg">
+          <label>Nombre</label>
+          <input type="text" placeholder="Tu nombre completo" autocomplete="name"/>
+        </div>
+        <div class="fg">
+          <label>Correo</label>
+          <input type="email" placeholder="tu@correo.com" autocomplete="email"/>
+        </div>
+        <div class="fg">
+          <label>Contraseña</label>
+          <input type="password" placeholder="••••••••" autocomplete="new-password"/>
+        </div>
+        <button class="btn-auth-submit">Registro</button>
+      </div>
+
+      <!-- LOGIN -->
+      <div class="auth-field" id="tab-login">
+        <div class="fg">
+          <label>Correo</label>
+          <input type="email" placeholder="tu@correo.com" autocomplete="email"/>
+        </div>
+        <div class="fg">
+          <label>Contraseña</label>
+          <input type="password" placeholder="••••••••" autocomplete="current-password"/>
+        </div>
+        <div class="auth-forgot">¿Olvidaste la contraseña?</div>
+        <button class="btn-auth-submit">Iniciar sesión</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>
