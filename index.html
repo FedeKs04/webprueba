@@ -53,7 +53,9 @@
         </svg>
       </button>
 
+      <a href="cuenta.html" class="btn-auth auth-account-link" id="authAccountLink" hidden>Mi cuenta</a>
       <button class="btn-auth" id="btnOpenAuth">Registro/Login</button>
+      <button class="btn-auth auth-logout" id="btnLogout" type="button" hidden>Cerrar sesión</button>
 
       <button class="burger" id="burger" aria-label="Menú">
         <span></span><span></span><span></span>
@@ -654,41 +656,44 @@
     <div class="auth-form">
 
       <!-- REGISTER -->
-      <div class="auth-field active" id="tab-register">
+      <form class="auth-field active" id="tab-register">
         <div class="fg">
-          <label>Nombre</label>
-          <input type="text" placeholder="Tu nombre completo" autocomplete="name"/>
+          <label for="registerName">Nombre</label>
+          <input id="registerName" name="name" type="text" placeholder="Tu nombre completo" autocomplete="name" required maxlength="80"/>
         </div>
         <div class="fg">
-          <label>Correo</label>
-          <input type="email" placeholder="tu@correo.com" autocomplete="email"/>
+          <label for="registerEmail">Correo</label>
+          <input id="registerEmail" name="email" type="email" placeholder="tu@correo.com" autocomplete="email" required/>
         </div>
         <div class="fg">
-          <label>Contraseña</label>
-          <input type="password" placeholder="••••••••" autocomplete="new-password"/>
+          <label for="registerPassword">Contraseña</label>
+          <input id="registerPassword" name="password" type="password" placeholder="Mínimo 8 caracteres" autocomplete="new-password" required minlength="8"/>
         </div>
-        <button class="btn-auth-submit">Registro</button>
-      </div>
+        <button class="btn-auth-submit" type="submit">Registro</button>
+        <p class="auth-status" id="registerStatus" role="status" aria-live="polite"></p>
+      </form>
 
       <!-- LOGIN -->
-      <div class="auth-field" id="tab-login">
+      <form class="auth-field" id="tab-login">
         <div class="fg">
-          <label>Correo</label>
-          <input type="email" placeholder="tu@correo.com" autocomplete="email"/>
+          <label for="loginEmail">Correo</label>
+          <input id="loginEmail" name="email" type="email" placeholder="tu@correo.com" autocomplete="email" required/>
         </div>
         <div class="fg">
-          <label>Contraseña</label>
-          <input type="password" placeholder="••••••••" autocomplete="current-password"/>
+          <label for="loginPassword">Contraseña</label>
+          <input id="loginPassword" name="password" type="password" placeholder="Tu contraseña" autocomplete="current-password" required/>
         </div>
-        <div class="auth-forgot">¿Olvidaste la contraseña?</div>
-        <button class="btn-auth-submit">Iniciar sesión</button>
-      </div>
+        <button class="auth-forgot" id="btnForgotPassword" type="button">¿Olvidaste la contraseña?</button>
+        <button class="btn-auth-submit" type="submit">Iniciar sesión</button>
+        <p class="auth-status" id="loginStatus" role="status" aria-live="polite"></p>
+      </form>
 
     </div>
   </div>
 </div>
 
 <script src="script.js"></script>
+<script type="module" src="auth.js"></script>
 
 </body>
 </html>

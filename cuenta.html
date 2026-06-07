@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi cuenta | RE:Hardware</title>
+  <link rel="icon" href="assets/images/logo-rehardware.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-auth-required="true">
+  <header class="header scrolled">
+    <div class="header__inner">
+      <a href="/" class="logo">
+        <div class="logo__hex">
+          <img src="assets/images/logo-rehardware.svg" alt="" />
+        </div>
+        <div>
+          <span class="logo__text"><span>&lt;</span>RE:Hardware<span>&gt;</span></span>
+          <span class="logo__sub">Repair · Restore · Rebuild</span>
+        </div>
+      </a>
+      <div class="header__actions">
+        <a class="btn-auth" href="/">Volver al inicio</a>
+        <button class="btn-auth auth-logout" id="accountLogout" type="button">Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="account-page">
+    <div class="account-page__grid"></div>
+    <section class="account-card">
+      <p class="account-loading" id="accountLoading">Verificando sesión...</p>
+      <div id="accountConfigError" hidden>
+        <span class="section-tag">// CONFIGURACIÓN PENDIENTE</span>
+        <h1>Conectá Supabase</h1>
+        <p>Completá <code>supabase-config.js</code> con la URL y la publishable key.</p>
+      </div>
+      <div id="accountContent" hidden>
+        <span class="section-tag">// ÁREA PROTEGIDA</span>
+        <h1>Mi cuenta</h1>
+        <p class="account-card__intro">Esta información solamente está disponible con una sesión activa.</p>
+        <dl class="account-data">
+          <div><dt>Nombre</dt><dd id="accountName">-</dd></div>
+          <div><dt>Correo</dt><dd id="accountEmail">-</dd></div>
+          <div><dt>Miembro desde</dt><dd id="accountCreated">-</dd></div>
+          <div><dt>Estado</dt><dd><span class="account-status-dot"></span> Sesión activa</dd></div>
+        </dl>
+        <form class="password-update" id="passwordUpdateForm" hidden>
+          <div class="fg">
+            <label for="newPassword">Nueva contraseña</label>
+            <input id="newPassword" name="password" type="password" minlength="8" autocomplete="new-password" placeholder="Mínimo 8 caracteres" required />
+          </div>
+          <button class="btn-auth-submit" type="submit">Actualizar contraseña</button>
+          <p class="auth-status" id="passwordUpdateStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.documentElement.setAttribute(
+      'data-theme',
+      localStorage.getItem('rehw-theme') || 'dark'
+    );
+  </script>
+  <script type="module" src="auth.js"></script>
+</body>
+</html>
