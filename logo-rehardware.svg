@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 344" role="img" aria-labelledby="title">
+  <title id="title">RE:Hardware</title>
+  <g fill="none" stroke="#087d65" stroke-width="3">
+    <path d="M194 7v36M194 295v37M19 106h66M303 106h66M19 232h66M303 232h66"/>
+    <path d="M104 29v67M104 242v67M284 29v67M284 242v67"/>
+    <path d="M48 169h37M303 169h37"/>
+    <path d="M194 43 303 106v126l-109 63-109-63V106Z"/>
+    <path d="m194 63 91 53v106l-91 53-91-53V116Z"/>
+  </g>
+  <g fill="#087d65">
+    <path d="M153 97c42-17 91-5 121 31 13 16 21 35 23 55l-18 2c-2-17-8-33-19-45-25-30-65-40-100-26Z"/>
+    <path d="m278 164 2 53 35-40-18 6Z"/>
+    <path d="M235 244c-42 17-91 5-121-31-13-16-21-35-23-55l18-2c2 17 8 33 19 45 25 30 65 40 100 26Z"/>
+    <path d="m110 177-2-53-35 40 18-6Z"/>
+  </g>
+</svg>
