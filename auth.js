@@ -1,23 +1,4 @@
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-import {
-  SUPABASE_PUBLISHABLE_KEY,
-  SUPABASE_URL
-} from './supabase-config.js';
-
-const isConfigured =
-  SUPABASE_URL.startsWith('https://') &&
-  SUPABASE_URL.includes('.supabase.co') &&
-  !SUPABASE_PUBLISHABLE_KEY.startsWith('YOUR_');
-
-const supabase = isConfigured
-  ? createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true
-      }
-    })
-  : null;
+import { isSupabaseConfigured, supabase } from './supabase-client.js';
 
 const registerForm = document.getElementById('tab-register');
 const loginForm = document.getElementById('tab-login');
@@ -242,7 +223,7 @@ async function handlePasswordUpdate(event) {
 }
 
 async function initializeAuth() {
-  if (!supabase) {
+  if (!isSupabaseConfigured) {
     document.documentElement.dataset.authConfigured = 'false';
     if (protectedPage) {
       document.getElementById('accountLoading')?.remove();

@@ -48,6 +48,60 @@
           <div><dt>Miembro desde</dt><dd id="accountCreated">-</dd></div>
           <div><dt>Estado</dt><dd><span class="account-status-dot"></span> Sesión activa</dd></div>
         </dl>
+        <form class="account-form" id="profileForm">
+          <h2>Datos de contacto</h2>
+          <div class="account-form__grid">
+            <div class="fg">
+              <label for="profileFullName">Nombre completo</label>
+              <input id="profileFullName" name="full_name" type="text" maxlength="80" required />
+            </div>
+            <div class="fg">
+              <label for="profilePhone">Teléfono</label>
+              <input id="profilePhone" name="phone" type="tel" maxlength="30" placeholder="+598 96 005 315" />
+            </div>
+          </div>
+          <button class="btn-auth-submit" type="submit">Guardar perfil</button>
+          <p class="auth-status" id="profileStatus" role="status" aria-live="polite"></p>
+        </form>
+
+        <section class="repair-panel">
+          <div class="repair-panel__header">
+            <div>
+              <span class="section-tag">// SOLICITUDES</span>
+              <h2>Mis reparaciones</h2>
+            </div>
+          </div>
+          <form class="account-form" id="repairRequestForm">
+            <div class="account-form__grid">
+              <div class="fg">
+                <label for="equipmentType">Tipo de equipo</label>
+                <select id="equipmentType" name="equipment_type" required>
+                  <option value="">Seleccioná una opción</option>
+                  <option>Notebook</option>
+                  <option>PC de escritorio</option>
+                  <option>Consola</option>
+                  <option>Disco o almacenamiento</option>
+                  <option>Hardware industrial</option>
+                  <option>Otro</option>
+                </select>
+              </div>
+              <div class="fg">
+                <label for="brandModel">Marca y modelo</label>
+                <input id="brandModel" name="brand_model" type="text" maxlength="120" required />
+              </div>
+            </div>
+            <div class="fg">
+              <label for="problemDescription">Descripción del problema</label>
+              <textarea id="problemDescription" name="problem_description" rows="4" maxlength="800" required></textarea>
+            </div>
+            <button class="btn-auth-submit" type="submit">Crear solicitud</button>
+            <p class="auth-status" id="repairRequestStatus" role="status" aria-live="polite"></p>
+          </form>
+          <div class="repair-list" id="repairList">
+            <p class="account-loading">Cargando solicitudes...</p>
+          </div>
+        </section>
+
         <form class="password-update" id="passwordUpdateForm" hidden>
           <div class="fg">
             <label for="newPassword">Nueva contraseña</label>
@@ -67,5 +121,6 @@
     );
   </script>
   <script type="module" src="auth.js"></script>
+  <script type="module" src="account.js"></script>
 </body>
 </html>

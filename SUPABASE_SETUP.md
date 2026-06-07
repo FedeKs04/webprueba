@@ -48,3 +48,30 @@ clave `service_role` desde el frontend.
 Supabase no distingue públicamente entre un correo inexistente y una contraseña
 incorrecta durante el login. La interfaz usa un mensaje genérico para evitar
 revelar qué correos están registrados.
+
+## Crear las tablas
+
+La migración está versionada en:
+
+`supabase/migrations/20260607230000_initial_schema.sql`
+
+Si la integración de GitHub está habilitada en `Project Settings > Integrations`:
+
+1. Configurar `Working directory` como `.`.
+2. Activar `Deploy to production`.
+3. Al hacer push a `main`, Supabase aplicará las migraciones nuevas.
+
+Alternativamente, con Supabase CLI:
+
+```bash
+supabase login
+supabase link --project-ref ektceqimrdcabmjjbolv
+supabase db push
+```
+
+La migración crea:
+
+- `profiles`: perfil asociado automáticamente a `auth.users`.
+- `repair_requests`: solicitudes y seguimiento de reparaciones.
+- `reviews`: reseñas públicas de usuarios registrados.
+- Políticas RLS para separar los datos de cada cliente.

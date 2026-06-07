@@ -209,6 +209,7 @@ new IntersectionObserver(entries => {
 
 /* REVIEWS */
 (function() {
+  if (window.REVIEWS_USE_SUPABASE) return;
   const form = document.getElementById('reviewForm');
   const list = document.getElementById('reviewsList');
   const ratingInput = document.getElementById('ratingInput');
