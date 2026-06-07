@@ -33,6 +33,7 @@
     <nav class="nav" id="nav">
       <a href="#servicios"  class="nav__item">Servicio</a>
       <a href="#proceso"    class="nav__item">Proceso</a>
+      <a href="#resenas"    class="nav__item">Rese&ntilde;as</a>
       <a href="#nosotros"   class="nav__item">Sobre Nosotros</a>
     </nav>
 
@@ -433,7 +434,115 @@
 </section>
 
 
-<!-- ════════════════ CTA ════════════════ -->
+<!-- REVIEWS -->
+<section class="reviews-section" id="resenas">
+  <div class="reviews-section__grid"></div>
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">// OPINIONES DE CLIENTES</span>
+      <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+      <p class="section-desc">Cada equipo cuenta una historia. Estas son algunas experiencias de quienes confiaron en nuestro trabajo.</p>
+    </div>
+
+    <div class="reviews-summary reveal">
+      <div class="reviews-score">
+        <strong id="reviewsAverage">4.7</strong>
+        <div>
+          <div class="stars stars--large" id="reviewsAverageStars" aria-label="Puntuaci&oacute;n promedio: 4.7 de 5">★★★★★</div>
+          <span id="reviewsTotal">Basado en 3 rese&ntilde;as</span>
+        </div>
+      </div>
+      <div class="rating-bars" id="ratingBars" aria-label="Distribuci&oacute;n de puntuaciones"></div>
+    </div>
+
+    <div class="reviews-layout">
+      <div class="reviews-list" id="reviewsList">
+        <article class="review-card reveal" data-rating="5">
+          <div class="review-card__top">
+            <div class="review-author">
+              <span class="review-author__avatar">ML</span>
+              <div><h3>Mart&iacute;n L.</h3><span>Reparaci&oacute;n de notebook</span></div>
+            </div>
+            <span class="review-card__verified">RESE&Ntilde;A DE EJEMPLO</span>
+          </div>
+          <div class="stars" aria-label="5 de 5 estrellas">★★★★★</div>
+          <p>&ldquo;Mi notebook no encend&iacute;a y en dos d&iacute;as ya ten&iacute;a el diagn&oacute;stico. Me explicaron claramente la falla y qued&oacute; funcionando perfecto.&rdquo;</p>
+          <time datetime="2026-05-18">18 MAY 2026</time>
+        </article>
+
+        <article class="review-card reveal" data-rating="5">
+          <div class="review-card__top">
+            <div class="review-author">
+              <span class="review-author__avatar">SV</span>
+              <div><h3>Sof&iacute;a V.</h3><span>Recuperaci&oacute;n de datos</span></div>
+            </div>
+            <span class="review-card__verified">RESE&Ntilde;A DE EJEMPLO</span>
+          </div>
+          <div class="stars" aria-label="5 de 5 estrellas">★★★★★</div>
+          <p>&ldquo;Recuperaron archivos de trabajo que cre&iacute;a perdidos. Excelente comunicaci&oacute;n durante todo el proceso y presupuesto muy transparente.&rdquo;</p>
+          <time datetime="2026-04-29">29 ABR 2026</time>
+        </article>
+
+        <article class="review-card reveal" data-rating="4">
+          <div class="review-card__top">
+            <div class="review-author">
+              <span class="review-author__avatar">DR</span>
+              <div><h3>Diego R.</h3><span>Consola y gaming</span></div>
+            </div>
+            <span class="review-card__verified">RESE&Ntilde;A DE EJEMPLO</span>
+          </div>
+          <div class="stars" aria-label="4 de 5 estrellas">★★★★<span>★</span></div>
+          <p>&ldquo;Solucionaron el puerto HDMI de mi consola y la probaron delante m&iacute;o al retirarla. Muy buen servicio y garant&iacute;a por escrito.&rdquo;</p>
+          <time datetime="2026-03-12">12 MAR 2026</time>
+        </article>
+      </div>
+
+      <aside class="review-form-wrap reveal">
+        <span class="review-form__eyebrow">TU EXPERIENCIA</span>
+        <h3>Dejanos tu rese&ntilde;a</h3>
+        <p>Tu opini&oacute;n nos ayuda a seguir mejorando.</p>
+        <form class="review-form" id="reviewForm">
+          <div class="fg">
+            <label for="reviewName">Nombre</label>
+            <input id="reviewName" name="name" type="text" maxlength="40" placeholder="Tu nombre" required />
+          </div>
+          <div class="fg">
+            <label for="reviewService">Servicio realizado</label>
+            <select id="reviewService" name="service" required>
+              <option value="">Seleccion&aacute; un servicio</option>
+              <option>Diagn&oacute;stico electr&oacute;nico</option>
+              <option>Reparaci&oacute;n de placas</option>
+              <option>Recuperaci&oacute;n de datos</option>
+              <option>Laptops y notebooks</option>
+              <option>Consolas y gaming</option>
+              <option>Hardware industrial</option>
+            </select>
+          </div>
+          <fieldset class="rating-input">
+            <legend>Tu puntuaci&oacute;n</legend>
+            <div class="rating-input__stars" id="ratingInput" tabindex="-1">
+              <button type="button" data-rating="1" aria-label="1 estrella">★</button>
+              <button type="button" data-rating="2" aria-label="2 estrellas">★</button>
+              <button type="button" data-rating="3" aria-label="3 estrellas">★</button>
+              <button type="button" data-rating="4" aria-label="4 estrellas">★</button>
+              <button type="button" data-rating="5" aria-label="5 estrellas">★</button>
+            </div>
+            <input type="hidden" id="reviewRating" name="rating" />
+          </fieldset>
+          <div class="fg">
+            <label for="reviewText">Rese&ntilde;a</label>
+            <textarea id="reviewText" name="review" maxlength="320" rows="4" placeholder="Contanos c&oacute;mo fue tu experiencia..." required></textarea>
+          </div>
+          <button class="btn-primary review-form__submit" type="submit">Publicar rese&ntilde;a</button>
+          <p class="review-form__status" id="reviewStatus" role="status" aria-live="polite"></p>
+        </form>
+      </aside>
+    </div>
+  </div>
+</section>
+
+
+<!-- CTA -->
 <section class="cta-section" id="nosotros">
   <div class="cta-section__inner">
     <div class="reveal">

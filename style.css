@@ -506,6 +506,113 @@ body::before {
   background: var(--accent); width:36px;
 }
 
+/* REVIEWS */
+.reviews-section {
+  padding:90px 0; background:var(--bg);
+  position:relative; overflow:hidden;
+}
+.reviews-section__grid {
+  position:absolute; inset:0; pointer-events:none; opacity:.45;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size:48px 48px;
+  mask-image:linear-gradient(to bottom, transparent, black 25%, black 75%, transparent);
+}
+.reviews-section .container { position:relative; }
+.reviews-summary {
+  display:grid; grid-template-columns:1fr 1fr; gap:52px; align-items:center;
+  padding:28px 32px; margin-bottom:28px;
+  background:var(--surface); border:1px solid var(--border); border-radius:10px;
+}
+.reviews-score { display:flex; align-items:center; gap:20px; }
+.reviews-score strong {
+  font-family:'Share Tech Mono', monospace; font-size:4rem;
+  line-height:1; color:var(--accent);
+}
+.reviews-score span {
+  display:block; margin-top:4px; color:var(--text-3);
+  font-family:'JetBrains Mono', monospace; font-size:.68rem;
+}
+.stars { color:var(--accent); font-size:1rem; letter-spacing:.12em; line-height:1; }
+.stars span { color:var(--text-3); }
+.stars--large { font-size:1.35rem; }
+.rating-bars { display:flex; flex-direction:column; gap:5px; }
+.rating-bar {
+  display:grid; grid-template-columns:30px 1fr 24px; gap:10px; align-items:center;
+  font-family:'JetBrains Mono', monospace; font-size:.64rem; color:var(--text-3);
+}
+.rating-bar__track { height:5px; background:var(--surface-3); border-radius:3px; overflow:hidden; }
+.rating-bar__fill { display:block; height:100%; background:var(--accent); border-radius:3px; }
+.reviews-layout {
+  display:grid; grid-template-columns:minmax(0, 1.65fr) minmax(300px, .8fr);
+  gap:28px; align-items:start;
+}
+.reviews-list { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.review-card {
+  min-height:245px; padding:24px; background:var(--card-bg);
+  border:1px solid var(--border); border-radius:10px;
+  display:flex; flex-direction:column; transition:var(--t);
+}
+.review-card:first-child { grid-column:1 / -1; min-height:220px; }
+.review-card:hover { border-color:var(--border-2); transform:translateY(-3px); box-shadow:var(--shadow-g); }
+.review-card__top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:18px; }
+.review-author { display:flex; align-items:center; gap:12px; }
+.review-author__avatar {
+  width:42px; height:42px; border-radius:7px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--accent-dim); border:1px solid var(--border-2);
+  color:var(--accent); font-family:'Share Tech Mono', monospace; font-size:.82rem;
+}
+.review-author h3 { font-size:1rem; line-height:1.2; color:var(--text); }
+.review-author div span { color:var(--text-3); font-size:.78rem; }
+.review-card__verified {
+  color:var(--accent); font-family:'JetBrains Mono', monospace;
+  font-size:.58rem; white-space:nowrap;
+}
+.review-card p { color:var(--text-2); font-size:.9rem; line-height:1.65; margin:16px 0; flex:1; }
+.review-card time {
+  color:var(--text-3); font-family:'JetBrains Mono', monospace;
+  font-size:.6rem; letter-spacing:.08em;
+}
+.review-form-wrap {
+  position:sticky; top:88px; padding:28px;
+  background:var(--surface); border:1px solid var(--border-2);
+  border-radius:10px; box-shadow:var(--shadow);
+}
+.review-form__eyebrow {
+  font-family:'JetBrains Mono', monospace; font-size:.62rem;
+  letter-spacing:.14em; color:var(--accent);
+}
+.review-form-wrap h3 { font-size:1.55rem; margin:4px 0 2px; }
+.review-form-wrap > p { color:var(--text-3); font-size:.85rem; margin-bottom:20px; }
+.review-form { display:flex; flex-direction:column; gap:14px; }
+.review-form select,
+.review-form textarea {
+  width:100%; background:var(--input-bg); border:1px solid var(--border);
+  border-radius:6px; padding:11px 14px; color:var(--text); outline:none;
+  font-family:'Rajdhani', sans-serif; font-size:.95rem; transition:var(--t);
+}
+.review-form select option { background:var(--surface); color:var(--text); }
+.review-form textarea { resize:vertical; min-height:96px; }
+.review-form select:focus,
+.review-form textarea:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-dim); }
+.review-form textarea::placeholder { color:var(--text-3); }
+.rating-input { border:0; }
+.rating-input legend {
+  font-family:'JetBrains Mono', monospace; font-size:.7rem;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--text-2); margin-bottom:4px;
+}
+.rating-input__stars { display:flex; gap:5px; }
+.rating-input__stars button {
+  border:0; padding:0; background:transparent; cursor:pointer;
+  color:var(--text-3); font-size:1.65rem; line-height:1; transition:var(--t);
+}
+.rating-input__stars button.active,
+.rating-input__stars button:hover { color:var(--accent); transform:scale(1.08); }
+.review-form__submit { width:100%; justify-content:center; margin-top:2px; }
+.review-form__status { min-height:18px; margin:0; color:var(--accent); font-size:.78rem; text-align:center; }
+
 /* ════════════════════════════════════════════════════════════
    CTA SECTION
 ════════════════════════════════════════════════════════════ */
@@ -717,8 +824,17 @@ body::before {
   .serv-cards { grid-template-columns:1fr 1fr; }
   .footer__grid { grid-template-columns:1fr 1fr; }
   .carousel__slide { min-width:calc(50% - 10px); }
+  .reviews-layout { grid-template-columns:1fr; }
+  .review-form-wrap { position:static; }
 }
 @media (max-width:600px) {
+  .header__inner { padding:0 14px; }
+  .header__actions { gap:6px; }
+  .logo { gap:7px; }
+  .logo__hex { width:32px; height:32px; }
+  .logo__text { font-size:.82rem; }
+  .logo__sub { display:none; }
+  .btn-auth { padding:7px 9px; font-size:.62rem; }
   .serv-cards { grid-template-columns:1fr; }
   .footer__grid { grid-template-columns:1fr; }
   .stats__grid { grid-template-columns:1fr 1fr; }
@@ -726,4 +842,11 @@ body::before {
   .hero__btns { flex-direction:column; }
   .cta-section__btns { flex-direction:column; align-items:center; }
   .auth-modal { margin:16px; max-width:calc(100vw - 32px); }
+  .reviews-section { padding:70px 0; }
+  .reviews-summary { grid-template-columns:1fr; gap:24px; padding:24px; }
+  .reviews-score strong { font-size:3.25rem; }
+  .reviews-list { grid-template-columns:1fr; }
+  .review-card:first-child { grid-column:auto; }
+  .review-card__top { flex-direction:column; }
+  .review-form-wrap { padding:24px 20px; }
 }

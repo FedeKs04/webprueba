@@ -206,3 +206,145 @@ new IntersectionObserver(entries => {
 
   init();
 })();
+
+/* REVIEWS */
+(function() {
+  const form = document.getElementById('reviewForm');
+  const list = document.getElementById('reviewsList');
+  const ratingInput = document.getElementById('ratingInput');
+  const ratingField = document.getElementById('reviewRating');
+  const status = document.getElementById('reviewStatus');
+  const storageKey = 'rehw-reviews';
+  if (!form || !list || !ratingInput) return;
+
+  const ratingButtons = Array.from(ratingInput.querySelectorAll('button'));
+
+  function paintRating(value) {
+    ratingButtons.forEach(button => {
+      button.classList.toggle('active', Number(button.dataset.rating) <= value);
+    });
+  }
+
+  ratingButtons.forEach(button => {
+    button.addEventListener('mouseenter', () => paintRating(Number(button.dataset.rating)));
+    button.addEventListener('click', () => {
+      ratingField.value = button.dataset.rating;
+      paintRating(Number(ratingField.value));
+    });
+  });
+  ratingInput.addEventListener('mouseleave', () => paintRating(Number(ratingField.value || 0)));
+
+  function initials(name) {
+    return name.trim().split(/\s+/).slice(0, 2).map(part => part[0]).join('').toUpperCase();
+  }
+
+  function formatDate(date) {
+    return new Intl.DateTimeFormat('es-UY', {
+      day: '2-digit', month: 'short', year: 'numeric'
+    }).format(date).replace('.', '').toUpperCase();
+  }
+
+  function createReviewCard(review, saved) {
+    const card = document.createElement('article');
+    card.className = 'review-card visible';
+    card.dataset.rating = review.rating;
+
+    const top = document.createElement('div');
+    top.className = 'review-card__top';
+    const author = document.createElement('div');
+    author.className = 'review-author';
+    const avatar = document.createElement('span');
+    avatar.className = 'review-author__avatar';
+    avatar.textContent = initials(review.name);
+    const authorInfo = document.createElement('div');
+    const authorName = document.createElement('h3');
+    authorName.textContent = review.name;
+    const service = document.createElement('span');
+    service.textContent = review.service;
+    authorInfo.append(authorName, service);
+    author.append(avatar, authorInfo);
+
+    const badge = document.createElement('span');
+    badge.className = 'review-card__verified';
+    badge.textContent = saved ? 'GUARDADA EN ESTE EQUIPO' : 'RESE\u00d1A DE EJEMPLO';
+    top.append(author, badge);
+
+    const stars = document.createElement('div');
+    stars.className = 'stars';
+    stars.setAttribute('aria-label', `${review.rating} de 5 estrellas`);
+    stars.textContent = '\u2605'.repeat(review.rating);
+    if (review.rating < 5) {
+      const empty = document.createElement('span');
+      empty.textContent = '\u2605'.repeat(5 - review.rating);
+      stars.appendChild(empty);
+    }
+
+    const text = document.createElement('p');
+    text.textContent = `\u201c${review.text}\u201d`;
+    const time = document.createElement('time');
+    time.dateTime = review.date;
+    time.textContent = formatDate(new Date(review.date));
+    card.append(top, stars, text, time);
+    return card;
+  }
+
+  function storedReviews() {
+    try {
+      const reviews = JSON.parse(localStorage.getItem(storageKey) || '[]');
+      return Array.isArray(reviews) ? reviews : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function updateSummary() {
+    const ratings = Array.from(list.querySelectorAll('.review-card')).map(card => Number(card.dataset.rating));
+    const average = ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+    document.getElementById('reviewsAverage').textContent = average.toFixed(1);
+    document.getElementById('reviewsTotal').textContent =
+      `Basado en ${ratings.length} ${ratings.length === 1 ? 'rese\u00f1a' : 'rese\u00f1as'}`;
+    document.getElementById('reviewsAverageStars').setAttribute(
+      'aria-label', `Puntuaci\u00f3n promedio: ${average.toFixed(1)} de 5`
+    );
+
+    const bars = document.getElementById('ratingBars');
+    bars.innerHTML = '';
+    for (let score = 5; score >= 1; score--) {
+      const count = ratings.filter(rating => rating === score).length;
+      const percentage = ratings.length ? (count / ratings.length) * 100 : 0;
+      const row = document.createElement('div');
+      row.className = 'rating-bar';
+      row.innerHTML = `<span>${score} \u2605</span><span class="rating-bar__track"><span class="rating-bar__fill" style="width:${percentage}%"></span></span><span>${count}</span>`;
+      bars.appendChild(row);
+    }
+  }
+
+  storedReviews().reverse().forEach(review => list.prepend(createReviewCard(review, true)));
+  updateSummary();
+
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    if (!ratingField.value) {
+      status.textContent = 'Seleccion\u00e1 una puntuaci\u00f3n para continuar.';
+      ratingInput.focus();
+      return;
+    }
+
+    const review = {
+      name: form.elements.name.value.trim(),
+      service: form.elements.service.value,
+      rating: Number(ratingField.value),
+      text: form.elements.review.value.trim(),
+      date: new Date().toISOString()
+    };
+    const reviews = storedReviews();
+    reviews.push(review);
+    localStorage.setItem(storageKey, JSON.stringify(reviews));
+    list.prepend(createReviewCard(review, true));
+    updateSummary();
+    form.reset();
+    ratingField.value = '';
+    paintRating(0);
+    status.textContent = '\u00a1Gracias! Tu rese\u00f1a fue publicada.';
+  });
+})();
