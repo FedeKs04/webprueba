@@ -3,77 +3,684 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechSolutions</title>
-    <link rel="stylesheet" href="estilo.css">
+    <title>NexaTech — Software & Hardware Profesional</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <nav>
-            <h2>TechSolutions</h2>
-            <ul>
-                <li><a href="#servicios">Servicios</a></li>
-                <li><a href="#nosotros">Nosotros</a></li>
-                <li><a href="#contacto">Contacto</a></li>
+    <!-- ===== HEADER ===== -->
+    <header class="header" id="header">
+        <nav class="nav">
+            <div class="nav__logo">
+                <span class="nav__logo-icon">⬡</span>
+                <span class="nav__logo-text">NexaTech</span>
+            </div>
+
+            <ul class="nav__links" id="navLinks">
+                <li><a href="#inicio" class="nav__link">Inicio</a></li>
+                <li><a href="#productos" class="nav__link">Productos</a></li>
+                <li><a href="#servicios" class="nav__link">Servicios</a></li>
+                <li><a href="#nosotros" class="nav__link">Nosotros</a></li>
+                <li><a href="#reseñas" class="nav__link">Reseñas</a></li>
+                <li><a href="#contacto" class="nav__link">Contacto</a></li>
             </ul>
+
+            <div class="nav__actions">
+                <a href="#contacto" class="btn btn--outline">Solicitar Cotización</a>
+                <button class="nav__toggle" id="navToggle" aria-label="Abrir menú">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
         </nav>
     </header>
 
-    <section class="hero">
-        <div class="contenido">
-            <h1>Impulsamos tu negocio con tecnología</h1>
-            <p>Desarrollo web, soporte técnico y soluciones informáticas para empresas.</p>
-            <button id="btnContacto">Solicitar Presupuesto</button>
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="inicio">
+        <div class="hero__bg">
+            <div class="hero__orb hero__orb--1"></div>
+            <div class="hero__orb hero__orb--2"></div>
+            <div class="hero__grid"></div>
+        </div>
+        <div class="hero__content">
+            <span class="hero__badge">🚀 Tecnología de vanguardia</span>
+            <h1 class="hero__title">
+                Soluciones Tech<br>
+                <span class="hero__title--accent">para el futuro</span><br>
+                de tu empresa
+            </h1>
+            <p class="hero__desc">
+                Distribuimos software y hardware profesional para empresas y particulares.
+                Calidad garantizada, soporte especializado y los mejores precios del mercado.
+            </p>
+            <div class="hero__ctas">
+                <a href="#productos" class="btn btn--primary">Ver Catálogo</a>
+                <a href="#contacto" class="btn btn--ghost">Contactar</a>
+            </div>
+            <div class="hero__stats">
+                <div class="hero__stat">
+                    <strong>+2.400</strong>
+                    <span>Clientes activos</span>
+                </div>
+                <div class="hero__stat-divider"></div>
+                <div class="hero__stat">
+                    <strong>+850</strong>
+                    <span>Productos</span>
+                </div>
+                <div class="hero__stat-divider"></div>
+                <div class="hero__stat">
+                    <strong>12 años</strong>
+                    <span>De experiencia</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero__visual">
+            <div class="hero__device">
+                <div class="hero__screen">
+                    <div class="hero__screen-bar">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <div class="hero__screen-content">
+                        <div class="hero__screen-line hero__screen-line--green"></div>
+                        <div class="hero__screen-line"></div>
+                        <div class="hero__screen-line hero__screen-line--short"></div>
+                        <div class="hero__screen-block"></div>
+                        <div class="hero__screen-line hero__screen-line--med"></div>
+                        <div class="hero__screen-line hero__screen-line--short"></div>
+                        <div class="hero__screen-chart">
+                            <div class="bar" style="height:40%"></div>
+                            <div class="bar" style="height:65%"></div>
+                            <div class="bar" style="height:50%"></div>
+                            <div class="bar" style="height:80%"></div>
+                            <div class="bar" style="height:55%"></div>
+                            <div class="bar" style="height:90%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero__chip hero__chip--1">AI</div>
+                <div class="hero__chip hero__chip--2">SSL</div>
+                <div class="hero__chip hero__chip--3">4K</div>
+            </div>
         </div>
     </section>
 
-    <section id="servicios" class="servicios">
-        <h2>Nuestros Servicios</h2>
-
-        <div class="cards">
-
-            <div class="card">
-                <h3>Desarrollo Web</h3>
-                <p>Sitios modernos y aplicaciones a medida.</p>
+    <!-- ===== PRODUCTOS ===== -->
+    <section class="productos" id="productos">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Catálogo</span>
+                <h2 class="section-title">Nuestros Productos</h2>
+                <p class="section-desc">Explora nuestra selección de software y hardware de las mejores marcas del mundo.</p>
             </div>
 
-            <div class="card">
-                <h3>Soporte Técnico</h3>
-                <p>Mantenimiento y asistencia especializada.</p>
+            <!-- Búsqueda y Filtros -->
+            <div class="productos__controls reveal">
+                <div class="search-bar">
+                    <svg class="search-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                    </svg>
+                    <input type="text" id="searchInput" placeholder="Buscar productos..." class="search-bar__input">
+                </div>
+                <div class="filtros" id="filtros">
+                    <button class="filtro-btn filtro-btn--active" data-filtro="todos">Todos</button>
+                    <button class="filtro-btn" data-filtro="software">Software</button>
+                    <button class="filtro-btn" data-filtro="hardware">Hardware</button>
+                    <button class="filtro-btn" data-filtro="accesorios">Accesorios</button>
+                    <button class="filtro-btn" data-filtro="redes">Redes</button>
+                    <button class="filtro-btn" data-filtro="seguridad">Seguridad</button>
+                </div>
             </div>
 
-            <div class="card">
-                <h3>Ciberseguridad</h3>
-                <p>Protección y monitoreo de sistemas.</p>
+            <!-- Grid de productos -->
+            <div class="productos__grid" id="productosGrid">
+
+                <div class="producto-card reveal" data-categoria="software">
+                    <div class="producto-card__badge">Software</div>
+                    <div class="producto-card__img producto-card__img--blue">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <rect x="8" y="12" width="48" height="36" rx="4" fill="rgba(255,255,255,0.15)"/>
+                            <rect x="14" y="18" width="20" height="3" rx="1.5" fill="rgba(255,255,255,0.6)"/>
+                            <rect x="14" y="24" width="36" height="2" rx="1" fill="rgba(255,255,255,0.4)"/>
+                            <rect x="14" y="29" width="30" height="2" rx="1" fill="rgba(255,255,255,0.3)"/>
+                            <rect x="14" y="34" width="24" height="2" rx="1" fill="rgba(255,255,255,0.3)"/>
+                            <rect x="22" y="48" width="20" height="4" rx="2" fill="rgba(255,255,255,0.2)"/>
+                        </svg>
+                    </div>
+                    <div class="producto-card__body">
+                        <span class="producto-card__cat">Suite Ofimática</span>
+                        <h3 class="producto-card__name">OfficeMax Pro 2025</h3>
+                        <div class="producto-card__stars" data-rating="4.5">
+                            <span class="stars-display"></span>
+                            <span class="stars-count">(128)</span>
+                        </div>
+                        <p class="producto-card__desc">Suite completa con procesador de texto, hojas de cálculo y presentaciones. Licencia anual.</p>
+                        <div class="producto-card__footer">
+                            <span class="producto-card__price">$89<small>/año</small></span>
+                            <button class="btn btn--sm">Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="producto-card reveal" data-categoria="hardware">
+                    <div class="producto-card__badge producto-card__badge--green">Hardware</div>
+                    <div class="producto-card__img producto-card__img--green">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <rect x="8" y="8" width="48" height="36" rx="3" fill="rgba(255,255,255,0.15)"/>
+                            <rect x="14" y="14" width="36" height="24" rx="2" fill="rgba(255,255,255,0.1)"/>
+                            <circle cx="32" cy="26" r="6" fill="rgba(255,255,255,0.25)"/>
+                            <rect x="20" y="44" width="24" height="4" rx="2" fill="rgba(255,255,255,0.15)"/>
+                            <rect x="10" y="48" width="44" height="8" rx="2" fill="rgba(255,255,255,0.1)"/>
+                        </svg>
+                    </div>
+                    <div class="producto-card__body">
+                        <span class="producto-card__cat">Monitores</span>
+                        <h3 class="producto-card__name">UltraView 27" 4K</h3>
+                        <div class="producto-card__stars" data-rating="5">
+                            <span class="stars-display"></span>
+                            <span class="stars-count">(74)</span>
+                        </div>
+                        <p class="producto-card__desc">Monitor profesional 4K UHD con panel IPS, 99% DCI-P3 y soporte ergonómico ajustable.</p>
+                        <div class="producto-card__footer">
+                            <span class="producto-card__price">$649</span>
+                            <button class="btn btn--sm">Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="producto-card reveal" data-categoria="seguridad">
+                    <div class="producto-card__badge producto-card__badge--red">Seguridad</div>
+                    <div class="producto-card__img producto-card__img--dark">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <path d="M32 8L14 16v14c0 10.5 7.7 20.3 18 23 10.3-2.7 18-12.5 18-23V16L32 8z" fill="rgba(255,255,255,0.15)"/>
+                            <path d="M26 32l4 4 8-8" stroke="rgba(255,255,255,0.7)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="producto-card__body">
+                        <span class="producto-card__cat">Antivirus</span>
+                        <h3 class="producto-card__name">ShieldMax Enterprise</h3>
+                        <div class="producto-card__stars" data-rating="4">
+                            <span class="stars-display"></span>
+                            <span class="stars-count">(203)</span>
+                        </div>
+                        <p class="producto-card__desc">Protección total contra malware, ransomware y amenazas web. Hasta 10 dispositivos.</p>
+                        <div class="producto-card__footer">
+                            <span class="producto-card__price">$129<small>/año</small></span>
+                            <button class="btn btn--sm">Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="producto-card reveal" data-categoria="accesorios">
+                    <div class="producto-card__badge producto-card__badge--amber">Accesorios</div>
+                    <div class="producto-card__img producto-card__img--amber">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <ellipse cx="32" cy="38" rx="20" ry="10" fill="rgba(255,255,255,0.1)"/>
+                            <rect x="14" y="20" width="36" height="22" rx="4" fill="rgba(255,255,255,0.15)"/>
+                            <rect x="20" y="26" width="24" height="3" rx="1.5" fill="rgba(255,255,255,0.5)"/>
+                            <rect x="20" y="32" width="16" height="3" rx="1.5" fill="rgba(255,255,255,0.3)"/>
+                            <rect x="26" y="10" width="12" height="12" rx="2" fill="rgba(255,255,255,0.2)"/>
+                        </svg>
+                    </div>
+                    <div class="producto-card__body">
+                        <span class="producto-card__cat">Teclados</span>
+                        <h3 class="producto-card__name">MechPro RGB TKL</h3>
+                        <div class="producto-card__stars" data-rating="4.5">
+                            <span class="stars-display"></span>
+                            <span class="stars-count">(312)</span>
+                        </div>
+                        <p class="producto-card__desc">Teclado mecánico tenkeyless con switches Cherry MX, retroiluminación RGB y construcción aluminio.</p>
+                        <div class="producto-card__footer">
+                            <span class="producto-card__price">$189</span>
+                            <button class="btn btn--sm">Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="producto-card reveal" data-categoria="redes">
+                    <div class="producto-card__badge producto-card__badge--teal">Redes</div>
+                    <div class="producto-card__img producto-card__img--teal">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <circle cx="32" cy="32" r="5" fill="rgba(255,255,255,0.4)"/>
+                            <circle cx="32" cy="32" r="12" stroke="rgba(255,255,255,0.2)" stroke-width="2" fill="none"/>
+                            <circle cx="32" cy="32" r="20" stroke="rgba(255,255,255,0.15)" stroke-width="2" fill="none"/>
+                            <line x1="32" y1="12" x2="32" y2="8" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+                            <line x1="47.3" y1="20" x2="50.2" y2="17.1" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+                            <line x1="47.3" y1="44" x2="50.2" y2="46.9" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+                            <line x1="32" y1="52" x2="32" y2="56" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+                            <line x1="16.7" y1="44" x2="13.8" y2="46.9" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+                            <line x1="16.7" y1="20" x2="13.8" y2="17.1" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="producto-card__body">
+                        <span class="producto-card__cat">Routers</span>
+                        <h3 class="producto-card__name">NetCore WiFi 6E Pro</h3>
+                        <div class="producto-card__stars" data-rating="4">
+                            <span class="stars-display"></span>
+                            <span class="stars-count">(89)</span>
+                        </div>
+                        <p class="producto-card__desc">Router empresarial WiFi 6E tribanda, cobertura 400m², gestión nube y VPN integrada.</p>
+                        <div class="producto-card__footer">
+                            <span class="producto-card__price">$349</span>
+                            <button class="btn btn--sm">Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="producto-card reveal" data-categoria="software">
+                    <div class="producto-card__badge">Software</div>
+                    <div class="producto-card__img producto-card__img--purple">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <rect x="10" y="10" width="20" height="20" rx="3" fill="rgba(255,255,255,0.2)"/>
+                            <rect x="34" y="10" width="20" height="20" rx="3" fill="rgba(255,255,255,0.15)"/>
+                            <rect x="10" y="34" width="20" height="20" rx="3" fill="rgba(255,255,255,0.15)"/>
+                            <rect x="34" y="34" width="20" height="20" rx="3" fill="rgba(255,255,255,0.2)"/>
+                            <circle cx="32" cy="32" r="4" fill="rgba(255,255,255,0.5)"/>
+                        </svg>
+                    </div>
+                    <div class="producto-card__body">
+                        <span class="producto-card__cat">Diseño</span>
+                        <h3 class="producto-card__name">DesignStudio Ultimate</h3>
+                        <div class="producto-card__stars" data-rating="5">
+                            <span class="stars-display"></span>
+                            <span class="stars-count">(456)</span>
+                        </div>
+                        <p class="producto-card__desc">Plataforma de diseño vectorial y edición de imagen con IA integrada. Ideal para profesionales creativos.</p>
+                        <div class="producto-card__footer">
+                            <span class="producto-card__price">$199<small>/año</small></span>
+                            <button class="btn btn--sm">Ver Detalles</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
+            <div class="productos__empty" id="productosEmpty">
+                <span>🔍</span>
+                <p>No se encontraron productos para tu búsqueda.</p>
+            </div>
         </div>
     </section>
 
-    <section id="nosotros" class="nosotros">
-        <h2>¿Quiénes Somos?</h2>
-        <p>
-            Somos una empresa especializada en brindar soluciones tecnológicas
-            para pequeñas y medianas empresas.
-        </p>
+    <!-- ===== SERVICIOS ===== -->
+    <section class="servicios" id="servicios">
+        <div class="servicios__bg">
+            <div class="servicios__orb"></div>
+        </div>
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Lo que hacemos</span>
+                <h2 class="section-title section-title--light">Nuestros Servicios</h2>
+                <p class="section-desc section-desc--light">Soluciones integrales de tecnología para impulsar tu negocio al siguiente nivel.</p>
+            </div>
+
+            <div class="servicios__grid">
+
+                <div class="servicio-card reveal">
+                    <div class="servicio-card__icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <rect x="6" y="10" width="36" height="26" rx="4" stroke="currentColor" stroke-width="2"/>
+                            <polyline points="14,22 20,28 34,18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Desarrollo de Software</h3>
+                    <p>Creamos aplicaciones web y mobile a medida, adaptadas a los procesos específicos de tu empresa.</p>
+                    <a href="#contacto" class="servicio-card__link">Saber más →</a>
+                </div>
+
+                <div class="servicio-card reveal">
+                    <div class="servicio-card__icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="10" stroke="currentColor" stroke-width="2"/>
+                            <path d="M24 4v4M24 40v4M4 24h4M40 24h4M9.17 9.17l2.83 2.83M35.17 35.17l2.83 2.83M35.17 9.17l-2.83 2.83M9.17 35.17l2.83 2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>Soporte Técnico</h3>
+                    <p>Asistencia especializada 24/7 para mantener tus sistemas funcionando sin interrupciones.</p>
+                    <a href="#contacto" class="servicio-card__link">Saber más →</a>
+                </div>
+
+                <div class="servicio-card reveal">
+                    <div class="servicio-card__icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <rect x="8" y="28" width="10" height="14" rx="2" stroke="currentColor" stroke-width="2"/>
+                            <rect x="19" y="20" width="10" height="22" rx="2" stroke="currentColor" stroke-width="2"/>
+                            <rect x="30" y="14" width="10" height="28" rx="2" stroke="currentColor" stroke-width="2"/>
+                            <polyline points="8,18 18,10 28,14 40,6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Infraestructura TI</h3>
+                    <p>Diseño, implementación y gestión de infraestructura tecnológica escalable y eficiente.</p>
+                    <a href="#contacto" class="servicio-card__link">Saber más →</a>
+                </div>
+
+                <div class="servicio-card reveal">
+                    <div class="servicio-card__icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path d="M24 6L8 14v10c0 9.4 6.8 18.2 16 20.7C33.2 42.2 40 33.4 40 24V14L24 6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                            <polyline points="18,24 22,28 30,20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Ciberseguridad</h3>
+                    <p>Protección avanzada contra amenazas digitales, auditorías de seguridad y monitoreo continuo.</p>
+                    <a href="#contacto" class="servicio-card__link">Saber más →</a>
+                </div>
+
+                <div class="servicio-card reveal">
+                    <div class="servicio-card__icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="16" r="6" stroke="currentColor" stroke-width="2"/>
+                            <path d="M10 42c0-7.7 6.3-14 14-14s14 6.3 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="30" y1="22" x2="38" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="40" cy="12" r="4" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3>Consultoría Informática</h3>
+                    <p>Asesoramiento estratégico para optimizar tus procesos tecnológicos y reducir costos operativos.</p>
+                    <a href="#contacto" class="servicio-card__link">Saber más →</a>
+                </div>
+
+                <div class="servicio-card reveal">
+                    <div class="servicio-card__icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <ellipse cx="24" cy="18" rx="14" ry="6" stroke="currentColor" stroke-width="2"/>
+                            <path d="M10 18v6c0 3.3 6.3 6 14 6s14-2.7 14-6v-6" stroke="currentColor" stroke-width="2"/>
+                            <path d="M10 24v6c0 3.3 6.3 6 14 6s14-2.7 14-6v-6" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3>Cloud & Servidores</h3>
+                    <p>Migración a la nube, configuración de servidores y gestión de entornos cloud híbridos.</p>
+                    <a href="#contacto" class="servicio-card__link">Saber más →</a>
+                </div>
+
+            </div>
+        </div>
     </section>
 
-    <section id="contacto" class="contacto">
-        <h2>Contacto</h2>
-
-        <form>
-            <input type="text" placeholder="Nombre" required>
-            <input type="email" placeholder="Correo" required>
-            <textarea placeholder="Mensaje"></textarea>
-            <button type="submit">Enviar</button>
-        </form>
+    <!-- ===== NOSOTROS ===== -->
+    <section class="nosotros" id="nosotros">
+        <div class="container">
+            <div class="nosotros__inner">
+                <div class="nosotros__text reveal">
+                    <span class="section-tag">Quiénes somos</span>
+                    <h2 class="section-title">Tecnología con<br>propósito real</h2>
+                    <p>NexaTech nació hace más de una década con la misión de democratizar el acceso a tecnología de calidad para empresas de todos los tamaños. Hoy somos referentes en distribución de software y hardware profesional en toda la región.</p>
+                    <div class="nosotros__mv">
+                        <div class="nosotros__mv-item">
+                            <h4>Misión</h4>
+                            <p>Conectar a las empresas con las mejores soluciones tecnológicas del mercado, con soporte experto y precios accesibles.</p>
+                        </div>
+                        <div class="nosotros__mv-item">
+                            <h4>Visión</h4>
+                            <p>Ser el socio tecnológico de referencia en Latinoamérica, impulsando la transformación digital empresarial.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="nosotros__stats reveal">
+                    <div class="stat-card">
+                        <div class="stat-card__num" data-target="2400">0</div>
+                        <div class="stat-card__label">Clientes satisfechos</div>
+                        <div class="stat-card__bar"><div class="stat-card__fill" style="width:96%"></div></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__num" data-target="850">0</div>
+                        <div class="stat-card__label">Productos disponibles</div>
+                        <div class="stat-card__bar"><div class="stat-card__fill" style="width:85%"></div></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__num" data-target="5200">0</div>
+                        <div class="stat-card__label">Proyectos completados</div>
+                        <div class="stat-card__bar"><div class="stat-card__fill" style="width:92%"></div></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__num" data-target="12">0</div>
+                        <div class="stat-card__label">Años de experiencia</div>
+                        <div class="stat-card__bar"><div class="stat-card__fill" style="width:78%"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <footer>
-        <p>© 2026 TechSolutions - Todos los derechos reservados.</p>
+    <!-- ===== RESEÑAS ===== -->
+    <section class="reseñas" id="reseñas">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Clientes</span>
+                <h2 class="section-title">Lo que dicen de nosotros</h2>
+                <div class="reseñas__promedio reveal">
+                    <div class="reseñas__promedio-num">4.8</div>
+                    <div class="reseñas__promedio-stars">★★★★★</div>
+                    <div class="reseñas__promedio-label">Promedio general · 1.247 reseñas</div>
+                </div>
+            </div>
+
+            <div class="reseñas__grid">
+
+                <div class="reseña-card reveal">
+                    <div class="reseña-card__header">
+                        <div class="reseña-card__avatar reseña-card__avatar--a">CM</div>
+                        <div>
+                            <strong>Carlos Mendoza</strong>
+                            <span>Director de TI · Fintech Latam</span>
+                        </div>
+                    </div>
+                    <div class="reseña-card__stars">★★★★★</div>
+                    <p>"NexaTech transformó nuestra infraestructura tecnológica por completo. El equipo de soporte es excepcional y siempre están disponibles cuando los necesitamos."</p>
+                </div>
+
+                <div class="reseña-card reveal">
+                    <div class="reseña-card__header">
+                        <div class="reseña-card__avatar reseña-card__avatar--b">LR</div>
+                        <div>
+                            <strong>Laura Rodríguez</strong>
+                            <span>CEO · Studio Creativo 360</span>
+                        </div>
+                    </div>
+                    <div class="reseña-card__stars">★★★★★</div>
+                    <p>"Compramos todo el hardware para nuestra nueva oficina aquí. Precios competitivos, entrega rápida y la garantía funcionó perfectamente cuando tuvimos un problema."</p>
+                </div>
+
+                <div class="reseña-card reveal">
+                    <div class="reseña-card__header">
+                        <div class="reseña-card__avatar reseña-card__avatar--c">AP</div>
+                        <div>
+                            <strong>Andrés Pereira</strong>
+                            <span>CTO · LogiSoft Solutions</span>
+                        </div>
+                    </div>
+                    <div class="reseña-card__stars">★★★★☆</div>
+                    <p>"El software de seguridad que adquirimos superó todas nuestras expectativas. La consultoría previa nos ayudó a elegir exactamente lo que necesitábamos."</p>
+                </div>
+
+                <div class="reseña-card reveal">
+                    <div class="reseña-card__header">
+                        <div class="reseña-card__avatar reseña-card__avatar--d">MV</div>
+                        <div>
+                            <strong>María Valentina</strong>
+                            <span>Gerente · Constructora Andina</span>
+                        </div>
+                    </div>
+                    <div class="reseña-card__stars">★★★★★</div>
+                    <p>"Llevamos 3 años siendo clientes de NexaTech. Su catálogo es el más completo que encontré, y siempre tienen lo que necesito con stock disponible."</p>
+                </div>
+
+                <div class="reseña-card reveal">
+                    <div class="reseña-card__header">
+                        <div class="reseña-card__avatar reseña-card__avatar--e">JG</div>
+                        <div>
+                            <strong>Javier González</strong>
+                            <span>IT Manager · Retail Group SA</span>
+                        </div>
+                    </div>
+                    <div class="reseña-card__stars">★★★★★</div>
+                    <p>"El servicio de migración a la nube fue impecable. Cero downtime, todo documentado perfectamente. Recomendaría NexaTech sin dudarlo a cualquier empresa."</p>
+                </div>
+
+                <div class="reseña-card reveal">
+                    <div class="reseña-card__header">
+                        <div class="reseña-card__avatar reseña-card__avatar--f">ST</div>
+                        <div>
+                            <strong>Sofía Torres</strong>
+                            <span>Freelancer · Diseño UX/UI</span>
+                        </div>
+                    </div>
+                    <div class="reseña-card__stars">★★★★☆</div>
+                    <p>"Encontré el software de diseño que buscaba a mejor precio que en cualquier otro lugar. El proceso de compra fue sencillo y recibí la licencia en minutos."</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACTO ===== -->
+    <section class="contacto" id="contacto">
+        <div class="container">
+            <div class="contacto__inner">
+                <div class="contacto__info reveal">
+                    <span class="section-tag">Contacto</span>
+                    <h2 class="section-title">¿Listo para dar el<br>siguiente paso?</h2>
+                    <p>Nuestro equipo está disponible para asesorarte y encontrar la solución tecnológica ideal para tu empresa.</p>
+
+                    <div class="contacto__datos">
+                        <div class="contacto__dato">
+                            <div class="contacto__dato-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <strong>Dirección</strong>
+                                <span>Av. Innovación 1420, Piso 8, Ciudad Empresarial</span>
+                            </div>
+                        </div>
+                        <div class="contacto__dato">
+                            <div class="contacto__dato-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <strong>Email</strong>
+                                <span>ventas@nexatech.com</span>
+                            </div>
+                        </div>
+                        <div class="contacto__dato">
+                            <div class="contacto__dato-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.7A2 2 0 012.18 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 9.16a16 16 0 006.93 6.93l1.52-1.52a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <strong>Teléfono</strong>
+                                <span>+1 (555) 920-4800</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contacto__form-wrap reveal">
+                    <form class="contacto__form" id="contactoForm">
+                        <div class="form-group">
+                            <label for="nombre">Nombre completo</label>
+                            <input type="text" id="nombre" placeholder="Tu nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo electrónico</label>
+                            <input type="email" id="email" placeholder="tu@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="empresa">Empresa (opcional)</label>
+                            <input type="text" id="empresa" placeholder="Nombre de tu empresa">
+                        </div>
+                        <div class="form-group">
+                            <label for="mensaje">Mensaje</label>
+                            <textarea id="mensaje" rows="4" placeholder="¿En qué podemos ayudarte?" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn--primary btn--full">Enviar mensaje</button>
+                        <div class="form-success" id="formSuccess">
+                            ✅ ¡Mensaje enviado! Te contactaremos pronto.
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__top">
+                <div class="footer__brand">
+                    <div class="footer__logo">
+                        <span class="nav__logo-icon">⬡</span>
+                        <span>NexaTech</span>
+                    </div>
+                    <p>Tu socio tecnológico de confianza. Software, hardware y soluciones integrales para empresas que quieren crecer.</p>
+                    <div class="footer__socials">
+                        <a href="#" class="footer__social" aria-label="LinkedIn">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+                        </a>
+                        <a href="#" class="footer__social" aria-label="Twitter/X">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                        <a href="#" class="footer__social" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                        </a>
+                        <a href="#" class="footer__social" aria-label="YouTube">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#0f172a"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer__links-group">
+                    <h5>Productos</h5>
+                    <ul>
+                        <li><a href="#productos">Software</a></li>
+                        <li><a href="#productos">Hardware</a></li>
+                        <li><a href="#productos">Accesorios</a></li>
+                        <li><a href="#productos">Redes</a></li>
+                        <li><a href="#productos">Seguridad</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer__links-group">
+                    <h5>Servicios</h5>
+                    <ul>
+                        <li><a href="#servicios">Desarrollo Web</a></li>
+                        <li><a href="#servicios">Soporte Técnico</a></li>
+                        <li><a href="#servicios">Infraestructura TI</a></li>
+                        <li><a href="#servicios">Ciberseguridad</a></li>
+                        <li><a href="#servicios">Consultoría</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer__links-group">
+                    <h5>Empresa</h5>
+                    <ul>
+                        <li><a href="#nosotros">Nosotros</a></li>
+                        <li><a href="#reseñas">Reseñas</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                        <li><a href="#">Política de Privacidad</a></li>
+                        <li><a href="#">Términos de Uso</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer__bottom">
+                <p>© 2026 NexaTech — Todos los derechos reservados.</p>
+            </div>
+        </div>
     </footer>
 
-    <script src="javascript.js"></script>
+    <!-- ===== BACK TO TOP ===== -->
+    <button class="back-to-top" id="backToTop" aria-label="Volver arriba">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"/>
+        </svg>
+    </button>
 
+    <script src="script.js"></script>
 </body>
 </html>
