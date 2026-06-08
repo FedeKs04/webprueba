@@ -226,25 +226,7 @@ function renderRepairs() {
 
 async function loadRepairs() {
   setStatus('Actualizando solicitudes...');
-  const { data, error } = await supabase
-    .from('repair_requests')
-    .select(`
-      id,
-      user_id,
-      equipment_type,
-      brand_model,
-      problem_description,
-      status,
-      technician_notes,
-      assigned_technician_id,
-      quote_amount,
-      quote_description,
-      quote_status,
-      quote_decided_at,
-      created_at,
-      updated_at
-    `)
-    .order('created_at', { ascending: false });
+  const { data, error } = await supabase.rpc('admin_list_repair_requests');
 
   if (error) {
     logAdminError('load repairs', error);

@@ -119,6 +119,16 @@ Después de aplicar la migración, el panel queda disponible en:
 
 `https://rehardware.vercel.app/admin.html`
 
+Para impedir que los clientes lean notas técnicas internas mediante consultas
+directas, aplicar también:
+
+`supabase/migrations/20260608060000_protect_internal_repair_notes.sql`
+
+Esta migración reemplaza el permiso general de lectura por permisos de columna
+que excluyen `technician_notes`. El panel administrativo obtiene la información
+completa mediante `admin_list_repair_requests`, que valida `is_staff()` antes de
+devolver datos.
+
 ## Correos de autenticación
 
 Mientras se use el servidor de correo compartido de Supabase, `Confirm email`
