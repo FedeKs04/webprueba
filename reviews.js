@@ -15,6 +15,8 @@ if (form && list && ratingInput && ratingField && status && supabase) {
   const ratingButtons = Array.from(ratingInput.querySelectorAll('button'));
   const submitButton = form.querySelector('[type="submit"]');
   let currentUserId = null;
+  let loadVersion = 0;
+  let lastAuthUserId;
 
   function setStatus(message = '', type = '') {
     status.textContent = message;
@@ -124,6 +126,7 @@ if (form && list && ratingInput && ratingField && status && supabase) {
       if (error) throw error;
       if (!data) throw new Error('La reseña no existe o no pertenece al usuario actual.');
 
+      loadVersion += 1;
       card.remove();
       updateSummary();
       setStatus('Reseña eliminada correctamente.', 'success');
@@ -221,9 +224,9 @@ if (form && list && ratingInput && ratingField && status && supabase) {
   }
 
   async function loadReviews(sessionOverride) {
+    const requestVersion = ++loadVersion;
     const session = sessionOverride === undefined ? await getSession() : sessionOverride;
-    currentUserId = session?.user?.id || null;
-    list.querySelectorAll('[data-database-review="true"]').forEach(card => card.remove());
+    const nextUserId = session?.user?.id || null;
     const { data, error } = await supabase
       .from('reviews')
       .select('id, user_id, author_name, service, rating, content, created_at')
@@ -233,9 +236,16 @@ if (form && list && ratingInput && ratingField && status && supabase) {
 
     if (error) {
       logReviewError('load reviews', error);
-    } else {
-      [...data].reverse().forEach(review => list.prepend(createReviewCard(review)));
+      return;
     }
+
+    if (requestVersion !== loadVersion) return;
+
+    currentUserId = nextUserId;
+    const cards = document.createDocumentFragment();
+    data.forEach(review => cards.appendChild(createReviewCard(review)));
+    list.querySelectorAll('[data-database-review="true"]').forEach(card => card.remove());
+    list.prepend(cards);
     updateSummary();
   }
 
@@ -302,6 +312,7 @@ if (form && list && ratingInput && ratingField && status && supabase) {
 
       if (error) throw error;
 
+      loadVersion += 1;
       list.prepend(createReviewCard(review));
       updateSummary();
       form.reset();
@@ -321,6 +332,9 @@ if (form && list && ratingInput && ratingField && status && supabase) {
   });
 
   supabase.auth.onAuthStateChange((_event, session) => {
+    const nextUserId = session?.user?.id || null;
+    if (nextUserId === lastAuthUserId) return;
+    lastAuthUserId = nextUserId;
     setTimeout(() => {
       loadReviews(session).catch(error => logReviewError('refresh reviews after auth change', error));
     }, 0);
