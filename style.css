@@ -1490,39 +1490,71 @@ body::before {
   max-width:400px;
   padding:34px 38px 38px;
   border-radius:0;
-  border-color:rgba(0,200,150,.42);
-  background:#0c654e;
+  border-color:rgba(0,232,174,.56);
+  background:#0b604b;
   box-shadow:0 22px 60px rgba(0,0,0,.52);
 }
 [data-theme="dark"] .modal-logo-sub,
 [data-theme="dark"] .auth-status { color:rgba(255,255,255,.68); }
 [data-theme="dark"] .auth-tabs {
   border-radius:0;
-  border-color:rgba(255,255,255,.24);
+  border-color:rgba(255,255,255,.34);
+  margin-bottom:30px;
 }
-[data-theme="dark"] .auth-tab { color:rgba(255,255,255,.75); }
+[data-theme="dark"] .auth-tab {
+  min-height:42px;
+  color:rgba(255,255,255,.82);
+}
 [data-theme="dark"] .auth-tab.active {
-  background:rgba(0,0,0,.23);
+  background:rgba(0,0,0,.3);
   color:#fff;
 }
-[data-theme="dark"] .auth-modal .fg label { color:rgba(255,255,255,.78); }
+[data-theme="dark"] .auth-modal .auth-field { gap:19px; }
+[data-theme="dark"] .auth-modal .fg { gap:8px; }
+[data-theme="dark"] .auth-modal .fg label {
+  color:rgba(255,255,255,.9);
+  font-weight:500;
+}
 [data-theme="dark"] .auth-modal .fg input {
   border-radius:0;
-  border-color:rgba(255,255,255,.35);
-  background:#e4e9e6;
-  color:#112019;
+  min-height:46px;
+  padding:12px 14px;
+  border-color:rgba(255,255,255,.5);
+  background:#f0f3f1;
+  color:#0d2119;
+  font-size:1rem;
+  box-shadow:inset 0 0 0 1px rgba(13,33,25,.05);
 }
-[data-theme="dark"] .auth-modal .fg input::placeholder { color:rgba(17,32,25,.52); }
+[data-theme="dark"] .auth-modal .fg input::placeholder { color:rgba(13,33,25,.58); }
+[data-theme="dark"] .auth-modal .fg input:focus {
+  border-color:#fff;
+  box-shadow:0 0 0 3px rgba(0,232,174,.24);
+}
 [data-theme="dark"] .auth-modal .btn-auth-submit {
   border-radius:0;
-  background:#e5ece8;
-  color:#12352a;
+  min-height:46px;
+  margin-top:6px;
+  border:1px solid rgba(255,255,255,.62);
+  background:#eaf0ed;
+  color:#0b362a;
+  font-weight:700;
+}
+[data-theme="dark"] .auth-modal .btn-auth-submit:hover {
+  background:#fff;
+  box-shadow:0 5px 18px rgba(0,0,0,.2);
 }
 [data-theme="dark"] .auth-modal .auth-forgot { color:rgba(255,255,255,.72); }
 [data-theme="dark"] .auth-modal .modal-close {
+  width:32px;
+  height:32px;
   border-radius:0;
-  border-color:rgba(255,255,255,.3);
+  border-color:rgba(255,255,255,.46);
+  background:rgba(0,0,0,.14);
   color:#fff;
+}
+[data-theme="dark"] .auth-modal .modal-close:hover {
+  border-color:#fff;
+  background:rgba(0,0,0,.28);
 }
 
 @media (max-width:900px) {
