@@ -535,6 +535,25 @@
   </div>
 </section>
 
+<div class="review-delete-modal" id="reviewDeleteModal" hidden>
+  <div class="review-delete-modal__backdrop" data-review-delete-cancel></div>
+  <div
+    class="review-delete-modal__dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="reviewDeleteTitle"
+    aria-describedby="reviewDeleteDescription"
+  >
+    <span class="review-delete-modal__eyebrow">// CONFIRMAR ACCI&Oacute;N</span>
+    <h3 id="reviewDeleteTitle">&iquest;Seguro que quer&eacute;s eliminar esta rese&ntilde;a?</h3>
+    <p id="reviewDeleteDescription">Esta acci&oacute;n no se puede deshacer y la rese&ntilde;a desaparecer&aacute; de la p&aacute;gina.</p>
+    <div class="review-delete-modal__actions">
+      <button class="btn-outline" id="reviewDeleteCancel" type="button">Cancelar</button>
+      <button class="review-delete-modal__confirm" id="reviewDeleteConfirm" type="button">Eliminar rese&ntilde;a</button>
+    </div>
+  </div>
+</div>
+
 
 <!-- CTA -->
 <section class="cta-section" id="nosotros">

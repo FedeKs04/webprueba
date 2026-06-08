@@ -10,13 +10,22 @@ const list = document.getElementById('reviewsList');
 const ratingInput = document.getElementById('ratingInput');
 const ratingField = document.getElementById('reviewRating');
 const status = document.getElementById('reviewStatus');
+const deleteModal = document.getElementById('reviewDeleteModal');
+const deleteCancelButton = document.getElementById('reviewDeleteCancel');
+const deleteConfirmButton = document.getElementById('reviewDeleteConfirm');
 
-if (form && list && ratingInput && ratingField && status && supabase) {
+if (
+  form && list && ratingInput && ratingField && status &&
+  deleteModal && deleteCancelButton && deleteConfirmButton && supabase
+) {
   const ratingButtons = Array.from(ratingInput.querySelectorAll('button'));
   const submitButton = form.querySelector('[type="submit"]');
   let currentUserId = null;
   let loadVersion = 0;
   let lastAuthUserId;
+  let pendingDelete = null;
+  let deleteInProgress = false;
+  let lastFocusedElement = null;
 
   function setStatus(message = '', type = '') {
     status.textContent = message;
@@ -102,17 +111,43 @@ if (form && list && ratingInput && ratingField && status && supabase) {
     }).format(new Date(value)).replace('.', '').toUpperCase();
   }
 
-  async function deleteReview(review, card, button) {
+  function closeDeleteModal() {
+    if (deleteInProgress) return;
+    deleteModal.hidden = true;
+    document.body.style.overflow = '';
+    pendingDelete = null;
+    lastFocusedElement?.focus();
+    lastFocusedElement = null;
+  }
+
+  function openDeleteModal(review, card, button) {
     if (!currentUserId || review.user_id !== currentUserId) {
       setStatus('No tenés permiso para eliminar esta reseña.', 'error');
       return;
     }
 
-    if (!window.confirm('¿Querés eliminar esta reseña? Esta acción no se puede deshacer.')) {
+    if (deleteInProgress) return;
+    pendingDelete = { review, card, button };
+    lastFocusedElement = button;
+    deleteModal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    deleteCancelButton.focus();
+  }
+
+  async function confirmDeleteReview() {
+    if (deleteInProgress || !pendingDelete) return;
+    const { review, card, button } = pendingDelete;
+    if (!currentUserId || review.user_id !== currentUserId) {
+      closeDeleteModal();
+      setStatus('No tenés permiso para eliminar esta reseña.', 'error');
       return;
     }
 
+    deleteInProgress = true;
     button.disabled = true;
+    deleteCancelButton.disabled = true;
+    deleteConfirmButton.disabled = true;
+    deleteConfirmButton.textContent = 'Eliminando...';
     setStatus();
     try {
       const { data, error } = await supabase
@@ -129,6 +164,10 @@ if (form && list && ratingInput && ratingField && status && supabase) {
       loadVersion += 1;
       card.remove();
       updateSummary();
+      deleteModal.hidden = true;
+      document.body.style.overflow = '';
+      pendingDelete = null;
+      lastFocusedElement = null;
       setStatus('Reseña eliminada correctamente.', 'success');
       console.info('[RE:Hardware Reviews] review deleted', {
         reviewId: review.id,
@@ -138,6 +177,11 @@ if (form && list && ratingInput && ratingField && status && supabase) {
       logReviewError('delete review', error);
       setStatus(reviewErrorMessage(error), 'error');
       button.disabled = false;
+    } finally {
+      deleteInProgress = false;
+      deleteCancelButton.disabled = false;
+      deleteConfirmButton.disabled = false;
+      deleteConfirmButton.textContent = 'Eliminar reseña';
     }
   }
 
@@ -174,7 +218,7 @@ if (form && list && ratingInput && ratingField && status && supabase) {
       deleteButton.type = 'button';
       deleteButton.textContent = 'Eliminar';
       deleteButton.setAttribute('aria-label', 'Eliminar mi reseña');
-      deleteButton.addEventListener('click', () => deleteReview(review, card, deleteButton));
+      deleteButton.addEventListener('click', () => openDeleteModal(review, card, deleteButton));
       actions.appendChild(deleteButton);
     }
 
@@ -329,6 +373,14 @@ if (form && list && ratingInput && ratingField && status && supabase) {
     } finally {
       submitButton.disabled = false;
     }
+  });
+
+  deleteCancelButton.addEventListener('click', closeDeleteModal);
+  deleteConfirmButton.addEventListener('click', confirmDeleteReview);
+  deleteModal.querySelector('[data-review-delete-cancel]')
+    .addEventListener('click', closeDeleteModal);
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && !deleteModal.hidden) closeDeleteModal();
   });
 
   supabase.auth.onAuthStateChange((_event, session) => {

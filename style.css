@@ -581,6 +581,37 @@ body::before {
 }
 .review-card__delete:hover { background:rgba(230,80,80,.16); border-color:#e66; }
 .review-card__delete:disabled { opacity:.55; cursor:wait; }
+.review-delete-modal {
+  position:fixed; inset:0; z-index:1200;
+  display:grid; place-items:center; padding:20px;
+}
+.review-delete-modal[hidden] { display:none; }
+.review-delete-modal__backdrop {
+  position:absolute; inset:0; background:rgba(3,8,10,.78);
+  backdrop-filter:blur(7px);
+}
+.review-delete-modal__dialog {
+  position:relative; width:min(440px, 100%); padding:30px;
+  background:var(--surface); border:1px solid var(--border-2);
+  border-radius:10px; box-shadow:var(--shadow-g);
+}
+.review-delete-modal__eyebrow {
+  color:#e66; font:600 .62rem var(--font-mono);
+  letter-spacing:.14em;
+}
+.review-delete-modal__dialog h3 { margin:7px 0 8px; font-size:1.45rem; line-height:1.2; }
+.review-delete-modal__dialog p { color:var(--text-3); font-size:.9rem; line-height:1.55; }
+.review-delete-modal__actions {
+  display:flex; justify-content:flex-end; gap:10px; margin-top:24px;
+}
+.review-delete-modal__confirm {
+  padding:10px 16px; border:1px solid #e66; border-radius:5px;
+  background:#c43d3d; color:#fff; font:700 .72rem var(--font-mono);
+  letter-spacing:.04em; text-transform:uppercase; cursor:pointer; transition:.2s;
+}
+.review-delete-modal__confirm:hover { background:#df4b4b; }
+.review-delete-modal__confirm:disabled,
+.review-delete-modal__actions button:disabled { opacity:.55; cursor:wait; }
 .review-card p { color:var(--text-2); font-size:.9rem; line-height:1.65; margin:16px 0; flex:1; }
 .review-card time {
   color:var(--text-3); font-family:'JetBrains Mono', monospace;
