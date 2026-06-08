@@ -28,6 +28,15 @@ function setLoading(form, loading) {
   button.textContent = loading ? 'Procesando...' : button.dataset.label;
 }
 
+function logAccountError(operation, error) {
+  console.error(`[RE:Hardware Account] ${operation} failed`, {
+    message: error?.message || String(error),
+    code: error?.code,
+    details: error?.details,
+    hint: error?.hint
+  });
+}
+
 function formatDate(value) {
   return new Intl.DateTimeFormat('es-UY', {
     dateStyle: 'medium',
@@ -82,7 +91,8 @@ async function loadAccount() {
   ]);
 
   if (profileResult.error) {
-    setStatus(profileStatus, 'No se pudo cargar el perfil. Verificá la migración de Supabase.', 'error');
+    logAccountError('load profile', profileResult.error);
+    setStatus(profileStatus, `Supabase: ${profileResult.error.message}`, 'error');
   } else {
     profileForm.elements.full_name.value = profileResult.data.full_name || '';
     profileForm.elements.phone.value = profileResult.data.phone || '';
@@ -90,7 +100,8 @@ async function loadAccount() {
   }
 
   if (repairsResult.error) {
-    repairList.innerHTML = '<p class="auth-status auth-status--error">No se pudieron cargar las solicitudes.</p>';
+    logAccountError('load repair requests', repairsResult.error);
+    repairList.innerHTML = `<p class="auth-status auth-status--error">Supabase: ${repairsResult.error.message}</p>`;
   } else {
     renderRepairs(repairsResult.data);
   }
@@ -112,7 +123,8 @@ profileForm.addEventListener('submit', async event => {
   setLoading(profileForm, false);
 
   if (error) {
-    setStatus(profileStatus, 'No se pudo guardar el perfil.', 'error');
+    logAccountError('update profile', error);
+    setStatus(profileStatus, `Supabase: ${error.message}`, 'error');
     return;
   }
   document.getElementById('accountName').textContent = formData.get('full_name').trim();
@@ -134,7 +146,8 @@ repairForm.addEventListener('submit', async event => {
   setLoading(repairForm, false);
 
   if (error) {
-    setStatus(repairStatus, 'No se pudo crear la solicitud.', 'error');
+    logAccountError('create repair request', error);
+    setStatus(repairStatus, `Supabase: ${error.message}`, 'error');
     return;
   }
   repairForm.reset();

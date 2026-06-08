@@ -54,6 +54,25 @@ function displayName(user) {
   return user?.user_metadata?.full_name?.trim() || user?.email?.split('@')[0] || 'Usuario';
 }
 
+function logAuth(operation, details = {}) {
+  console.info(`[RE:Hardware Auth] ${operation}`, {
+    event: details.event,
+    userId: details.user?.id || details.userId,
+    email: details.user?.email || details.email,
+    session: details.session ? 'present' : details.session === null ? 'missing' : undefined,
+    emailConfirmationRequired: details.emailConfirmationRequired
+  });
+}
+
+function logAuthError(operation, error) {
+  console.error(`[RE:Hardware Auth] ${operation} failed`, {
+    name: error?.name,
+    message: error?.message || String(error),
+    code: error?.code,
+    status: error?.status
+  });
+}
+
 function renderSession(session) {
   const user = session?.user;
   const signedIn = Boolean(user);
@@ -76,7 +95,8 @@ function renderSession(session) {
 }
 
 function authErrorMessage(error, context) {
-  const message = (error?.message || '').toLowerCase();
+  const originalMessage = error?.message || 'Error desconocido de Supabase';
+  const message = originalMessage.toLowerCase();
   const code = error?.code || '';
 
   if (message.includes('invalid login credentials') || code === 'invalid_credentials') {
@@ -91,13 +111,19 @@ function authErrorMessage(error, context) {
   if (message.includes('password') && message.includes('least')) {
     return 'La contraseña debe tener al menos 8 caracteres.';
   }
-  if (message.includes('rate limit')) {
-    return 'Demasiados intentos. Esperá unos minutos antes de volver a probar.';
+  if (message.includes('rate limit') || code === 'over_email_send_rate_limit') {
+    return `Supabase: ${originalMessage}. Se alcanzó el límite de correos; esperá unos minutos o configurá SMTP propio.`;
+  }
+  if (message.includes('database error saving new user')) {
+    return `Supabase: ${originalMessage}. No se pudo crear el perfil asociado al usuario.`;
+  }
+  if (message.includes('signup is disabled')) {
+    return `Supabase: ${originalMessage}. El registro está deshabilitado en Auth.`;
   }
   if (context === 'reset') {
-    return 'No pudimos enviar el correo de recuperación. Revisá la dirección.';
+    return `Supabase: ${originalMessage}`;
   }
-  return 'No se pudo completar la operación. Intentá nuevamente.';
+  return `Supabase: ${originalMessage}${code ? ` (${code})` : ''}`;
 }
 
 function showConfigurationError(statusElement) {
@@ -119,31 +145,61 @@ async function handleSignUp(event) {
   const password = formData.get('password');
   const fullName = formData.get('name').trim();
 
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: { full_name: fullName },
-      emailRedirectTo: `${window.location.origin}/`
+  logAuth('signUp started', { email });
+
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { full_name: fullName },
+        emailRedirectTo: `${window.location.origin}/`
+      }
+    });
+
+    if (error) throw error;
+    if (!data.user) throw new Error('Supabase no devolvió el usuario creado.');
+    if (data.user.identities?.length === 0) {
+      const duplicateError = new Error('User already registered');
+      duplicateError.code = 'user_already_exists';
+      throw duplicateError;
     }
-  });
 
-  setLoading(registerForm, false);
-  if (error) {
+    logAuth('signUp completed', {
+      user: data.user,
+      session: data.session,
+      emailConfirmationRequired: !data.session
+    });
+
+    if (data.session) {
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('id', data.user.id)
+        .single();
+
+      if (profileError) {
+        logAuthError('profile verification after signUp', profileError);
+        throw new Error(`Usuario creado, pero el perfil falló: ${profileError.message}`);
+      }
+      logAuth('profile verified after signUp', { userId: profile.id });
+    }
+
+    registerForm.reset();
+    if (data.session) {
+      setStatus(registerStatus, 'Cuenta y perfil creados. Ya iniciaste sesión.', 'success');
+      setTimeout(() => {
+        modalOverlay?.classList.remove('open');
+        document.body.style.overflow = '';
+      }, 900);
+    } else {
+      setStatus(registerStatus, 'Cuenta y perfil creados. Revisá tu correo para confirmarla.', 'success');
+    }
+  } catch (error) {
+    logAuthError('signUp', error);
     setStatus(registerStatus, authErrorMessage(error, 'signup'), 'error');
-    return;
-  }
-  if (data.user?.identities?.length === 0) {
-    setStatus(registerStatus, 'Este correo ya está registrado. Probá iniciar sesión.', 'error');
-    return;
-  }
-
-  registerForm.reset();
-  if (data.session) {
-    setStatus(registerStatus, 'Cuenta creada. Ya iniciaste sesión.', 'success');
-    setTimeout(() => modalOverlay?.classList.remove('open'), 900);
-  } else {
-    setStatus(registerStatus, 'Cuenta creada. Revisá tu correo para confirmarla.', 'success');
+  } finally {
+    setLoading(registerForm, false);
   }
 }
 
@@ -156,20 +212,24 @@ async function handleSignIn(event) {
   const formData = new FormData(loginForm);
   const email = formData.get('email').trim().toLowerCase();
   const password = formData.get('password');
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
-  setLoading(loginForm, false);
+  logAuth('signIn started', { email });
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+    logAuth('signIn completed', { user: data.user, session: data.session });
 
-  if (error) {
+    loginForm.reset();
+    setStatus(loginStatus, 'Sesión iniciada correctamente.', 'success');
+    setTimeout(() => {
+      modalOverlay?.classList.remove('open');
+      document.body.style.overflow = '';
+    }, 700);
+  } catch (error) {
+    logAuthError('signIn', error);
     setStatus(loginStatus, authErrorMessage(error, 'login'), 'error');
-    return;
+  } finally {
+    setLoading(loginForm, false);
   }
-
-  loginForm.reset();
-  setStatus(loginStatus, 'Sesión iniciada correctamente.', 'success');
-  setTimeout(() => {
-    modalOverlay?.classList.remove('open');
-    document.body.style.overflow = '';
-  }, 700);
 }
 
 async function handlePasswordReset() {
@@ -197,11 +257,14 @@ async function handlePasswordReset() {
 
 async function handleLogout() {
   if (!supabase) return;
+  logAuth('signOut started');
   const { error } = await supabase.auth.signOut({ scope: 'local' });
   if (error) {
-    window.alert('No se pudo cerrar la sesión. Intentá nuevamente.');
+    logAuthError('signOut', error);
+    window.alert(authErrorMessage(error, 'logout'));
     return;
   }
+  logAuth('signOut completed');
   if (protectedPage) window.location.replace('/');
 }
 
@@ -234,12 +297,15 @@ async function initializeAuth() {
 
   document.documentElement.dataset.authConfigured = 'true';
   supabase.auth.onAuthStateChange((event, nextSession) => {
+    logAuth('state changed', { event, user: nextSession?.user, session: nextSession });
     renderSession(nextSession);
     if (event === 'PASSWORD_RECOVERY') passwordUpdateForm?.removeAttribute('hidden');
     if (event === 'SIGNED_OUT' && protectedPage) window.location.replace('/');
   });
 
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+  if (sessionError) logAuthError('getSession', sessionError);
+  else logAuth('session restored', { user: session?.user, session });
   renderSession(session);
 
   if (protectedPage && !session && !recoveryRequest) {

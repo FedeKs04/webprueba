@@ -55,6 +55,10 @@ La migración está versionada en:
 
 `supabase/migrations/20260607230000_initial_schema.sql`
 
+La corrección del trigger que crea y sincroniza perfiles está en:
+
+`supabase/migrations/20260608024000_harden_user_profile_trigger.sql`
+
 Si la integración de GitHub está habilitada en `Project Settings > Integrations`:
 
 1. Configurar `Working directory` como `.`.
@@ -75,3 +79,10 @@ La migración crea:
 - `repair_requests`: solicitudes y seguimiento de reparaciones.
 - `reviews`: reseñas públicas de usuarios registrados.
 - Políticas RLS para separar los datos de cada cliente.
+
+## Correos de autenticación
+
+Mientras se use el servidor de correo compartido de Supabase, `Confirm email`
+permanece desactivado para evitar que su límite de envíos bloquee el registro.
+Antes de un lanzamiento público, configurar SMTP propio en Authentication y
+volver a activar `Confirm email`.
