@@ -1,4 +1,5 @@
 import { isSupabaseConfigured, supabase } from './supabase-client.js';
+import { hasFirstAndLastName, normalizeFullName } from './name-utils.js';
 
 const registerForm = document.getElementById('tab-register');
 const loginForm = document.getElementById('tab-login');
@@ -187,7 +188,14 @@ async function handleSignUp(event) {
   const formData = new FormData(registerForm);
   const email = formData.get('email').trim().toLowerCase();
   const password = formData.get('password');
-  const fullName = formData.get('name').trim();
+  const fullName = normalizeFullName(formData.get('name'));
+
+  if (!hasFirstAndLastName(fullName)) {
+    setStatus(registerStatus, 'Ingresá nombre y apellido, por ejemplo: Federico Vidal.', 'error');
+    registerForm.elements.name.focus();
+    setLoading(registerForm, false);
+    return;
+  }
 
   logAuth('signUp started', { email });
 

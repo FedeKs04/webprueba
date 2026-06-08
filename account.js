@@ -1,4 +1,5 @@
 import { supabase } from './supabase-client.js';
+import { hasFirstAndLastName, normalizeFullName } from './name-utils.js';
 
 const profileForm = document.getElementById('profileForm');
 const profileStatus = document.getElementById('profileStatus');
@@ -112,22 +113,40 @@ profileForm.addEventListener('submit', async event => {
   setLoading(profileForm, true);
   setStatus(profileStatus);
   const formData = new FormData(profileForm);
+  const fullName = normalizeFullName(formData.get('full_name'));
+
+  if (!hasFirstAndLastName(fullName)) {
+    setStatus(profileStatus, 'Ingresá nombre y apellido, por ejemplo: Federico Vidal.', 'error');
+    profileForm.elements.full_name.focus();
+    setLoading(profileForm, false);
+    return;
+  }
+
   const { data: { user } } = await supabase.auth.getUser();
-  const { error } = await supabase
-    .from('profiles')
-    .update({
-      full_name: formData.get('full_name').trim(),
-      phone: formData.get('phone').trim() || null
+  const [profileResult, authResult] = await Promise.all([
+    supabase
+      .from('profiles')
+      .update({
+        full_name: fullName,
+        phone: formData.get('phone').trim() || null
+      })
+      .eq('id', user.id),
+    supabase.auth.updateUser({
+      data: {
+        ...user.user_metadata,
+        full_name: fullName
+      }
     })
-    .eq('id', user.id);
+  ]);
   setLoading(profileForm, false);
 
+  const error = profileResult.error || authResult.error;
   if (error) {
     logAccountError('update profile', error);
     setStatus(profileStatus, `Supabase: ${error.message}`, 'error');
     return;
   }
-  document.getElementById('accountName').textContent = formData.get('full_name').trim();
+  document.getElementById('accountName').textContent = fullName;
   setStatus(profileStatus, 'Perfil actualizado.', 'success');
 });
 

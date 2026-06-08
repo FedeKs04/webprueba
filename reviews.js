@@ -1,4 +1,9 @@
 import { supabase } from './supabase-client.js';
+import {
+  abbreviatedName,
+  hasFirstAndLastName,
+  normalizeFullName
+} from './name-utils.js';
 
 const form = document.getElementById('reviewForm');
 const list = document.getElementById('reviewsList');
@@ -59,10 +64,12 @@ if (form && list && ratingInput && ratingField && status && supabase) {
 
     if (error) logReviewError('load author profile', error);
 
-    return profile?.full_name?.trim() ||
-      session.user.user_metadata?.full_name?.trim() ||
-      session.user.email?.split('@')[0] ||
-      'Usuario';
+    const fullName = normalizeFullName(
+      profile?.full_name || session.user.user_metadata?.full_name || ''
+    );
+
+    if (!hasFirstAndLastName(fullName)) return '';
+    return abbreviatedName(fullName);
   }
 
   function paintRating(value) {
@@ -210,6 +217,13 @@ if (form && list && ratingInput && ratingField && status && supabase) {
 
       const formData = new FormData(form);
       const authorName = await getAuthorName(session);
+      if (!authorName) {
+        setStatus(
+          'Completá tu nombre y apellido en Mi cuenta antes de publicar una reseña.',
+          'error'
+        );
+        return;
+      }
       const payload = {
         user_id: session.user.id,
         author_name: authorName,
