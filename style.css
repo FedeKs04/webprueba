@@ -939,6 +939,7 @@ body::before {
   .logo__sub { display:none; }
   .btn-auth { padding:7px 9px; font-size:.62rem; }
   .auth-logout { display:none; }
+  body[data-auth-required="true"] .auth-logout { display:inline-flex; }
   .serv-cards { grid-template-columns:1fr; }
   .footer__grid { grid-template-columns:1fr; }
   .stats__grid { grid-template-columns:1fr 1fr; }
