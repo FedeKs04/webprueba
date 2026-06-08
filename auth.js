@@ -8,6 +8,7 @@ const openAuthButton = document.getElementById('btnOpenAuth');
 const accountLink = document.getElementById('authAccountLink');
 const logoutButton = document.getElementById('btnLogout');
 const forgotPasswordButton = document.getElementById('btnForgotPassword');
+const requestDiagnosisButton = document.getElementById('btnRequestDiagnosis');
 const modalOverlay = document.getElementById('modalOverlay');
 const accountEmail = document.getElementById('accountEmail');
 const accountName = document.getElementById('accountName');
@@ -16,6 +17,8 @@ const accountLogout = document.getElementById('accountLogout');
 const passwordUpdateForm = document.getElementById('passwordUpdateForm');
 const passwordUpdateStatus = document.getElementById('passwordUpdateStatus');
 const protectedPage = document.body.dataset.authRequired === 'true';
+const diagnosisDestination = '/cuenta.html#mis-reparaciones';
+const diagnosisIntentKey = 'rehw-diagnosis-intent';
 const recoveryRequest =
   window.location.hash.includes('type=recovery') ||
   new URLSearchParams(window.location.search).has('code');
@@ -48,6 +51,47 @@ function openLogin() {
   switchToLogin();
   modalOverlay?.classList.add('open');
   document.body.style.overflow = 'hidden';
+}
+
+function redirectToRepairs() {
+  sessionStorage.removeItem(diagnosisIntentKey);
+  window.location.assign(diagnosisDestination);
+}
+
+function continueDiagnosisFlow() {
+  if (sessionStorage.getItem(diagnosisIntentKey) === 'true') {
+    redirectToRepairs();
+    return true;
+  }
+  return false;
+}
+
+async function handleDiagnosisRequest() {
+  if (!supabase) {
+    showConfigurationError(loginStatus);
+    openLogin();
+    return;
+  }
+
+  requestDiagnosisButton.disabled = true;
+  try {
+    const { data: { session }, error } = await supabase.auth.getSession();
+    if (error) throw error;
+
+    if (session) {
+      redirectToRepairs();
+      return;
+    }
+
+    sessionStorage.setItem(diagnosisIntentKey, 'true');
+    openLogin();
+  } catch (error) {
+    logAuthError('diagnosis session check', error);
+    setStatus(loginStatus, authErrorMessage(error, 'session'), 'error');
+    openLogin();
+  } finally {
+    requestDiagnosisButton.disabled = false;
+  }
 }
 
 function displayName(user) {
@@ -188,6 +232,7 @@ async function handleSignUp(event) {
     registerForm.reset();
     if (data.session) {
       setStatus(registerStatus, 'Cuenta y perfil creados. Ya iniciaste sesión.', 'success');
+      if (continueDiagnosisFlow()) return;
       setTimeout(() => {
         modalOverlay?.classList.remove('open');
         document.body.style.overflow = '';
@@ -220,6 +265,7 @@ async function handleSignIn(event) {
 
     loginForm.reset();
     setStatus(loginStatus, 'Sesión iniciada correctamente.', 'success');
+    if (continueDiagnosisFlow()) return;
     setTimeout(() => {
       modalOverlay?.classList.remove('open');
       document.body.style.overflow = '';
@@ -332,5 +378,6 @@ forgotPasswordButton?.addEventListener('click', handlePasswordReset);
 logoutButton?.addEventListener('click', handleLogout);
 accountLogout?.addEventListener('click', handleLogout);
 passwordUpdateForm?.addEventListener('submit', handlePasswordUpdate);
+requestDiagnosisButton?.addEventListener('click', handleDiagnosisRequest);
 
 initializeAuth();
