@@ -3,14 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>&lt;RE:Hardware&gt; — Reparación a nivel componente</title>
+  <title>RE:Hardware | Reparación de hardware a nivel componente</title>
+  <meta name="description" content="Diagnóstico electrónico, reparación de placas, recuperación de datos y servicio técnico de hardware en Uruguay. Presupuesto claro y garantía por escrito." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://rehardware.vercel.app/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_UY" />
+  <meta property="og:site_name" content="RE:Hardware" />
+  <meta property="og:title" content="RE:Hardware | Reparación de hardware a nivel componente" />
+  <meta property="og:description" content="Diagnóstico electrónico, reparación de placas y recuperación de datos con presupuesto claro y garantía por escrito." />
+  <meta property="og:url" content="https://rehardware.vercel.app/" />
+  <meta property="og:image" content="https://rehardware.vercel.app/assets/images/og-rehardware.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Portada de RE:Hardware, servicio técnico de hardware a nivel componente" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="RE:Hardware | Reparación de hardware" />
+  <meta name="twitter:description" content="Servicio técnico especializado a nivel componente en Uruguay." />
+  <meta name="twitter:image" content="https://rehardware.vercel.app/assets/images/og-rehardware.png" />
   <link rel="icon" href="assets/images/logo-rehardware.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "RE:Hardware",
+      "url": "https://rehardware.vercel.app/",
+      "logo": "https://rehardware.vercel.app/assets/images/logo-rehardware.svg",
+      "image": "https://rehardware.vercel.app/assets/images/og-rehardware.png",
+      "description": "Servicio tecnico especializado en diagnostico electronico, reparacion de placas y recuperacion de datos.",
+      "telephone": "+59896005315",
+      "areaServed": {"@type": "Country", "name": "Uruguay"},
+      "serviceType": ["Diagnostico electronico", "Reparacion de placas", "Recuperacion de datos", "Reparacion de notebooks y consolas"]
+    }
+  </script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Saltar al contenido</a>
 
 <!-- ════════════════ HEADER ════════════════ -->
 <header class="header" id="header">
@@ -26,7 +58,7 @@
       </div>
     </a>
 
-    <nav class="nav" id="nav">
+    <nav class="nav" id="nav" aria-label="Navegación principal">
       <a href="#servicios"  class="nav__item">Servicio</a>
       <a href="#proceso"    class="nav__item">Proceso</a>
       <a href="#resenas"    class="nav__item">Rese&ntilde;as</a>
@@ -57,7 +89,7 @@
       <button class="btn-auth" id="btnOpenAuth">Registro/Login</button>
       <button class="btn-auth auth-logout" id="btnLogout" type="button" hidden>Cerrar sesión</button>
 
-      <button class="burger" id="burger" aria-label="Menú">
+      <button class="burger" id="burger" aria-label="Abrir menú" aria-controls="nav" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -65,6 +97,7 @@
   </div>
 </header>
 
+<main id="main-content">
 
 <!-- ════════════════ HERO ════════════════ -->
 <section class="hero" id="inicio">
@@ -142,19 +175,19 @@
   <div class="container">
     <div class="stats__grid">
       <div class="stat-item">
-        <span class="stat-item__num" data-target="3400" data-prefix="+">+0</span>
+        <span class="stat-item__num" data-target="3400" data-prefix="+">+3.400</span>
         <span class="stat-item__lbl">equipos reparados</span>
       </div>
       <div class="stat-item">
-        <span class="stat-item__num" data-target="98" data-suffix="%">0%</span>
+        <span class="stat-item__num" data-target="98" data-suffix="%">98%</span>
         <span class="stat-item__lbl">tasa de éxito</span>
       </div>
       <div class="stat-item">
-        <span class="stat-item__num" data-target="48" data-suffix="h">0h</span>
+        <span class="stat-item__num" data-target="48" data-suffix="h">48h</span>
         <span class="stat-item__lbl">diagnóstico express</span>
       </div>
       <div class="stat-item">
-        <span class="stat-item__num" data-target="8" data-prefix="+">+0</span>
+        <span class="stat-item__num" data-target="8" data-prefix="+">+8</span>
         <span class="stat-item__lbl">años en servicio</span>
       </div>
     </div>
@@ -314,7 +347,8 @@
 
 
 <!-- ════════════════ CAROUSEL ════════════════ -->
-<section class="carousel-section" id="reparacion">
+<template id="legacy-service-carousel">
+<section class="carousel-section" id="reparacion" hidden aria-hidden="true">
   <div class="carousel-section__deco"></div>
   <div class="container">
     <div class="section-header reveal">
@@ -430,6 +464,7 @@
     </div>
   </div>
 </section>
+</template>
 
 
 <!-- REVIEWS -->
@@ -444,10 +479,10 @@
 
     <div class="reviews-summary reveal">
       <div class="reviews-score">
-        <strong id="reviewsAverage">4.7</strong>
+        <strong id="reviewsAverage">0.0</strong>
         <div>
-          <div class="stars stars--large" id="reviewsAverageStars" aria-label="Puntuaci&oacute;n promedio: 4.7 de 5">★★★★★</div>
-          <span id="reviewsTotal">Basado en 3 rese&ntilde;as</span>
+          <div class="stars stars--large" id="reviewsAverageStars" aria-label="Todavía no hay puntuaciones reales">★★★★★</div>
+          <span id="reviewsTotal">Todavía no hay reseñas reales publicadas</span>
         </div>
       </div>
       <div class="rating-bars" id="ratingBars" aria-label="Distribuci&oacute;n de puntuaciones"></div>
@@ -455,7 +490,7 @@
 
     <div class="reviews-layout">
       <div class="reviews-list" id="reviewsList">
-        <article class="review-card reveal" data-rating="5">
+        <article class="review-card review-card--demo reveal" data-rating="5" data-demo-review="true">
           <div class="review-card__top">
             <div class="review-author">
               <span class="review-author__avatar">ML</span>
@@ -468,7 +503,7 @@
           <time datetime="2026-05-18">18 MAY 2026</time>
         </article>
 
-        <article class="review-card reveal" data-rating="5">
+        <article class="review-card review-card--demo reveal" data-rating="5" data-demo-review="true">
           <div class="review-card__top">
             <div class="review-author">
               <span class="review-author__avatar">SV</span>
@@ -481,7 +516,7 @@
           <time datetime="2026-04-29">29 ABR 2026</time>
         </article>
 
-        <article class="review-card reveal" data-rating="4">
+        <article class="review-card review-card--demo reveal" data-rating="4" data-demo-review="true">
           <div class="review-card__top">
             <div class="review-author">
               <span class="review-author__avatar">DR</span>
@@ -581,6 +616,7 @@
   </div>
 </section>
 
+</main>
 
 <!-- ════════════════ FOOTER ════════════════ -->
 <footer class="footer">
@@ -597,17 +633,20 @@
       </a>
       <p>Reparación profesional de hardware a nivel componente. Diagnóstico electrónico, recuperación de datos y soldadura de precisión.</p>
       <div class="footer__socials">
-        <a href="#" class="fsoc" aria-label="Facebook">
+        <a href="https://www.facebook.com/" class="fsoc" target="_blank" rel="noopener noreferrer" aria-label="Visitar Facebook">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
         </a>
-        <a href="#" class="fsoc" aria-label="Instagram">
+        <a href="https://www.instagram.com/" class="fsoc" target="_blank" rel="noopener noreferrer" aria-label="Visitar Instagram">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         </a>
-        <a href="#" class="fsoc" aria-label="LinkedIn">
+        <a href="https://www.linkedin.com/" class="fsoc" target="_blank" rel="noopener noreferrer" aria-label="Visitar LinkedIn">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
         </a>
-        <a href="#" class="fsoc" aria-label="X">
+        <a href="https://x.com/" class="fsoc" target="_blank" rel="noopener noreferrer" aria-label="Visitar X">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/" class="fsoc" target="_blank" rel="noopener noreferrer" aria-label="Visitar YouTube">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 00.5 6.2 31 31 0 000 12a31 31 0 00.5 5.8 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31 31 0 0024 12a31 31 0 00-.5-5.8zM9.6 15.6V8.4L15.8 12z"/></svg>
         </a>
       </div>
     </div>
@@ -626,16 +665,15 @@
       <ul>
         <li><a href="#nosotros">Sobre nosotros</a></li>
         <li><a href="#proceso">Cómo trabajamos</a></li>
-        <li><a href="#">Blog técnico</a></li>
-        <li><a href="#">Garantías</a></li>
+        <li><span class="footer__unavailable">Blog técnico <small>próximamente</small></span></li>
+        <li><a href="garantia.html">Garantías</a></li>
       </ul>
     </div>
     <div class="footer__col">
       <h5>Legal</h5>
       <ul>
-        <li><a href="#">Política de privacidad</a></li>
-        <li><a href="#">Términos de servicio</a></li>
-        <li><a href="#">Cookies</a></li>
+        <li><a href="privacidad.html">Política de privacidad</a></li>
+        <li><a href="terminos.html">Términos de servicio</a></li>
       </ul>
     </div>
   </div>
@@ -653,25 +691,25 @@
 
 
 <!-- ════════════════ AUTH MODAL ════════════════ -->
-<div class="modal-overlay" id="modalOverlay">
-  <div class="auth-modal" id="authModal">
-    <button class="modal-close" id="modalClose">✕</button>
+<div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+  <div class="auth-modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+    <button class="modal-close" id="modalClose" type="button" aria-label="Cerrar registro e inicio de sesión">✕</button>
 
     <div class="modal-logo">
       <img src="assets/images/logo-rehardware.svg" alt="" />
-      <span class="modal-logo-text"><span>&lt;</span>RE:Hardware<span>&gt;</span></span>
+      <span class="modal-logo-text" id="authModalTitle"><span>&lt;</span>RE:Hardware<span>&gt;</span></span>
       <span class="modal-logo-sub">Repair · Restore · Rebuild</span>
     </div>
 
-    <div class="auth-tabs">
-      <button class="auth-tab active" data-tab="register">Registro</button>
-      <button class="auth-tab" data-tab="login">Iniciar sesión</button>
+    <div class="auth-tabs" role="tablist" aria-label="Acceso a RE:Hardware">
+      <button class="auth-tab active" data-tab="register" role="tab" aria-selected="true" aria-controls="tab-register">Registro</button>
+      <button class="auth-tab" data-tab="login" role="tab" aria-selected="false" aria-controls="tab-login">Iniciar sesión</button>
     </div>
 
     <div class="auth-form">
 
       <!-- REGISTER -->
-      <form class="auth-field active" id="tab-register">
+      <form class="auth-field active" id="tab-register" role="tabpanel">
         <div class="fg">
           <label for="registerName">Nombre y apellido</label>
           <input id="registerName" name="name" type="text" placeholder="Ej: Federico Vidal" autocomplete="name" required minlength="3" maxlength="80"/>
@@ -689,7 +727,7 @@
       </form>
 
       <!-- LOGIN -->
-      <form class="auth-field" id="tab-login">
+      <form class="auth-field" id="tab-login" role="tabpanel" hidden>
         <div class="fg">
           <label for="loginEmail">Correo</label>
           <input id="loginEmail" name="email" type="email" placeholder="tu@correo.com" autocomplete="email" required/>
@@ -708,9 +746,9 @@
 </div>
 
 <script>window.REVIEWS_USE_SUPABASE = true;</script>
-<script src="script.js"></script>
-<script type="module" src="auth.js"></script>
-<script type="module" src="reviews.js"></script>
+<script src="script.js?v=20260608-phase2"></script>
+<script type="module" src="auth.js?v=20260608-phase2"></script>
+<script type="module" src="reviews.js?v=20260608-phase2"></script>
 
 </body>
 </html>

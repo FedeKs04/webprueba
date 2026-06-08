@@ -86,15 +86,31 @@ if (
 
   function paintRating(value) {
     ratingButtons.forEach(button => {
-      button.classList.toggle('active', Number(button.dataset.rating) <= value);
+      const rating = Number(button.dataset.rating);
+      button.classList.toggle('active', rating <= value);
+      button.setAttribute('aria-pressed', String(rating === value));
     });
   }
 
-  ratingButtons.forEach(button => {
+  ratingButtons.forEach((button, index) => {
+    button.setAttribute('aria-pressed', 'false');
     button.addEventListener('mouseenter', () => paintRating(Number(button.dataset.rating)));
     button.addEventListener('click', () => {
       ratingField.value = button.dataset.rating;
       paintRating(Number(ratingField.value));
+    });
+    button.addEventListener('keydown', event => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      let nextIndex = index;
+      if (event.key === 'ArrowLeft') nextIndex = Math.max(0, index - 1);
+      if (event.key === 'ArrowRight') nextIndex = Math.min(ratingButtons.length - 1, index + 1);
+      if (event.key === 'Home') nextIndex = 0;
+      if (event.key === 'End') nextIndex = ratingButtons.length - 1;
+      const nextButton = ratingButtons[nextIndex];
+      ratingField.value = nextButton.dataset.rating;
+      paintRating(Number(ratingField.value));
+      nextButton.focus();
     });
   });
   ratingInput.addEventListener('mouseleave', () => paintRating(Number(ratingField.value || 0)));
@@ -190,6 +206,7 @@ if (
     card.className = 'review-card visible';
     card.dataset.rating = review.rating;
     card.dataset.databaseReview = 'true';
+    card.dataset.realReview = 'true';
 
     const top = document.createElement('div');
     top.className = 'review-card__top';
@@ -244,15 +261,23 @@ if (
   }
 
   function updateSummary() {
-    const ratings = Array.from(list.querySelectorAll('.review-card'))
+    const ratings = Array.from(list.querySelectorAll('[data-real-review="true"]'))
       .map(card => Number(card.dataset.rating));
-    const average = ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
-    document.getElementById('reviewsAverage').textContent = average.toFixed(1);
-    document.getElementById('reviewsTotal').textContent =
-      `Basado en ${ratings.length} ${ratings.length === 1 ? 'reseña' : 'reseñas'}`;
-    document.getElementById('reviewsAverageStars').setAttribute(
+    const average = ratings.length
+      ? ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length
+      : 0;
+    const averageElement = document.getElementById('reviewsAverage');
+    const totalElement = document.getElementById('reviewsTotal');
+    const starsElement = document.getElementById('reviewsAverageStars');
+    averageElement.textContent = average.toFixed(1);
+    totalElement.textContent = ratings.length
+      ? `Basado en ${ratings.length} ${ratings.length === 1 ? 'reseña real' : 'reseñas reales'}`
+      : 'Todavía no hay reseñas reales publicadas';
+    starsElement.setAttribute(
       'aria-label',
-      `Puntuación promedio: ${average.toFixed(1)} de 5`
+      ratings.length
+        ? `Puntuación promedio real: ${average.toFixed(1)} de 5`
+        : 'Todavía no hay puntuaciones reales'
     );
 
     const bars = document.getElementById('ratingBars');
@@ -262,6 +287,7 @@ if (
       const percentage = ratings.length ? (count / ratings.length) * 100 : 0;
       const row = document.createElement('div');
       row.className = 'rating-bar';
+      row.setAttribute('aria-label', `${score} estrellas: ${count} reseñas reales`);
       row.innerHTML = `<span>${score} \u2605</span><span class="rating-bar__track"><span class="rating-bar__fill" style="width:${percentage}%"></span></span><span>${count}</span>`;
       bars.appendChild(row);
     }

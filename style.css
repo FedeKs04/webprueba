@@ -63,6 +63,29 @@ body {
 a { text-decoration:none; color:inherit; }
 ul { list-style:none; }
 img { max-width:100%; display:block; }
+main { display:block; }
+
+.skip-link {
+  position:fixed;
+  top:10px;
+  left:10px;
+  z-index:10000;
+  padding:9px 14px;
+  border:1px solid var(--accent);
+  border-radius:2px;
+  background:var(--bg);
+  color:var(--accent);
+  font-family:'JetBrains Mono', monospace;
+  font-size:.75rem;
+  transform:translateY(-160%);
+  transition:transform .18s ease;
+}
+.skip-link:focus { transform:none; }
+
+:where(a, button, input, select, textarea):focus-visible {
+  outline:2px solid var(--accent);
+  outline-offset:3px;
+}
 
 /* ── SCROLLBAR ───────────────────────────────────────────── */
 ::-webkit-scrollbar { width:6px; }
@@ -559,6 +582,10 @@ body::before {
 }
 .review-card:first-child { grid-column:1 / -1; min-height:220px; }
 .review-card:hover { border-color:var(--border-2); transform:translateY(-3px); box-shadow:var(--shadow-g); }
+.review-card--demo {
+  border-style:dashed;
+  background:color-mix(in srgb, var(--card-bg) 88%, transparent);
+}
 .review-card__top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:18px; }
 .review-author { display:flex; align-items:center; gap:12px; }
 .review-author__avatar {
@@ -717,6 +744,18 @@ body::before {
 .footer__col ul { display:flex; flex-direction:column; gap:8px; }
 .footer__col a { font-size:.9rem; color: var(--text-2); transition: var(--t); }
 .footer__col a:hover { color: var(--accent); }
+.footer__unavailable {
+  color:var(--text-3);
+  font-size:.83rem;
+  cursor:default;
+}
+.footer__unavailable small {
+  display:block;
+  font-family:'JetBrains Mono', monospace;
+  font-size:.56rem;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
 
 .footer__bottom {
   border-top:1px solid var(--border); padding-top:24px;
@@ -874,6 +913,93 @@ body::before {
   width:100%; max-width:820px; padding:38px;
   position:relative; background:var(--surface);
   border:1px solid var(--border-2); border-radius:12px; box-shadow:var(--shadow);
+}
+
+/* LEGAL AND TRUST PAGES */
+.legal-page {
+  min-height:100vh;
+  padding:116px 24px 64px;
+  position:relative;
+  overflow:hidden;
+}
+.legal-page::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.35;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size:52px 52px;
+  mask-image:linear-gradient(to bottom, black, transparent 68%);
+}
+.legal-document {
+  width:min(820px, 100%);
+  margin:0 auto;
+  padding:42px;
+  position:relative;
+  border:1px solid var(--border-2);
+  border-radius:2px;
+  background:var(--surface);
+}
+.legal-document h1 {
+  margin:8px 0 12px;
+  font-size:clamp(2rem, 5vw, 3rem);
+  line-height:1.08;
+}
+.legal-document__lead {
+  margin-bottom:30px;
+  color:var(--text-2);
+  font-size:1.02rem;
+}
+.legal-document section + section { margin-top:26px; }
+.legal-document h2 {
+  margin-bottom:7px;
+  color:var(--text);
+  font-size:1.25rem;
+}
+.legal-document p,
+.legal-document li { color:var(--text-2); }
+.legal-document ul {
+  display:grid;
+  gap:7px;
+  padding-left:20px;
+  list-style:square;
+}
+.legal-document a {
+  color:var(--accent);
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+.legal-document__updated {
+  margin-top:34px;
+  padding-top:18px;
+  border-top:1px solid var(--border);
+  color:var(--text-3);
+  font-family:'JetBrains Mono', monospace;
+  font-size:.68rem;
+}
+
+@media (max-width:600px) {
+  .legal-page { padding:92px 16px 42px; }
+  .legal-document { padding:28px 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior:auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    scroll-behavior:auto !important;
+    transition-duration:.01ms !important;
+  }
+  .reveal {
+    opacity:1;
+    transform:none;
+  }
 }
 .account-card h1 { font-size:2.4rem; line-height:1.1; margin:12px 0 8px; }
 .account-card__intro,

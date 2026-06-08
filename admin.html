@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
   <title>Administración de reparaciones | RE:Hardware</title>
   <link rel="icon" href="assets/images/logo-rehardware.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -11,6 +12,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body data-auth-required="true">
+  <a class="skip-link" href="#main-content">Saltar al contenido</a>
   <header class="header scrolled">
     <div class="header__inner">
       <a href="/" class="logo">
@@ -29,7 +31,7 @@
     </div>
   </header>
 
-  <main class="admin-page">
+  <main class="admin-page" id="main-content">
     <div class="account-page__grid"></div>
     <section class="admin-shell">
       <p class="account-loading" id="accountLoading">Verificando permisos...</p>
@@ -87,7 +89,7 @@
       localStorage.getItem('rehw-theme') || 'dark'
     );
   </script>
-  <script type="module" src="auth.js"></script>
-  <script type="module" src="admin.js"></script>
+  <script type="module" src="auth.js?v=20260608-phase2"></script>
+  <script type="module" src="admin.js?v=20260608-phase2"></script>
 </body>
 </html>

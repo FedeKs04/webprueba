@@ -10,18 +10,25 @@ window.addEventListener('scroll', () => {
   fabTop.classList.toggle('show',    window.scrollY > 400);
 });
 
-fabTop.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+fabTop.addEventListener('click', () => window.scrollTo({
+  top: 0,
+  behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+}));
 
 /* ── BURGER ──────────────────────────────────────────────── */
 const burger = document.getElementById('burger');
 const nav    = document.getElementById('nav');
+function setMenuOpen(open) {
+  burger.classList.toggle('open', open);
+  nav.classList.toggle('open', open);
+  burger.setAttribute('aria-expanded', String(open));
+  burger.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+}
 burger.addEventListener('click', () => {
-  burger.classList.toggle('open');
-  nav.classList.toggle('open');
+  setMenuOpen(!nav.classList.contains('open'));
 });
 nav.querySelectorAll('.nav__item').forEach(l => l.addEventListener('click', () => {
-  burger.classList.remove('open');
-  nav.classList.remove('open');
+  setMenuOpen(false);
 }));
 
 /* ════════════════════════════════════════════════════════════
@@ -48,22 +55,79 @@ themeToggle.addEventListener('click', () => {
 const modalOverlay = document.getElementById('modalOverlay');
 const btnOpenAuth  = document.getElementById('btnOpenAuth');
 const modalClose   = document.getElementById('modalClose');
+const authModal    = document.getElementById('authModal');
+let authModalTrigger = null;
 
-function openModal()  { modalOverlay.classList.add('open'); document.body.style.overflow='hidden'; }
-function closeModal() { modalOverlay.classList.remove('open'); document.body.style.overflow=''; }
+function syncModalState() {
+  const open = modalOverlay.classList.contains('open');
+  modalOverlay.setAttribute('aria-hidden', String(!open));
+  document.body.style.overflow = open ? 'hidden' : '';
+  if (open) {
+    authModalTrigger = document.activeElement;
+    requestAnimationFrame(() => {
+      authModal.querySelector('.auth-tab.active, input, button')?.focus();
+    });
+  }
+}
+
+function openModal() {
+  modalOverlay.classList.add('open');
+  syncModalState();
+}
+
+function closeModal() {
+  if (!modalOverlay.classList.contains('open')) return;
+  modalOverlay.classList.remove('open');
+  syncModalState();
+  authModalTrigger?.focus();
+  authModalTrigger = null;
+}
 
 btnOpenAuth.addEventListener('click', openModal);
 modalClose.addEventListener('click', closeModal);
 modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+new MutationObserver(syncModalState).observe(modalOverlay, {
+  attributes: true,
+  attributeFilter: ['class']
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (nav.classList.contains('open')) setMenuOpen(false);
+    closeModal();
+    return;
+  }
+  if (e.key !== 'Tab' || !modalOverlay.classList.contains('open')) return;
+  const focusable = Array.from(authModal.querySelectorAll(
+    'button:not([disabled]):not([hidden]), input:not([disabled]):not([hidden]), a[href]'
+  )).filter(element => element.offsetParent !== null);
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
+});
 
 // Tabs
 document.querySelectorAll('.auth-tab').forEach(tab => {
   tab.addEventListener('click', () => {
-    document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.auth-field').forEach(f => f.classList.remove('active'));
+    document.querySelectorAll('.auth-tab').forEach(t => {
+      const selected = t === tab;
+      t.classList.toggle('active', selected);
+      t.setAttribute('aria-selected', String(selected));
+    });
+    document.querySelectorAll('.auth-field').forEach(f => {
+      const active = f.id === 'tab-' + tab.dataset.tab;
+      f.classList.toggle('active', active);
+      f.hidden = !active;
+    });
     tab.classList.add('active');
-    document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+    document.getElementById('tab-' + tab.dataset.tab)
+      .querySelector('input, button')?.focus();
   });
 });
 
@@ -88,20 +152,25 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     const t = document.querySelector(a.getAttribute('href'));
     if (!t) return;
     e.preventDefault();
-    window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 74, behavior:'smooth' });
+    window.scrollTo({
+      top: t.getBoundingClientRect().top + window.scrollY - 74,
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+    });
   });
 });
 
 /* ════════════════════════════════════════════════════════════
    STATS COUNTER ANIMATION
 ════════════════════════════════════════════════════════════ */
-function animCount(el, target, prefix='', suffix='', duration=1600) {
+function animCount(el, target, prefix='', suffix='', duration=1200) {
   const start = performance.now();
+  const initial = Math.round(target * .72);
   const step  = ts => {
     const p   = Math.min((ts - start) / duration, 1);
-    const val = Math.round(target * (1 - Math.pow(1 - p, 3)));
+    const val = Math.round(initial + (target - initial) * (1 - Math.pow(1 - p, 3)));
     el.textContent = prefix + val.toLocaleString('es-UY') + suffix;
     if (p < 1) requestAnimationFrame(step);
+    else el.textContent = prefix + target.toLocaleString('es-UY') + suffix;
   };
   requestAnimationFrame(step);
 }
@@ -110,6 +179,7 @@ let statsAnimated = false;
 new IntersectionObserver(entries => {
   if (entries[0].isIntersecting && !statsAnimated) {
     statsAnimated = true;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     document.querySelectorAll('.stat-item__num').forEach(el => {
       animCount(el,
         +el.dataset.target,
@@ -125,6 +195,7 @@ new IntersectionObserver(entries => {
 ════════════════════════════════════════════════════════════ */
 (function() {
   const track    = document.getElementById('carouselTrack');
+  if (!track || track.closest('[hidden]')) return;
   const slides   = Array.from(track.querySelectorAll('.carousel__slide'));
   const dotsWrap = document.getElementById('carouselDots');
   const prevBtn  = document.getElementById('carouselPrev');

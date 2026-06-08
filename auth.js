@@ -41,10 +41,14 @@ function setLoading(form, loading) {
 
 function switchToLogin() {
   document.querySelectorAll('.auth-tab').forEach(tab => {
-    tab.classList.toggle('active', tab.dataset.tab === 'login');
+    const active = tab.dataset.tab === 'login';
+    tab.classList.toggle('active', active);
+    tab.setAttribute('aria-selected', String(active));
   });
   document.querySelectorAll('.auth-field').forEach(field => {
-    field.classList.toggle('active', field.id === 'tab-login');
+    const active = field.id === 'tab-login';
+    field.classList.toggle('active', active);
+    field.hidden = !active;
   });
 }
 
