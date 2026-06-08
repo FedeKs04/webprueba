@@ -6,8 +6,64 @@ const ratingInput = document.getElementById('ratingInput');
 const ratingField = document.getElementById('reviewRating');
 const status = document.getElementById('reviewStatus');
 
-if (form && list && ratingInput && supabase) {
+if (form && list && ratingInput && ratingField && status && supabase) {
   const ratingButtons = Array.from(ratingInput.querySelectorAll('button'));
+  const submitButton = form.querySelector('[type="submit"]');
+
+  function setStatus(message = '', type = '') {
+    status.textContent = message;
+    status.dataset.type = type;
+  }
+
+  function logReviewError(operation, error) {
+    console.error(`[RE:Hardware Reviews] ${operation} failed`, {
+      message: error?.message || String(error),
+      code: error?.code,
+      details: error?.details,
+      hint: error?.hint,
+      status: error?.status
+    });
+  }
+
+  function reviewErrorMessage(error) {
+    if (error?.code === '23514') {
+      return 'La reseña debe tener entre 10 y 320 caracteres y una puntuación de 1 a 5.';
+    }
+    if (error?.code === '42501') {
+      return 'Supabase rechazó la operación por permisos. Volvé a iniciar sesión.';
+    }
+    return `Supabase: ${error?.message || 'No se pudo publicar la reseña.'}`;
+  }
+
+  function openLogin() {
+    setStatus('Iniciá sesión para publicar una reseña.', 'error');
+    document.getElementById('btnOpenAuth')?.click();
+    document.querySelector('[data-tab="login"]')?.click();
+  }
+
+  async function getSession() {
+    const { data: { session }, error } = await supabase.auth.getSession();
+    if (error) {
+      logReviewError('getSession', error);
+      throw error;
+    }
+    return session;
+  }
+
+  async function getAuthorName(session) {
+    const { data: profile, error } = await supabase
+      .from('profiles')
+      .select('full_name')
+      .eq('id', session.user.id)
+      .maybeSingle();
+
+    if (error) logReviewError('load author profile', error);
+
+    return profile?.full_name?.trim() ||
+      session.user.user_metadata?.full_name?.trim() ||
+      session.user.email?.split('@')[0] ||
+      'Usuario';
+  }
 
   function paintRating(value) {
     ratingButtons.forEach(button => {
@@ -113,50 +169,86 @@ if (form && list && ratingInput && supabase) {
       .order('created_at', { ascending: false })
       .limit(12);
 
-    if (!error) {
+    if (error) {
+      logReviewError('load reviews', error);
+    } else {
       [...data].reverse().forEach(review => list.prepend(createReviewCard(review)));
     }
     updateSummary();
   }
 
+  submitButton.addEventListener('click', async event => {
+    event.preventDefault();
+    try {
+      if (!await getSession()) {
+        openLogin();
+        return;
+      }
+      form.requestSubmit();
+    } catch (error) {
+      setStatus(reviewErrorMessage(error), 'error');
+    }
+  });
+
   form.addEventListener('submit', async event => {
     event.preventDefault();
-    status.textContent = '';
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) {
-      status.textContent = 'Iniciá sesión para publicar una reseña.';
-      document.getElementById('btnOpenAuth')?.click();
-      document.querySelector('[data-tab="login"]')?.click();
-      return;
-    }
+    setStatus();
+
     if (!ratingField.value) {
-      status.textContent = 'Seleccioná una puntuación para continuar.';
+      setStatus('Seleccioná una puntuación para continuar.', 'error');
+      ratingInput.focus();
       return;
     }
 
-    const submitButton = form.querySelector('[type="submit"]');
     submitButton.disabled = true;
-    const formData = new FormData(form);
-    const { error } = await supabase.from('reviews').insert({
-      user_id: session.user.id,
-      author_name: formData.get('name').trim(),
-      service: formData.get('service'),
-      rating: Number(ratingField.value),
-      content: formData.get('review').trim(),
-      status: 'published'
-    });
-    submitButton.disabled = false;
+    try {
+      const session = await getSession();
+      if (!session) {
+        openLogin();
+        return;
+      }
 
-    if (error) {
-      status.textContent = 'No se pudo publicar la reseña. Intentá nuevamente.';
-      return;
+      const formData = new FormData(form);
+      const authorName = await getAuthorName(session);
+      const payload = {
+        user_id: session.user.id,
+        author_name: authorName,
+        service: formData.get('service'),
+        rating: Number(ratingField.value),
+        content: formData.get('review').trim()
+      };
+
+      console.info('[RE:Hardware Reviews] publishing review', {
+        userId: session.user.id,
+        service: payload.service,
+        rating: payload.rating,
+        contentLength: payload.content.length
+      });
+
+      const { data: review, error } = await supabase
+        .from('reviews')
+        .insert(payload)
+        .select('id, author_name, service, rating, content, created_at')
+        .single();
+
+      if (error) throw error;
+
+      list.prepend(createReviewCard(review));
+      updateSummary();
+      form.reset();
+      ratingField.value = '';
+      paintRating(0);
+      setStatus('¡Gracias! Tu reseña fue publicada.', 'success');
+      console.info('[RE:Hardware Reviews] review published', {
+        reviewId: review.id,
+        userId: session.user.id
+      });
+    } catch (error) {
+      logReviewError('publish review', error);
+      setStatus(reviewErrorMessage(error), 'error');
+    } finally {
+      submitButton.disabled = false;
     }
-
-    form.reset();
-    ratingField.value = '';
-    paintRating(0);
-    status.textContent = '¡Gracias! Tu reseña fue publicada.';
-    loadReviews();
   });
 
   loadReviews();

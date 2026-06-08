@@ -501,10 +501,6 @@
         <p>Tu opini&oacute;n nos ayuda a seguir mejorando.</p>
         <form class="review-form" id="reviewForm">
           <div class="fg">
-            <label for="reviewName">Nombre</label>
-            <input id="reviewName" name="name" type="text" maxlength="40" placeholder="Tu nombre" required />
-          </div>
-          <div class="fg">
             <label for="reviewService">Servicio realizado</label>
             <select id="reviewService" name="service" required>
               <option value="">Seleccion&aacute; un servicio</option>
@@ -529,7 +525,7 @@
           </fieldset>
           <div class="fg">
             <label for="reviewText">Rese&ntilde;a</label>
-            <textarea id="reviewText" name="review" maxlength="320" rows="4" placeholder="Contanos c&oacute;mo fue tu experiencia..." required></textarea>
+            <textarea id="reviewText" name="review" minlength="10" maxlength="320" rows="4" placeholder="Contanos c&oacute;mo fue tu experiencia..." required></textarea>
           </div>
           <button class="btn-primary review-form__submit" type="submit">Publicar rese&ntilde;a</button>
           <p class="review-form__status" id="reviewStatus" role="status" aria-live="polite"></p>
