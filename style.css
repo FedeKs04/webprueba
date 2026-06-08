@@ -573,6 +573,14 @@ body::before {
   color:var(--accent); font-family:'JetBrains Mono', monospace;
   font-size:.58rem; white-space:nowrap;
 }
+.review-card__actions { display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+.review-card__delete {
+  padding:5px 9px; border:1px solid rgba(230,80,80,.45); border-radius:4px;
+  background:rgba(230,80,80,.08); color:#e66; font:600 .68rem var(--font-mono);
+  letter-spacing:.04em; text-transform:uppercase; cursor:pointer; transition:.2s;
+}
+.review-card__delete:hover { background:rgba(230,80,80,.16); border-color:#e66; }
+.review-card__delete:disabled { opacity:.55; cursor:wait; }
 .review-card p { color:var(--text-2); font-size:.9rem; line-height:1.65; margin:16px 0; flex:1; }
 .review-card time {
   color:var(--text-3); font-family:'JetBrains Mono', monospace;

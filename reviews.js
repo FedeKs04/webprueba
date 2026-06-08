@@ -14,6 +14,7 @@ const status = document.getElementById('reviewStatus');
 if (form && list && ratingInput && ratingField && status && supabase) {
   const ratingButtons = Array.from(ratingInput.querySelectorAll('button'));
   const submitButton = form.querySelector('[type="submit"]');
+  let currentUserId = null;
 
   function setStatus(message = '', type = '') {
     status.textContent = message;
@@ -99,6 +100,44 @@ if (form && list && ratingInput && ratingField && status && supabase) {
     }).format(new Date(value)).replace('.', '').toUpperCase();
   }
 
+  async function deleteReview(review, card, button) {
+    if (!currentUserId || review.user_id !== currentUserId) {
+      setStatus('No tenés permiso para eliminar esta reseña.', 'error');
+      return;
+    }
+
+    if (!window.confirm('¿Querés eliminar esta reseña? Esta acción no se puede deshacer.')) {
+      return;
+    }
+
+    button.disabled = true;
+    setStatus();
+    try {
+      const { data, error } = await supabase
+        .from('reviews')
+        .delete()
+        .eq('id', review.id)
+        .eq('user_id', currentUserId)
+        .select('id')
+        .maybeSingle();
+
+      if (error) throw error;
+      if (!data) throw new Error('La reseña no existe o no pertenece al usuario actual.');
+
+      card.remove();
+      updateSummary();
+      setStatus('Reseña eliminada correctamente.', 'success');
+      console.info('[RE:Hardware Reviews] review deleted', {
+        reviewId: review.id,
+        userId: currentUserId
+      });
+    } catch (error) {
+      logReviewError('delete review', error);
+      setStatus(reviewErrorMessage(error), 'error');
+      button.disabled = false;
+    }
+  }
+
   function createReviewCard(review) {
     const card = document.createElement('article');
     card.className = 'review-card visible';
@@ -122,7 +161,21 @@ if (form && list && ratingInput && ratingField && status && supabase) {
     const badge = document.createElement('span');
     badge.className = 'review-card__verified';
     badge.textContent = 'CLIENTE REGISTRADO';
-    top.append(author, badge);
+    const actions = document.createElement('div');
+    actions.className = 'review-card__actions';
+    actions.appendChild(badge);
+
+    if (currentUserId && review.user_id === currentUserId) {
+      const deleteButton = document.createElement('button');
+      deleteButton.className = 'review-card__delete';
+      deleteButton.type = 'button';
+      deleteButton.textContent = 'Eliminar';
+      deleteButton.setAttribute('aria-label', 'Eliminar mi reseña');
+      deleteButton.addEventListener('click', () => deleteReview(review, card, deleteButton));
+      actions.appendChild(deleteButton);
+    }
+
+    top.append(author, actions);
 
     const stars = document.createElement('div');
     stars.className = 'stars';
@@ -167,11 +220,13 @@ if (form && list && ratingInput && ratingField && status && supabase) {
     }
   }
 
-  async function loadReviews() {
+  async function loadReviews(sessionOverride) {
+    const session = sessionOverride === undefined ? await getSession() : sessionOverride;
+    currentUserId = session?.user?.id || null;
     list.querySelectorAll('[data-database-review="true"]').forEach(card => card.remove());
     const { data, error } = await supabase
       .from('reviews')
-      .select('id, author_name, service, rating, content, created_at')
+      .select('id, user_id, author_name, service, rating, content, created_at')
       .eq('status', 'published')
       .order('created_at', { ascending: false })
       .limit(12);
@@ -242,7 +297,7 @@ if (form && list && ratingInput && ratingField && status && supabase) {
       const { data: review, error } = await supabase
         .from('reviews')
         .insert(payload)
-        .select('id, author_name, service, rating, content, created_at')
+        .select('id, user_id, author_name, service, rating, content, created_at')
         .single();
 
       if (error) throw error;
@@ -263,6 +318,12 @@ if (form && list && ratingInput && ratingField && status && supabase) {
     } finally {
       submitButton.disabled = false;
     }
+  });
+
+  supabase.auth.onAuthStateChange((_event, session) => {
+    setTimeout(() => {
+      loadReviews(session).catch(error => logReviewError('refresh reviews after auth change', error));
+    }, 0);
   });
 
   loadReviews();
