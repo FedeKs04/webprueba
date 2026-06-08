@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administración de reparaciones | RE:Hardware</title>
+  <link rel="icon" href="assets/images/logo-rehardware.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-auth-required="true">
+  <header class="header scrolled">
+    <div class="header__inner">
+      <a href="/" class="logo">
+        <div class="logo__hex">
+          <img src="assets/images/logo-rehardware.svg" alt="" />
+        </div>
+        <div>
+          <span class="logo__text"><span>&lt;</span>RE:Hardware<span>&gt;</span></span>
+          <span class="logo__sub">Repair · Restore · Rebuild</span>
+        </div>
+      </a>
+      <div class="header__actions">
+        <a class="btn-auth" href="/cuenta.html">Mi cuenta</a>
+        <button class="btn-auth auth-logout" id="accountLogout" type="button">Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="admin-page">
+    <div class="account-page__grid"></div>
+    <section class="admin-shell">
+      <p class="account-loading" id="accountLoading">Verificando permisos...</p>
+      <div id="accountConfigError" hidden>
+        <span class="section-tag">// CONFIGURACIÓN PENDIENTE</span>
+        <h1>Conectá Supabase</h1>
+        <p>Completá <code>supabase-config.js</code> con la URL y la publishable key.</p>
+      </div>
+      <div id="accountContent" hidden>
+        <span class="section-tag">// OPERACIONES</span>
+        <div class="admin-heading">
+          <div>
+            <h1>Panel de reparaciones</h1>
+            <p>Gestión de solicitudes, estados, técnicos y presupuestos.</p>
+          </div>
+          <span class="admin-role" id="adminRole">STAFF</span>
+        </div>
+
+        <section class="admin-filters" aria-label="Filtros de reparaciones">
+          <div class="fg">
+            <label for="adminStatusFilter">Estado</label>
+            <select id="adminStatusFilter">
+              <option value="">Todos</option>
+              <option value="received">Recibido</option>
+              <option value="diagnosis">En diagnóstico</option>
+              <option value="quoted">Presupuestado</option>
+              <option value="repairing">En reparación</option>
+              <option value="ready">Listo para retirar</option>
+              <option value="delivered">Entregado</option>
+              <option value="cancelled">Cancelado</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label for="adminDateFilter">Desde</label>
+            <input id="adminDateFilter" type="date" />
+          </div>
+          <div class="fg admin-filter-search">
+            <label for="adminUserFilter">Cliente</label>
+            <input id="adminUserFilter" type="search" placeholder="Nombre o ID de usuario" />
+          </div>
+          <button class="btn-auth" id="adminClearFilters" type="button">Limpiar</button>
+        </section>
+
+        <p class="auth-status" id="adminStatus" role="status" aria-live="polite"></p>
+        <div class="admin-repair-list" id="adminRepairList">
+          <p class="account-loading">Cargando solicitudes...</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.documentElement.setAttribute(
+      'data-theme',
+      localStorage.getItem('rehw-theme') || 'dark'
+    );
+  </script>
+  <script type="module" src="auth.js"></script>
+  <script type="module" src="admin.js"></script>
+</body>
+</html>

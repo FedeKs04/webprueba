@@ -80,6 +80,45 @@ La migración crea:
 - `reviews`: reseñas públicas de usuarios registrados.
 - Políticas RLS para separar los datos de cada cliente.
 
+## Fase 1: flujo seguro de reparaciones
+
+Aplicar también:
+
+`supabase/migrations/20260608050000_secure_repair_workflow.sql`
+
+Esta migración:
+
+- Quita a los clientes permisos directos sobre `status`, `technician_notes`,
+  técnico asignado y datos del presupuesto.
+- Mantiene la edición de `equipment_type`, `brand_model` y
+  `problem_description` únicamente mientras la solicitud está en `received`.
+- Crea `repair_status_history` y registra automáticamente cada cambio de estado.
+- Agrega técnico asignado, monto, descripción, estado y fecha de decisión del
+  presupuesto.
+- Crea `admin_update_repair`, una función restringida a perfiles `technician` o
+  `admin`.
+- Crea `respond_to_repair_quote`, que solo permite al propietario aceptar o
+  rechazar un presupuesto pendiente.
+- Permite al cliente leer únicamente el historial de sus reparaciones; el staff
+  puede leer todas.
+
+Para convertir el usuario de desarrollo en administrador, ejecutar una sola vez
+desde el SQL Editor de Supabase:
+
+```sql
+update public.profiles
+set role = 'admin'
+where id = (
+  select id
+  from auth.users
+  where email = 'fedeyegros2004@gmail.com'
+);
+```
+
+Después de aplicar la migración, el panel queda disponible en:
+
+`https://rehardware.vercel.app/admin.html`
+
 ## Correos de autenticación
 
 Mientras se use el servidor de correo compartido de Supabase, `Confirm email`

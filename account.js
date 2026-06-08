@@ -6,6 +6,7 @@ const profileStatus = document.getElementById('profileStatus');
 const repairForm = document.getElementById('repairRequestForm');
 const repairStatus = document.getElementById('repairRequestStatus');
 const repairList = document.getElementById('repairList');
+const adminPanelLink = document.getElementById('adminPanelLink');
 
 const statusLabels = {
   received: 'Recibido',
@@ -15,6 +16,13 @@ const statusLabels = {
   ready: 'Listo para retirar',
   delivered: 'Entregado',
   cancelled: 'Cancelado'
+};
+
+const quoteStatusLabels = {
+  not_issued: 'Sin presupuesto',
+  pending: 'Pendiente de respuesta',
+  accepted: 'Aceptado',
+  rejected: 'Rechazado'
 };
 
 function setStatus(element, message = '', type = '') {
@@ -39,13 +47,143 @@ function logAccountError(operation, error) {
 }
 
 function formatDate(value) {
+  if (!value) return '';
   return new Intl.DateTimeFormat('es-UY', {
     dateStyle: 'medium',
     timeStyle: 'short'
   }).format(new Date(value));
 }
 
-function renderRepairs(repairs) {
+function formatMoney(value) {
+  return new Intl.NumberFormat('es-UY', {
+    style: 'currency',
+    currency: 'UYU',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2
+  }).format(Number(value));
+}
+
+function createTimeline(history) {
+  const section = document.createElement('section');
+  section.className = 'repair-timeline';
+
+  const title = document.createElement('h4');
+  title.textContent = 'Historial de progreso';
+  section.appendChild(title);
+
+  const list = document.createElement('ol');
+  if (!history.length) {
+    const empty = document.createElement('li');
+    empty.className = 'repair-timeline__empty';
+    empty.textContent = 'El historial estará disponible cuando se aplique la migración.';
+    list.appendChild(empty);
+  } else {
+    history.forEach(item => {
+      const entry = document.createElement('li');
+      const marker = document.createElement('span');
+      marker.className = 'repair-timeline__marker';
+
+      const content = document.createElement('div');
+      const status = document.createElement('strong');
+      status.textContent = statusLabels[item.new_status] || item.new_status;
+      const date = document.createElement('time');
+      date.dateTime = item.created_at;
+      date.textContent = formatDate(item.created_at);
+      content.append(status, date);
+      entry.append(marker, content);
+      list.appendChild(entry);
+    });
+  }
+
+  section.appendChild(list);
+  return section;
+}
+
+function createQuote(repair) {
+  if (repair.quote_status === 'not_issued' || repair.quote_amount === null) return null;
+
+  const section = document.createElement('section');
+  section.className = `repair-quote repair-quote--${repair.quote_status}`;
+
+  const heading = document.createElement('div');
+  heading.className = 'repair-quote__heading';
+  const title = document.createElement('h4');
+  title.textContent = 'Presupuesto';
+  const badge = document.createElement('span');
+  badge.className = 'repair-quote__status';
+  badge.textContent = quoteStatusLabels[repair.quote_status] || repair.quote_status;
+  heading.append(title, badge);
+
+  const amount = document.createElement('strong');
+  amount.className = 'repair-quote__amount';
+  amount.textContent = formatMoney(repair.quote_amount);
+
+  const description = document.createElement('p');
+  description.textContent = repair.quote_description || '';
+
+  section.append(heading, amount, description);
+
+  if (repair.quote_status === 'pending') {
+    const actions = document.createElement('div');
+    actions.className = 'repair-quote__actions';
+
+    const accept = document.createElement('button');
+    accept.className = 'btn-auth-submit';
+    accept.type = 'button';
+    accept.textContent = 'Aceptar presupuesto';
+
+    const reject = document.createElement('button');
+    reject.className = 'btn-secondary-danger';
+    reject.type = 'button';
+    reject.textContent = 'Rechazar';
+
+    const status = document.createElement('p');
+    status.className = 'auth-status';
+    status.setAttribute('role', 'status');
+    status.setAttribute('aria-live', 'polite');
+
+    const respond = decision => async () => {
+      accept.disabled = true;
+      reject.disabled = true;
+      setStatus(status, 'Guardando decisión...');
+
+      const { error } = await supabase.rpc('respond_to_repair_quote', {
+        p_repair_id: repair.id,
+        p_decision: decision
+      });
+
+      if (error) {
+        logAccountError('respond to quote', error);
+        setStatus(status, `Supabase: ${error.message}`, 'error');
+        accept.disabled = false;
+        reject.disabled = false;
+        return;
+      }
+
+      setStatus(
+        status,
+        decision === 'accepted' ? 'Presupuesto aceptado.' : 'Presupuesto rechazado.',
+        'success'
+      );
+      await loadAccount();
+    };
+
+    accept.addEventListener('click', respond('accepted'));
+    reject.addEventListener('click', respond('rejected'));
+    actions.append(accept, reject);
+    section.append(actions, status);
+  } else if (repair.quote_decided_at) {
+    const decisionDate = document.createElement('time');
+    decisionDate.className = 'repair-quote__decision-date';
+    decisionDate.dateTime = repair.quote_decided_at;
+    decisionDate.textContent = `Decisión registrada: ${formatDate(repair.quote_decided_at)}`;
+    section.appendChild(decisionDate);
+  }
+
+  return section;
+}
+
+function renderRepairs(repairs, historyByRepair) {
   repairList.innerHTML = '';
   if (!repairs.length) {
     repairList.innerHTML = '<p class="repair-list__empty">Todavía no tenés solicitudes registradas.</p>';
@@ -54,7 +192,7 @@ function renderRepairs(repairs) {
 
   repairs.forEach(repair => {
     const article = document.createElement('article');
-    article.className = 'repair-item';
+    article.className = 'repair-item repair-item--detailed';
 
     const heading = document.createElement('div');
     heading.className = 'repair-item__heading';
@@ -69,8 +207,19 @@ function renderRepairs(repairs) {
     description.textContent = repair.problem_description;
     const date = document.createElement('time');
     date.dateTime = repair.created_at;
-    date.textContent = formatDate(repair.created_at);
+    date.textContent = `Solicitud creada: ${formatDate(repair.created_at)}`;
     article.append(heading, description, date);
+
+    if (repair.assigned_technician_id) {
+      const assigned = document.createElement('p');
+      assigned.className = 'repair-assigned';
+      assigned.textContent = 'Técnico asignado';
+      article.appendChild(assigned);
+    }
+
+    const quote = createQuote(repair);
+    if (quote) article.appendChild(quote);
+    article.appendChild(createTimeline(historyByRepair.get(repair.id) || []));
     repairList.appendChild(article);
   });
 }
@@ -87,7 +236,19 @@ async function loadAccount() {
       .single(),
     supabase
       .from('repair_requests')
-      .select('id, equipment_type, brand_model, problem_description, status, created_at')
+      .select(`
+        id,
+        equipment_type,
+        brand_model,
+        problem_description,
+        status,
+        assigned_technician_id,
+        quote_amount,
+        quote_description,
+        quote_status,
+        quote_decided_at,
+        created_at
+      `)
       .order('created_at', { ascending: false })
   ]);
 
@@ -98,13 +259,43 @@ async function loadAccount() {
     profileForm.elements.full_name.value = profileResult.data.full_name || '';
     profileForm.elements.phone.value = profileResult.data.phone || '';
     document.getElementById('accountName').textContent = profileResult.data.full_name || 'Sin nombre';
+    adminPanelLink.hidden = !['technician', 'admin'].includes(profileResult.data.role);
   }
 
   if (repairsResult.error) {
     logAccountError('load repair requests', repairsResult.error);
     repairList.innerHTML = `<p class="auth-status auth-status--error">Supabase: ${repairsResult.error.message}</p>`;
-  } else {
-    renderRepairs(repairsResult.data);
+    return;
+  }
+
+  const repairIds = repairsResult.data.map(repair => repair.id);
+  let history = [];
+
+  if (repairIds.length) {
+    const historyResult = await supabase
+      .from('repair_status_history')
+      .select('repair_request_id, previous_status, new_status, created_at')
+      .in('repair_request_id', repairIds)
+      .order('created_at', { ascending: true });
+
+    if (historyResult.error) {
+      logAccountError('load repair history', historyResult.error);
+    } else {
+      history = historyResult.data;
+    }
+  }
+
+  const historyByRepair = new Map();
+  history.forEach(item => {
+    const entries = historyByRepair.get(item.repair_request_id) || [];
+    entries.push(item);
+    historyByRepair.set(item.repair_request_id, entries);
+  });
+
+  renderRepairs(repairsResult.data, historyByRepair);
+
+  if (new URLSearchParams(window.location.search).get('admin') === 'denied') {
+    setStatus(profileStatus, 'Tu usuario no tiene permisos de administración.', 'error');
   }
 }
 
@@ -171,7 +362,7 @@ repairForm.addEventListener('submit', async event => {
   }
   repairForm.reset();
   setStatus(repairStatus, 'Solicitud creada correctamente.', 'success');
-  loadAccount();
+  await loadAccount();
 });
 
 loadAccount();

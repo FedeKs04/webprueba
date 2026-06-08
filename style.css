@@ -871,7 +871,7 @@ body::before {
   mask-image:radial-gradient(circle at center, black, transparent 75%);
 }
 .account-card {
-  width:100%; max-width:620px; padding:38px;
+  width:100%; max-width:820px; padding:38px;
   position:relative; background:var(--surface);
   border:1px solid var(--border-2); border-radius:12px; box-shadow:var(--shadow);
 }
@@ -935,6 +935,15 @@ body::before {
 .repair-item time {
   font-family:'JetBrains Mono', monospace; font-size:.62rem; color:var(--text-3);
 }
+.repair-item--detailed { padding:22px; }
+.repair-assigned {
+  display:inline-flex; align-items:center; gap:7px;
+  font-family:'JetBrains Mono', monospace; font-size:.64rem;
+  color:var(--accent) !important; text-transform:uppercase; letter-spacing:.08em;
+}
+.repair-assigned::before {
+  content:''; width:6px; height:6px; border-radius:50%; background:var(--accent);
+}
 .repair-status {
   flex-shrink:0; padding:4px 9px; border-radius:4px;
   font-family:'JetBrains Mono', monospace; font-size:.58rem;
@@ -944,6 +953,131 @@ body::before {
   color:#ff7b72; border-color:rgba(255,123,114,.3); background:rgba(255,123,114,.08);
 }
 .repair-status--delivered { color:var(--text-3); }
+
+.repair-quote {
+  margin-top:18px; padding:18px; border-radius:8px;
+  border:1px solid var(--border-2); background:var(--accent-dim);
+}
+.repair-quote--rejected {
+  border-color:rgba(255,123,114,.3); background:rgba(255,123,114,.06);
+}
+.repair-quote__heading {
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+}
+.repair-quote h4,
+.repair-timeline h4 { font-size:1rem; }
+.repair-quote__status {
+  font-family:'JetBrains Mono', monospace; font-size:.58rem;
+  letter-spacing:.06em; text-transform:uppercase; color:var(--accent);
+}
+.repair-quote--rejected .repair-quote__status { color:#ff7b72; }
+.repair-quote__amount {
+  display:block; margin-top:12px; font-size:1.55rem; color:var(--text);
+}
+.repair-quote__actions { display:flex; gap:10px; margin-top:14px; }
+.repair-quote__actions .btn-auth-submit { margin-top:0; flex:1; }
+.btn-secondary-danger {
+  padding:11px 16px; border-radius:6px; cursor:pointer;
+  font-family:'Rajdhani', sans-serif; font-weight:700;
+  border:1px solid rgba(255,123,114,.45); background:rgba(255,123,114,.08);
+  color:#ff7b72;
+}
+.btn-secondary-danger:disabled { opacity:.5; cursor:wait; }
+.repair-quote__decision-date {
+  display:block; margin-top:10px;
+}
+.repair-timeline { margin-top:20px; padding-top:18px; border-top:1px solid var(--border); }
+.repair-timeline ol { list-style:none; margin-top:14px; }
+.repair-timeline li {
+  position:relative; display:grid; grid-template-columns:14px 1fr; gap:10px;
+  padding-bottom:16px;
+}
+.repair-timeline li:not(:last-child)::after {
+  content:''; position:absolute; left:5px; top:13px; bottom:0;
+  width:1px; background:var(--border-2);
+}
+.repair-timeline__marker {
+  width:11px; height:11px; margin-top:3px; border-radius:50%;
+  border:2px solid var(--accent); background:var(--surface);
+}
+.repair-timeline strong { display:block; font-size:.88rem; }
+.repair-timeline time { display:block; margin-top:3px; }
+.repair-timeline__empty { display:block !important; color:var(--text-3); }
+
+/* ADMIN */
+.admin-page {
+  min-height:100vh; padding:110px 24px 60px;
+  position:relative; overflow:hidden;
+}
+.admin-shell {
+  width:100%; max-width:1180px; margin:0 auto; padding:38px;
+  position:relative; background:var(--surface);
+  border:1px solid var(--border-2); border-radius:12px; box-shadow:var(--shadow);
+}
+.admin-shell h1 { font-size:2.4rem; line-height:1.1; margin:12px 0 6px; }
+.admin-heading {
+  display:flex; align-items:flex-start; justify-content:space-between; gap:20px;
+}
+.admin-heading p { color:var(--text-2); }
+.admin-role {
+  padding:6px 10px; border:1px solid var(--border-2); border-radius:5px;
+  background:var(--accent-dim); color:var(--accent);
+  font-family:'JetBrains Mono', monospace; font-size:.62rem; letter-spacing:.1em;
+}
+.admin-filters {
+  display:grid; grid-template-columns:1fr 1fr 1.5fr auto;
+  align-items:end; gap:12px; margin:28px 0 18px; padding:18px;
+  border:1px solid var(--border); border-radius:8px; background:var(--card-bg);
+}
+.admin-filters select,
+.admin-filters input,
+.admin-repair-form select,
+.admin-repair-form input,
+.admin-repair-form textarea {
+  width:100%; background:var(--input-bg); border:1px solid var(--border);
+  border-radius:6px; padding:11px 14px; color:var(--text); outline:none;
+  font-family:'Rajdhani', sans-serif; font-size:.95rem; transition:var(--t);
+}
+.admin-filters select:focus,
+.admin-filters input:focus,
+.admin-repair-form select:focus,
+.admin-repair-form input:focus,
+.admin-repair-form textarea:focus {
+  border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-dim);
+}
+.admin-filters select option,
+.admin-repair-form select option { background:var(--surface); color:var(--text); }
+.admin-repair-list { display:flex; flex-direction:column; gap:18px; margin-top:18px; }
+.admin-repair-card {
+  padding:24px; border:1px solid var(--border); border-radius:9px;
+  background:var(--card-bg);
+}
+.admin-repair-card__header {
+  display:flex; align-items:flex-start; justify-content:space-between; gap:20px;
+}
+.admin-repair-card__header h2 { font-size:1.25rem; }
+.admin-repair-card__header p,
+.admin-repair-card__problem { color:var(--text-2); }
+.admin-repair-card__header p {
+  margin-top:4px; font-family:'JetBrains Mono', monospace; font-size:.65rem;
+}
+.admin-repair-card__problem { margin:16px 0 8px; }
+.admin-repair-card > time {
+  font-family:'JetBrains Mono', monospace; font-size:.62rem; color:var(--text-3);
+}
+.admin-repair-form {
+  display:flex; flex-direction:column; gap:14px;
+  margin-top:20px; padding-top:20px; border-top:1px solid var(--border);
+}
+.admin-repair-form__grid {
+  display:grid; grid-template-columns:1fr 1.35fr .8fr; gap:12px;
+}
+.admin-repair-form textarea { resize:vertical; min-height:90px; }
+.admin-quote-meta {
+  font-family:'JetBrains Mono', monospace; font-size:.64rem; color:var(--text-3);
+  text-transform:uppercase; letter-spacing:.05em;
+}
+.admin-repair-form .btn-auth-submit { align-self:flex-start; min-width:190px; }
 
 /* ════════════════════════════════════════════════════════════
    RESPONSIVE
@@ -968,6 +1102,9 @@ body::before {
   .carousel__slide { min-width:calc(50% - 10px); }
   .reviews-layout { grid-template-columns:1fr; }
   .review-form-wrap { position:static; }
+  .admin-filters { grid-template-columns:1fr 1fr; }
+  .admin-filter-search { grid-column:1 / -1; }
+  .admin-repair-form__grid { grid-template-columns:1fr 1fr; }
 }
 @media (max-width:600px) {
   .header__inner { padding:0 14px; }
@@ -997,4 +1134,16 @@ body::before {
   .account-data { grid-template-columns:1fr; }
   .account-form__grid { grid-template-columns:1fr; }
   .repair-item__heading { align-items:flex-start; flex-direction:column; }
+  .account-page,
+  .admin-page { padding:88px 12px 36px; }
+  .account-card,
+  .admin-shell { padding:24px 18px; }
+  .admin-heading,
+  .admin-repair-card__header { flex-direction:column; }
+  .admin-filters,
+  .admin-repair-form__grid { grid-template-columns:1fr; }
+  .admin-filter-search { grid-column:auto; }
+  .admin-filters .btn-auth { width:100%; }
+  .repair-quote__actions { flex-direction:column; }
+  .admin-repair-form .btn-auth-submit { width:100%; }
 }
