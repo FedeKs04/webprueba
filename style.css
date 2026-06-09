@@ -1486,6 +1486,14 @@ body::before {
   padding-top:18px;
 }
 
+[data-theme="light"] .footer {
+  background:#dfe8e1;
+  color:#0f1f12;
+  --text:#0f1f12;
+  --text-2:rgba(15,31,18,.82);
+  --text-3:rgba(15,31,18,.68);
+}
+
 [data-theme="dark"] .auth-modal {
   max-width:400px;
   padding:28px 36px 26px;
