@@ -16,7 +16,7 @@
   <a class="skip-link" href="#main-content">Saltar al contenido</a>
   <header class="header scrolled">
     <div class="header__inner">
-      <a class="btn-auth" href="/">← Volver al inicio</a>
+      <a class="btn-auth" href="/" onclick="if (document.referrer.indexOf(location.origin) === 0) { event.preventDefault(); history.back(); }">← Volver al inicio</a>
       <a href="/" class="logo" aria-label="Volver al inicio de RE:Hardware">
         <div class="logo__hex"><img src="assets/images/logo-rehardware.svg" alt="" /></div>
         <div>
