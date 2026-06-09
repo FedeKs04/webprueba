@@ -1,7 +1,7 @@
 /* ════════════════════════════════════════════════════════════
    RE:HARDWARE — Design System
-   Dark: #0d0d0d bg, #1a2a1f surfaces, #00c896 accent
-   Light: #f0f4f0 bg, #ffffff surfaces, #007a5c accent
+   Dark: #0d0d0d bg, #1a2a1f surfaces, #35b58d accent
+   Light: #f0f4f0 bg, #ffffff surfaces, #0f6e56 accent
 ════════════════════════════════════════════════════════════ */
 
 :root {
@@ -10,20 +10,21 @@
   --surface:     #111a14;
   --surface-2:   #172019;
   --surface-3:   #1e2d22;
-  --border:      rgba(0,200,150,.15);
-  --border-2:    rgba(0,200,150,.28);
-  --accent:      #00c896;
-  --accent-dim:  rgba(0,200,150,.12);
-  --accent-glow: rgba(0,200,150,.32);
+  --brand-base:  #0f6e56;
+  --border:      rgba(53,181,141,.15);
+  --border-2:    rgba(53,181,141,.3);
+  --accent:      #35b58d;
+  --accent-dim:  rgba(53,181,141,.11);
+  --accent-glow: rgba(15,110,86,.3);
   --text:        #e8efe9;
   --text-2:      rgba(232,239,233,.65);
   --text-3:      rgba(232,239,233,.38);
   --white:       #ffffff;
   --header-bg:   rgba(10,18,12,.92);
   --card-bg:     #131e16;
-  --input-bg:    rgba(0,200,150,.06);
+  --input-bg:    rgba(53,181,141,.06);
   --shadow:      0 8px 40px rgba(0,0,0,.55);
-  --shadow-g:    0 8px 32px rgba(0,200,150,.25);
+  --shadow-g:    0 8px 32px rgba(15,110,86,.28);
   --ease:        cubic-bezier(.4,0,.2,1);
   --t:           .24s var(--ease);
 }
@@ -33,11 +34,12 @@
   --surface:     #f7fbf7;
   --surface-2:   #ffffff;
   --surface-3:   #e8f0e9;
-  --border:      rgba(0,100,70,.18);
-  --border-2:    rgba(0,100,70,.32);
-  --accent:      #007a5c;
-  --accent-dim:  rgba(0,122,92,.1);
-  --accent-glow: rgba(0,122,92,.22);
+  --brand-base:  #0f6e56;
+  --border:      rgba(15,110,86,.18);
+  --border-2:    rgba(15,110,86,.34);
+  --accent:      #0f6e56;
+  --accent-dim:  rgba(15,110,86,.1);
+  --accent-glow: rgba(15,110,86,.22);
   --text:        #0f1f12;
   --text-2:      rgba(15,31,18,.62);
   --text-3:      rgba(15,31,18,.38);
@@ -275,7 +277,7 @@ body::before {
   font-family:'Rajdhani', sans-serif;
   font-size:.95rem; font-weight:700; letter-spacing:.06em;
   padding:12px 28px; border-radius:6px;
-  background: var(--accent); color: #0d1a10;
+  background: var(--brand-base); color: #ffffff;
   border:none; cursor:pointer; transition: var(--t);
   display:inline-flex; align-items:center; gap:8px;
 }
@@ -924,17 +926,23 @@ body::before {
 
 .auth-forgot {
   font-family:'JetBrains Mono', monospace; font-size:.68rem;
-  color: var(--text-3); text-align:right; letter-spacing:.06em;
+  color: var(--text-2); text-align:right; letter-spacing:.06em;
   cursor:pointer; transition: var(--t); margin-top:-8px;
   border:0; background:transparent; align-self:flex-end;
+  text-decoration:underline;
+  text-decoration-color:var(--border-2);
+  text-underline-offset:3px;
 }
-.auth-forgot:hover { color: var(--accent); }
+.auth-forgot:hover {
+  color:var(--accent);
+  text-decoration-color:var(--accent);
+}
 
 .btn-auth-submit {
   font-family:'Rajdhani', sans-serif; font-size:.95rem; font-weight:700;
   letter-spacing:.08em; text-transform:uppercase;
   padding:12px; border-radius:6px;
-  background: var(--accent); color: #0d1a10;
+  background:var(--brand-base); color:#ffffff;
   border:none; cursor:pointer; transition: var(--t); margin-top:8px;
 }
 .btn-auth-submit:hover { box-shadow: var(--shadow-g); transform:translateY(-1px); }
@@ -1396,7 +1404,7 @@ body::before {
   border-radius:3px;
   padding:11px 24px;
 }
-.btn-primary:hover { transform:none; box-shadow:0 6px 20px rgba(0,200,150,.18); }
+.btn-primary:hover { transform:none; box-shadow:0 6px 20px rgba(15,110,86,.26); }
 .hero__hex-wrap { width:270px; height:270px; }
 .hero__hex-inner { inset:34px; }
 .hero__hex-center { inset:68px; }
@@ -1567,8 +1575,8 @@ body::before {
   max-width:400px;
   padding:28px 36px 26px;
   border-radius:0;
-  border-color:rgba(0,232,174,.56);
-  background:#0b604b;
+  border-color:rgba(53,181,141,.5);
+  background:#0f6e56;
   box-shadow:0 22px 60px rgba(0,0,0,.52);
 }
 [data-theme="dark"] .auth-modal .modal-logo {
@@ -1583,7 +1591,7 @@ body::before {
 }
 [data-theme="dark"] .auth-modal .modal-logo-text {
   color:rgba(255,255,255,.96);
-  text-shadow:0 0 12px rgba(0,232,174,.18);
+  text-shadow:0 0 12px rgba(53,181,141,.16);
 }
 [data-theme="dark"] .modal-logo-sub,
 [data-theme="dark"] .auth-status { color:rgba(255,255,255,.74); }
@@ -1611,7 +1619,7 @@ body::before {
   right:12px;
   bottom:0;
   height:2px;
-  background:#00e8ae;
+  background:#65d0ad;
 }
 [data-theme="dark"] .auth-modal .auth-field { gap:14px; }
 [data-theme="dark"] .auth-modal .fg { gap:6px; }
@@ -1631,22 +1639,22 @@ body::before {
 }
 [data-theme="dark"] .auth-modal .fg input::placeholder { color:rgba(13,33,25,.55); }
 [data-theme="dark"] .auth-modal .fg input:focus {
-  border-color:#00f0b4;
+  border-color:#35b58d;
   background:#edf4f1;
-  box-shadow:0 0 0 3px rgba(0,232,174,.22);
+  box-shadow:0 0 0 3px rgba(53,181,141,.24);
 }
 [data-theme="dark"] .auth-modal .btn-auth-submit {
   border-radius:0;
   min-height:44px;
   margin-top:4px;
-  border:1px solid #35efbd;
-  background:#00d6a0;
-  color:#07291f;
+  border:1px solid #66c9aa;
+  background:#0b4f3e;
+  color:#ffffff;
   font-weight:700;
   box-shadow:inset 0 -2px 0 rgba(4,67,51,.24);
 }
 [data-theme="dark"] .auth-modal .btn-auth-submit:hover {
-  background:#18e6b0;
+  background:#123f34;
   box-shadow:0 5px 18px rgba(0,0,0,.22);
 }
 [data-theme="dark"] .auth-modal .auth-status {
@@ -1655,7 +1663,14 @@ body::before {
 }
 [data-theme="dark"] .auth-modal .auth-forgot {
   margin-top:-4px;
-  color:rgba(255,255,255,.76);
+  color:rgba(255,255,255,.92);
+  text-decoration:underline;
+  text-decoration-color:rgba(255,255,255,.52);
+  text-underline-offset:3px;
+}
+[data-theme="dark"] .auth-modal .auth-forgot:hover {
+  color:#ffffff;
+  text-decoration-color:#ffffff;
 }
 [data-theme="dark"] .auth-modal .modal-close {
   top:12px;
