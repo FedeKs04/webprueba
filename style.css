@@ -1181,6 +1181,9 @@ body::before {
 .admin-repair-card__header {
   display:flex; align-items:flex-start; justify-content:space-between; gap:20px;
 }
+.admin-repair-card__actions {
+  display:flex; align-items:center; justify-content:flex-end; gap:10px; flex-wrap:wrap;
+}
 .admin-repair-card__header h2 { font-size:1.25rem; }
 .admin-repair-card__header p,
 .admin-repair-card__problem { color:var(--text-2); }
@@ -1266,6 +1269,7 @@ body::before {
   .admin-shell { padding:24px 18px; }
   .admin-heading,
   .admin-repair-card__header { flex-direction:column; }
+  .admin-repair-card__actions { width:100%; justify-content:space-between; }
   .admin-filters,
   .admin-repair-form__grid { grid-template-columns:1fr; }
   .admin-filter-search { grid-column:auto; }

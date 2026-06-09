@@ -21,6 +21,7 @@ if (
   const ratingButtons = Array.from(ratingInput.querySelectorAll('button'));
   const submitButton = form.querySelector('[type="submit"]');
   let currentUserId = null;
+  let currentUserRole = null;
   let loadVersion = 0;
   let lastAuthUserId;
   let pendingDelete = null;
@@ -84,6 +85,23 @@ if (
     return abbreviatedName(fullName);
   }
 
+  async function getCurrentUserRole(session) {
+    if (!session?.user?.id) return null;
+
+    const { data: profile, error } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', session.user.id)
+      .maybeSingle();
+
+    if (error) {
+      logReviewError('load current user role', error);
+      return null;
+    }
+
+    return profile?.role || null;
+  }
+
   function paintRating(value) {
     ratingButtons.forEach(button => {
       const rating = Number(button.dataset.rating);
@@ -137,7 +155,11 @@ if (
   }
 
   function openDeleteModal(review, card, button) {
-    if (!currentUserId || review.user_id !== currentUserId) {
+    const canDelete = currentUserId && (
+      review.user_id === currentUserId ||
+      currentUserRole === 'admin'
+    );
+    if (!canDelete) {
       setStatus('No tenés permiso para eliminar esta reseña.', 'error');
       return;
     }
@@ -153,7 +175,8 @@ if (
   async function confirmDeleteReview() {
     if (deleteInProgress || !pendingDelete) return;
     const { review, card, button } = pendingDelete;
-    if (!currentUserId || review.user_id !== currentUserId) {
+    const isAdmin = currentUserRole === 'admin';
+    if (!currentUserId || (review.user_id !== currentUserId && !isAdmin)) {
       closeDeleteModal();
       setStatus('No tenés permiso para eliminar esta reseña.', 'error');
       return;
@@ -166,13 +189,17 @@ if (
     deleteConfirmButton.textContent = 'Eliminando...';
     setStatus();
     try {
-      const { data, error } = await supabase
+      let deleteQuery = supabase
         .from('reviews')
         .delete()
         .eq('id', review.id)
-        .eq('user_id', currentUserId)
-        .select('id')
-        .maybeSingle();
+        .select('id');
+
+      if (!isAdmin) {
+        deleteQuery = deleteQuery.eq('user_id', currentUserId);
+      }
+
+      const { data, error } = await deleteQuery.maybeSingle();
 
       if (error) throw error;
       if (!data) throw new Error('La reseña no existe o no pertenece al usuario actual.');
@@ -187,7 +214,8 @@ if (
       setStatus('Reseña eliminada correctamente.', 'success');
       console.info('[RE:Hardware Reviews] review deleted', {
         reviewId: review.id,
-        userId: currentUserId
+        userId: currentUserId,
+        deletedAsAdmin: isAdmin
       });
     } catch (error) {
       logReviewError('delete review', error);
@@ -229,12 +257,21 @@ if (
     actions.className = 'review-card__actions';
     actions.appendChild(badge);
 
-    if (currentUserId && review.user_id === currentUserId) {
+    const canDelete = currentUserId && (
+      review.user_id === currentUserId ||
+      currentUserRole === 'admin'
+    );
+    if (canDelete) {
       const deleteButton = document.createElement('button');
       deleteButton.className = 'review-card__delete';
       deleteButton.type = 'button';
       deleteButton.textContent = 'Eliminar';
-      deleteButton.setAttribute('aria-label', 'Eliminar mi reseña');
+      deleteButton.setAttribute(
+        'aria-label',
+        review.user_id === currentUserId
+          ? 'Eliminar mi reseña'
+          : `Eliminar reseña de ${review.author_name}`
+      );
       deleteButton.addEventListener('click', () => openDeleteModal(review, card, deleteButton));
       actions.appendChild(deleteButton);
     }
@@ -312,6 +349,8 @@ if (
     if (requestVersion !== loadVersion) return;
 
     currentUserId = nextUserId;
+    currentUserRole = await getCurrentUserRole(session);
+    if (requestVersion !== loadVersion) return;
     const cards = document.createDocumentFragment();
     data.forEach(review => cards.appendChild(createReviewCard(review)));
     list.querySelectorAll('[data-database-review="true"]').forEach(card => card.remove());

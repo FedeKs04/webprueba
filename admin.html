@@ -83,6 +83,25 @@
     </section>
   </main>
 
+  <div class="review-delete-modal" id="adminDeleteModal" hidden>
+    <div class="review-delete-modal__backdrop" data-admin-delete-cancel></div>
+    <div
+      class="review-delete-modal__dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="adminDeleteTitle"
+      aria-describedby="adminDeleteDescription"
+    >
+      <span class="review-delete-modal__eyebrow">// CONFIRMAR ACCI&Oacute;N</span>
+      <h3 id="adminDeleteTitle">&iquest;Eliminar esta solicitud de reparaci&oacute;n?</h3>
+      <p id="adminDeleteDescription">Se eliminar&aacute;n la solicitud y su historial de estados. Esta acci&oacute;n no se puede deshacer.</p>
+      <div class="review-delete-modal__actions">
+        <button class="btn-outline" id="adminDeleteCancel" type="button">Cancelar</button>
+        <button class="review-delete-modal__confirm" id="adminDeleteConfirm" type="button">Eliminar solicitud</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     document.documentElement.setAttribute(
       'data-theme',
@@ -90,6 +109,6 @@
     );
   </script>
   <script type="module" src="auth.js?v=20260608-phase2"></script>
-  <script type="module" src="admin.js?v=20260608-phase2"></script>
+  <script type="module" src="admin.js?v=20260609-admin-delete"></script>
 </body>
 </html>

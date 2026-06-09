@@ -6,6 +6,10 @@ const statusFilter = document.getElementById('adminStatusFilter');
 const dateFilter = document.getElementById('adminDateFilter');
 const userFilter = document.getElementById('adminUserFilter');
 const clearFilters = document.getElementById('adminClearFilters');
+const deleteModal = document.getElementById('adminDeleteModal');
+const deleteCancelButton = document.getElementById('adminDeleteCancel');
+const deleteConfirmButton = document.getElementById('adminDeleteConfirm');
+const deleteDescription = document.getElementById('adminDeleteDescription');
 
 const statusLabels = {
   received: 'Recibido',
@@ -21,6 +25,10 @@ const statuses = Object.entries(statusLabels);
 let repairs = [];
 let profiles = new Map();
 let staffProfiles = [];
+let currentRole = null;
+let pendingDelete = null;
+let deleteInProgress = false;
+let lastFocusedElement = null;
 
 function setStatus(message = '', type = '') {
   pageStatus.textContent = message;
@@ -61,6 +69,76 @@ function field(labelText, control) {
   return wrapper;
 }
 
+function closeDeleteModal() {
+  if (deleteInProgress) return;
+  deleteModal.hidden = true;
+  document.body.style.overflow = '';
+  pendingDelete = null;
+  lastFocusedElement?.focus();
+  lastFocusedElement = null;
+}
+
+function openDeleteModal(repair, article, button) {
+  if (currentRole !== 'admin' || deleteInProgress) {
+    setStatus('Solo un administrador puede eliminar solicitudes.', 'error');
+    return;
+  }
+
+  pendingDelete = { repair, article, button };
+  lastFocusedElement = button;
+  deleteDescription.textContent =
+    `Se eliminará la solicitud de ${repair.equipment_type} · ${repair.brand_model} y su historial. Esta acción no se puede deshacer.`;
+  deleteModal.hidden = false;
+  document.body.style.overflow = 'hidden';
+  deleteCancelButton.focus();
+}
+
+async function confirmDeleteRepair() {
+  if (deleteInProgress || !pendingDelete) return;
+  if (currentRole !== 'admin') {
+    closeDeleteModal();
+    setStatus('Solo un administrador puede eliminar solicitudes.', 'error');
+    return;
+  }
+
+  const { repair, article, button } = pendingDelete;
+  deleteInProgress = true;
+  button.disabled = true;
+  deleteCancelButton.disabled = true;
+  deleteConfirmButton.disabled = true;
+  deleteConfirmButton.textContent = 'Eliminando...';
+
+  try {
+    const { data, error } = await supabase.rpc('admin_delete_repair_request', {
+      p_repair_id: repair.id
+    });
+
+    if (error) throw error;
+    if (data !== repair.id) throw new Error('Supabase no confirmó la solicitud eliminada.');
+
+    repairs = repairs.filter(item => item.id !== repair.id);
+    article.remove();
+    deleteModal.hidden = true;
+    document.body.style.overflow = '';
+    pendingDelete = null;
+    lastFocusedElement = null;
+    setStatus('Solicitud eliminada correctamente.', 'success');
+    renderRepairs();
+    console.info('[RE:Hardware Admin] repair request deleted', {
+      repairId: repair.id
+    });
+  } catch (error) {
+    logAdminError('delete repair request', error);
+    setStatus(`Supabase: ${error.message}`, 'error');
+    button.disabled = false;
+  } finally {
+    deleteInProgress = false;
+    deleteCancelButton.disabled = false;
+    deleteConfirmButton.disabled = false;
+    deleteConfirmButton.textContent = 'Eliminar solicitud';
+  }
+}
+
 function createRepairCard(repair) {
   const profile = profiles.get(repair.user_id);
   const article = document.createElement('article');
@@ -78,7 +156,27 @@ function createRepairCard(repair) {
   const badge = document.createElement('span');
   badge.className = `repair-status repair-status--${repair.status}`;
   badge.textContent = statusLabels[repair.status] || repair.status;
-  header.append(heading, badge);
+
+  const headerActions = document.createElement('div');
+  headerActions.className = 'admin-repair-card__actions';
+  headerActions.appendChild(badge);
+
+  if (currentRole === 'admin') {
+    const deleteButton = document.createElement('button');
+    deleteButton.className = 'review-card__delete';
+    deleteButton.type = 'button';
+    deleteButton.textContent = 'Eliminar';
+    deleteButton.setAttribute(
+      'aria-label',
+      `Eliminar solicitud de ${repair.equipment_type} ${repair.brand_model}`
+    );
+    deleteButton.addEventListener('click', () => {
+      openDeleteModal(repair, article, deleteButton);
+    });
+    headerActions.appendChild(deleteButton);
+  }
+
+  header.append(heading, headerActions);
 
   const description = document.createElement('p');
   description.className = 'admin-repair-card__problem';
@@ -258,6 +356,7 @@ async function initializeAdmin() {
   }
 
   document.getElementById('adminRole').textContent = currentProfile.role.toUpperCase();
+  currentRole = currentProfile.role;
 
   const { data: profileData, error: profilesError } = await supabase
     .from('profiles')
@@ -283,6 +382,14 @@ clearFilters.addEventListener('click', () => {
   dateFilter.value = '';
   userFilter.value = '';
   renderRepairs();
+});
+
+deleteCancelButton.addEventListener('click', closeDeleteModal);
+deleteConfirmButton.addEventListener('click', confirmDeleteRepair);
+deleteModal.querySelector('[data-admin-delete-cancel]')
+  .addEventListener('click', closeDeleteModal);
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && !deleteModal.hidden) closeDeleteModal();
 });
 
 initializeAdmin();
