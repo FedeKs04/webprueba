@@ -489,7 +489,9 @@
     </div>
 
     <div class="reviews-layout">
-      <div class="reviews-list" id="reviewsList">
+      <div class="reviews-carousel" aria-label="Carrusel de rese&ntilde;as">
+        <div class="reviews-carousel__viewport" id="reviewsCarouselViewport" tabindex="0">
+          <div class="reviews-list" id="reviewsList">
         <article class="review-card review-card--demo reveal" data-rating="5" data-demo-review="true">
           <div class="review-card__top">
             <div class="review-author">
@@ -528,6 +530,17 @@
           <p>&ldquo;Solucionaron el puerto HDMI de mi consola y la probaron delante m&iacute;o al retirarla. Muy buen servicio y garant&iacute;a por escrito.&rdquo;</p>
           <time datetime="2026-03-12">12 MAR 2026</time>
         </article>
+          </div>
+        </div>
+        <div class="reviews-carousel__controls">
+          <button class="reviews-carousel__arrow" id="reviewsPrev" type="button" aria-label="Ver rese&ntilde;as anteriores">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="reviews-carousel__dots" id="reviewsDots" aria-label="P&aacute;ginas de rese&ntilde;as"></div>
+          <button class="reviews-carousel__arrow" id="reviewsNext" type="button" aria-label="Ver rese&ntilde;as siguientes">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
       </div>
 
       <aside class="review-form-wrap reveal">
@@ -760,7 +773,7 @@
 <script>window.REVIEWS_USE_SUPABASE = true;</script>
 <script src="script.js?v=20260608-phase2"></script>
 <script type="module" src="auth.js?v=20260608-phase2"></script>
-<script type="module" src="reviews.js?v=20260609-admin-delete"></script>
+<script type="module" src="reviews.js?v=20260609-reviews-carousel"></script>
 
 </body>
 </html>

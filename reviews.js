@@ -13,10 +13,15 @@ const status = document.getElementById('reviewStatus');
 const deleteModal = document.getElementById('reviewDeleteModal');
 const deleteCancelButton = document.getElementById('reviewDeleteCancel');
 const deleteConfirmButton = document.getElementById('reviewDeleteConfirm');
+const carouselViewport = document.getElementById('reviewsCarouselViewport');
+const carouselPrev = document.getElementById('reviewsPrev');
+const carouselNext = document.getElementById('reviewsNext');
+const carouselDots = document.getElementById('reviewsDots');
 
 if (
   form && list && ratingInput && ratingField && status &&
-  deleteModal && deleteCancelButton && deleteConfirmButton && supabase
+  deleteModal && deleteCancelButton && deleteConfirmButton &&
+  carouselViewport && carouselPrev && carouselNext && carouselDots && supabase
 ) {
   const ratingButtons = Array.from(ratingInput.querySelectorAll('button'));
   const submitButton = form.querySelector('[type="submit"]');
@@ -27,6 +32,8 @@ if (
   let pendingDelete = null;
   let deleteInProgress = false;
   let lastFocusedElement = null;
+  let carouselPage = 0;
+  let carouselResizeTimer = null;
 
   function setStatus(message = '', type = '') {
     status.textContent = message;
@@ -145,6 +152,54 @@ if (
     }).format(new Date(value)).replace('.', '').toUpperCase();
   }
 
+  function carouselCards() {
+    return Array.from(list.querySelectorAll('.review-card'));
+  }
+
+  function visibleCarouselCards() {
+    return window.matchMedia('(max-width: 600px)').matches ? 1 : 2;
+  }
+
+  function carouselPageCount() {
+    return Math.max(1, Math.ceil(carouselCards().length / visibleCarouselCards()));
+  }
+
+  function updateCarouselControls() {
+    const pageCount = carouselPageCount();
+    carouselPage = Math.min(carouselPage, pageCount - 1);
+    carouselPrev.disabled = carouselPage === 0;
+    carouselNext.disabled = carouselPage === pageCount - 1;
+
+    carouselDots.innerHTML = '';
+    for (let page = 0; page < pageCount; page += 1) {
+      const dot = document.createElement('button');
+      dot.className = 'reviews-carousel__dot';
+      dot.type = 'button';
+      dot.setAttribute('aria-label', `Ir a la pÃ¡gina ${page + 1} de reseÃ±as`);
+      dot.setAttribute('aria-current', page === carouselPage ? 'true' : 'false');
+      dot.classList.toggle('active', page === carouselPage);
+      dot.addEventListener('click', () => goToCarouselPage(page));
+      carouselDots.appendChild(dot);
+    }
+  }
+
+  function goToCarouselPage(page, behavior = 'smooth') {
+    const cards = carouselCards();
+    const pageCount = carouselPageCount();
+    carouselPage = Math.max(0, Math.min(page, pageCount - 1));
+    const targetCard = cards[carouselPage * visibleCarouselCards()];
+    carouselViewport.scrollTo({
+      left: targetCard ? targetCard.offsetLeft - list.offsetLeft : 0,
+      behavior
+    });
+    updateCarouselControls();
+  }
+
+  function refreshCarousel(reset = false) {
+    if (reset) carouselPage = 0;
+    requestAnimationFrame(() => goToCarouselPage(carouselPage, 'auto'));
+  }
+
   function closeDeleteModal() {
     if (deleteInProgress) return;
     deleteModal.hidden = true;
@@ -207,6 +262,7 @@ if (
       loadVersion += 1;
       card.remove();
       updateSummary();
+      refreshCarousel();
       deleteModal.hidden = true;
       document.body.style.overflow = '';
       pendingDelete = null;
@@ -356,6 +412,7 @@ if (
     list.querySelectorAll('[data-database-review="true"]').forEach(card => card.remove());
     list.prepend(cards);
     updateSummary();
+    refreshCarousel(true);
   }
 
   submitButton.addEventListener('click', async event => {
@@ -424,6 +481,7 @@ if (
       loadVersion += 1;
       list.prepend(createReviewCard(review));
       updateSummary();
+      refreshCarousel(true);
       form.reset();
       ratingField.value = '';
       paintRating(0);
@@ -447,6 +505,22 @@ if (
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && !deleteModal.hidden) closeDeleteModal();
   });
+  carouselPrev.addEventListener('click', () => goToCarouselPage(carouselPage - 1));
+  carouselNext.addEventListener('click', () => goToCarouselPage(carouselPage + 1));
+  carouselViewport.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      goToCarouselPage(carouselPage - 1);
+    }
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      goToCarouselPage(carouselPage + 1);
+    }
+  });
+  window.addEventListener('resize', () => {
+    clearTimeout(carouselResizeTimer);
+    carouselResizeTimer = setTimeout(() => refreshCarousel(), 120);
+  });
 
   supabase.auth.onAuthStateChange((_event, session) => {
     const nextUserId = session?.user?.id || null;
@@ -457,5 +531,6 @@ if (
     }, 0);
   });
 
+  refreshCarousel(true);
   loadReviews();
 }
