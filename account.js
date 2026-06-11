@@ -25,6 +25,14 @@ const quoteStatusLabels = {
   rejected: 'Rechazado'
 };
 
+const repairSteps = [
+  { status: 'received', label: 'Recibido' },
+  { status: 'diagnosis', label: 'Diagnóstico' },
+  { status: 'quoted', label: 'Presupuesto' },
+  { status: 'repairing', label: 'En reparación' },
+  { status: 'ready', label: 'Listo' }
+];
+
 function setStatus(element, message = '', type = '') {
   element.textContent = message;
   element.className = `auth-status${type ? ` auth-status--${type}` : ''}`;
@@ -183,6 +191,41 @@ function createQuote(repair) {
   return section;
 }
 
+function createRepairStepper(status) {
+  const currentIndex = status === 'delivered'
+    ? repairSteps.length - 1
+    : repairSteps.findIndex(step => step.status === status);
+  const stepper = document.createElement('ol');
+  stepper.className = `repair-stepper${status === 'cancelled' ? ' repair-stepper--cancelled' : ''}`;
+  stepper.setAttribute(
+    'aria-label',
+    status === 'cancelled'
+      ? 'Solicitud cancelada'
+      : `Estado actual: ${statusLabels[status] || status}`
+  );
+
+  repairSteps.forEach((step, index) => {
+    const item = document.createElement('li');
+    item.className = 'repair-stepper__step';
+    if (currentIndex >= 0 && index < currentIndex) item.classList.add('is-complete');
+    if (currentIndex >= 0 && index === currentIndex) {
+      item.classList.add('is-active');
+      item.setAttribute('aria-current', 'step');
+    }
+
+    const marker = document.createElement('span');
+    marker.className = 'repair-stepper__marker';
+    marker.textContent = String(index + 1).padStart(2, '0');
+    const label = document.createElement('span');
+    label.className = 'repair-stepper__label';
+    label.textContent = step.label;
+    item.append(marker, label);
+    stepper.appendChild(item);
+  });
+
+  return stepper;
+}
+
 function renderRepairs(repairs, historyByRepair) {
   repairList.innerHTML = '';
   if (!repairs.length) {
@@ -198,17 +241,14 @@ function renderRepairs(repairs, historyByRepair) {
     heading.className = 'repair-item__heading';
     const title = document.createElement('h3');
     title.textContent = `${repair.equipment_type} · ${repair.brand_model}`;
-    const badge = document.createElement('span');
-    badge.className = `repair-status repair-status--${repair.status}`;
-    badge.textContent = statusLabels[repair.status] || repair.status;
-    heading.append(title, badge);
+    heading.appendChild(title);
 
     const description = document.createElement('p');
     description.textContent = repair.problem_description;
     const date = document.createElement('time');
     date.dateTime = repair.created_at;
     date.textContent = `Solicitud creada: ${formatDate(repair.created_at)}`;
-    article.append(heading, description, date);
+    article.append(heading, description, date, createRepairStepper(repair.status));
 
     if (repair.assigned_technician_id) {
       const assigned = document.createElement('p');
