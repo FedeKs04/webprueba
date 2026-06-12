@@ -24,6 +24,17 @@
           <span class="logo__sub">Repair · Restore · Rebuild</span>
         </div>
       </a>
+      <div class="header__actions">
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Cambiar tema" title="Cambiar tema (dark/light)">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"/>
+          </svg>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -121,5 +132,15 @@
       <div class="footer__bottom-logo"><span>&lt;</span>RE:Hardware<span>&gt;</span></div>
     </div>
   </footer>
+  <script>
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    html.setAttribute('data-theme', localStorage.getItem('rehw-theme') || 'dark');
+    themeToggle.addEventListener('click', () => {
+      const nextTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', nextTheme);
+      localStorage.setItem('rehw-theme', nextTheme);
+    });
+  </script>
 </body>
 </html>
