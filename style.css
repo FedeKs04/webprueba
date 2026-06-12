@@ -17,8 +17,8 @@
   --accent-dim:  rgba(53,181,141,.11);
   --accent-glow: rgba(15,110,86,.3);
   --text:        #e8efe9;
-  --text-2:      rgba(232,239,233,.65);
-  --text-3:      rgba(232,239,233,.38);
+  --text-2:      rgba(232,239,233,.88);
+  --text-3:      rgba(232,239,233,.85);
   --white:       #ffffff;
   --header-bg:   rgba(10,18,12,.92);
   --card-bg:     #131e16;
@@ -41,8 +41,8 @@
   --accent-dim:  rgba(26,122,74,.1);
   --accent-glow: rgba(26,122,74,.18);
   --text:        #202622;
-  --text-2:      rgba(32,38,34,.72);
-  --text-3:      rgba(32,38,34,.5);
+  --text-2:      rgba(32,38,34,.82);
+  --text-3:      rgba(32,38,34,.68);
   --white:       #f8faf7;
   --header-bg:   rgba(242,243,240,.96);
   --card-bg:     #e9ede8;
@@ -388,7 +388,7 @@ body::before {
 }
 .section-title--light { color: var(--white); }
 .section-desc { font-size:1rem; color: var(--text-2); max-width:520px; margin:0 auto; }
-.section-desc--light { color:rgba(255,255,255,.55); }
+.section-desc--light { color:rgba(255,255,255,.85); }
 
 /* ════════════════════════════════════════════════════════════
    SERVICIOS — GRID CARDS (above carousel)
@@ -1656,8 +1656,8 @@ body::before {
   background:#1a1a1a;
   color:#eef3ef;
   --text:#eef3ef;
-  --text-2:rgba(238,243,239,.72);
-  --text-3:rgba(238,243,239,.5);
+  --text-2:rgba(238,243,239,.9);
+  --text-3:rgba(238,243,239,.82);
   --border:rgba(53,181,141,.15);
   --border-2:rgba(53,181,141,.3);
   --accent:#35b58d;
@@ -1688,7 +1688,7 @@ body::before {
   text-shadow:0 0 12px rgba(53,181,141,.16);
 }
 [data-theme="dark"] .modal-logo-sub,
-[data-theme="dark"] .auth-status { color:rgba(255,255,255,.74); }
+[data-theme="dark"] .auth-status { color:rgba(255,255,255,.86); }
 [data-theme="dark"] .auth-tabs {
   position:relative;
   border-radius:0;
@@ -1699,7 +1699,7 @@ body::before {
 [data-theme="dark"] .auth-tab {
   min-height:40px;
   position:relative;
-  color:rgba(255,255,255,.72);
+  color:rgba(255,255,255,.85);
 }
 [data-theme="dark"] .auth-tab.active {
   background:rgba(5,31,24,.5);
@@ -1731,7 +1731,7 @@ body::before {
   font-size:.98rem;
   box-shadow:inset 0 1px 2px rgba(13,33,25,.12);
 }
-[data-theme="dark"] .auth-modal .fg input::placeholder { color:rgba(13,33,25,.55); }
+[data-theme="dark"] .auth-modal .fg input::placeholder { color:rgba(13,33,25,.85); }
 [data-theme="dark"] .auth-modal .fg input:focus {
   border-color:#35b58d;
   background:#edf4f1;
