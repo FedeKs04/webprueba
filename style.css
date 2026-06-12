@@ -1,7 +1,7 @@
 /* ════════════════════════════════════════════════════════════
    RE:HARDWARE — Design System
    Dark: #0d0d0d bg, #1a2a1f surfaces, #35b58d accent
-   Light: #f0f4f0 bg, #ffffff surfaces, #0f6e56 accent
+   Light: #f2f3f0 bg, #e9ede8 surfaces, #1a7a4a accent
 ════════════════════════════════════════════════════════════ */
 
 :root {
@@ -30,25 +30,25 @@
 }
 
 [data-theme="light"] {
-  --bg:          #eef2ee;
-  --surface:     #f7fbf7;
-  --surface-2:   #ffffff;
-  --surface-3:   #e8f0e9;
-  --brand-base:  #0f6e56;
-  --border:      rgba(15,110,86,.18);
-  --border-2:    rgba(15,110,86,.34);
-  --accent:      #0f6e56;
-  --accent-dim:  rgba(15,110,86,.1);
-  --accent-glow: rgba(15,110,86,.22);
-  --text:        #0f1f12;
-  --text-2:      rgba(15,31,18,.62);
-  --text-3:      rgba(15,31,18,.38);
-  --white:       #ffffff;
-  --header-bg:   rgba(238,242,238,.94);
-  --card-bg:     #f0f7f1;
-  --input-bg:    rgba(0,100,70,.06);
-  --shadow:      0 8px 40px rgba(0,0,0,.12);
-  --shadow-g:    0 8px 32px rgba(0,100,70,.18);
+  --bg:          #f2f3f0;
+  --surface:     #e9ede8;
+  --surface-2:   #eef1ed;
+  --surface-3:   #e2e7e1;
+  --brand-base:  #1a7a4a;
+  --border:      rgba(26,122,74,.18);
+  --border-2:    rgba(26,122,74,.38);
+  --accent:      #1a7a4a;
+  --accent-dim:  rgba(26,122,74,.1);
+  --accent-glow: rgba(26,122,74,.18);
+  --text:        #202622;
+  --text-2:      rgba(32,38,34,.72);
+  --text-3:      rgba(32,38,34,.5);
+  --white:       #f8faf7;
+  --header-bg:   rgba(242,243,240,.96);
+  --card-bg:     #e9ede8;
+  --input-bg:    rgba(26,122,74,.055);
+  --shadow:      none;
+  --shadow-g:    none;
 }
 
 /* ── RESET ────────────────────────────────────────────────── */
@@ -1653,12 +1653,16 @@ body::before {
 }
 
 [data-theme="light"] .footer {
-  background:#d8e4dc;
-  color:#0f1f12;
-  --text:#0f1f12;
-  --text-2:rgba(15,31,18,.86);
-  --text-3:rgba(15,31,18,.72);
-  border-top-color:rgba(15,110,86,.28);
+  background:#1a1a1a;
+  color:#eef3ef;
+  --text:#eef3ef;
+  --text-2:rgba(238,243,239,.72);
+  --text-3:rgba(238,243,239,.5);
+  --border:rgba(53,181,141,.15);
+  --border-2:rgba(53,181,141,.3);
+  --accent:#35b58d;
+  --accent-dim:rgba(53,181,141,.1);
+  border-top-color:rgba(53,181,141,.22);
 }
 
 [data-theme="dark"] .auth-modal {
